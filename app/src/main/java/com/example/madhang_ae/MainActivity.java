@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setStatusBarColor(ContextCompat.getColor(MainActivity.this,R.color.colorButton));
+        getWindow().setStatusBarColor(ContextCompat.getColor(MainActivity.this,R.color.ColorButton));
         setContentView(R.layout.activity_main);
         login = findViewById(R.id.btn_Login);
         login.setOnClickListener(new View.OnClickListener() {
