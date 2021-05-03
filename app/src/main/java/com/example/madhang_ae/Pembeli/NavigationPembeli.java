@@ -22,9 +22,10 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
         super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.ColorButton));
         setContentView(R.layout.activity_navigation_pembeli);
+        loadFragment(new MakananFragment());
         bottomNavigationViewPembeli = findViewById(R.id.navigationPembeli);
         bottomNavigationViewPembeli.setOnNavigationItemSelectedListener(this);
-        loadFragment(new MakananFragment());
+
     }
     private boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
@@ -52,7 +53,7 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
                 fragment= new JajananFragment();
                 break;
         }
-        return false;
+        return loadFragment(fragment);
     }
 
 }
