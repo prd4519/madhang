@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigationMakan"
+        android:icon="@drawable/ic_makan"
+        android:title="Makanan" />
+
+    <item
+        android:id="@+id/navigationMinum"
+        android:icon="@drawable/ic_minum"
+        android:title="Minuman" />
+
+    <item
+        android:id="@+id/navigationLauk"
+        android:icon="@drawable/ic_lauk"
+        android:title="Lauk" />
+
+    <item
+        android:id="@+id/navigationJajan"
+        android:icon="@drawable/ic_jajan"
+        android:title="Jajanan" />
+
+</menu>
