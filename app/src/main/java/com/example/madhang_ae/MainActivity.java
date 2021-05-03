@@ -14,8 +14,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        getWindow().setStatusBarColor(ContextCompat.getColor(MainActivity.this,R.color.colorButton));
+
+        getWindow().setStatusBarColor(ContextCompat.getColor(MainActivity.this,R.color.ColorButton));
         setContentView(R.layout.activity_main);
 
         Button daftar = (Button) findViewById(R.id.btn_Daftar);
