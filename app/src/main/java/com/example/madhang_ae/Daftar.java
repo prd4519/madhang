@@ -1,6 +1,7 @@
 package com.example.madhang_ae;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ public class Daftar extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.ColorButton));
         setContentView(R.layout.activity_daftar);
 
         FloatingActionButton button = (FloatingActionButton) findViewById(R.id.btn_kembaliDaftar);

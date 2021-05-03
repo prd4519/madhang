@@ -7,7 +7,7 @@
     tools:context=".Pembeli.NavigationPembeli">
 
     <FrameLayout
-        android:id="@+id/container"
+        android:id="@+id/containerPembeli"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/navigationPembeli" />
@@ -25,6 +25,6 @@
         app:itemIconTint="@color/bot_nav_color"
         app:itemTextColor="@color/bot_nav_color"
         app:labelVisibilityMode="labeled"
-        app:menu="@menu/master_bot_nav" />
+        app:menu="@menu/pembeli_bot_nav" />
 
 </RelativeLayout>
