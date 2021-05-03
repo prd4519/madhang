@@ -16,8 +16,8 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         setContentView(R.layout.activity_main);
 
-        Button button = (Button) findViewById(R.id.btn_Daftar);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button daftar = (Button) findViewById(R.id.btn_Daftar);
+        daftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,Daftar.class);
