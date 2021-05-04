@@ -6,9 +6,11 @@
     <color name="colorButton">#0D1EE2</color>
     <color name="colorWhite">#fff</color>
     <color name="ColorButton">#00747F</color>
+    <color name="whiteBodyColor">#FCFCFC</color>
+    <color name="frutorial_title">#4c4c4c</color>
     <color name="bottomNavigationTextColor">#B2B2B2</color>
     <color name="bottomNavigationTintColor">#B2B2B2</color>
     <color name="bottomNavigationSelectedColor">#034950</color>
     <color name="bottomNavigationBackground">#F7F7F7</color>
-    <color name="statusBarColor">#000</color>
+    <color name="colorBlack">#000</color>
 </resources>

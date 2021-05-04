@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="7dp"
+        card_view:cardBackgroundColor="@color/whiteBodyColor"
+        card_view:cardPreventCornerOverlap="false"
+        android:layout_margin="5dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/youtubeThubnail"
+                android:layout_width="127dp"
+                android:layout_height="83dp"
+                android:src="@drawable/example"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/namaDagangan"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/frutorial_title"
+                android:layout_marginHorizontal="5dp"
+                android:fontFamily="@font/roboto"
+                android:text="Nama Dagangan"
+                android:textStyle="bold"
+                android:textSize="10dp" />
+            <TextView
+                android:id="@+id/namaDesa"
+                android:layout_width="110dp"
+                android:fontFamily="@font/roboto"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:layout_marginHorizontal="5dp"
+                android:text="Nama Desa"
+                android:textSize="7dp" />
+            <TextView
+                android:id="@+id/Waktu"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/roboto"
+                android:layout_marginHorizontal="5dp"
+                android:text="Tersedia Hingga"
+                android:textSize="8dp" />
+
+            <TextView
+                android:id="@+id/Harga"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:text="Rp. 15000"
+                android:fontFamily="@font/rokkitt"
+                android:textColor="@color/colorBlack"
+                android:textSize="10dp" />
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:textAlignment="gravity"
+                android:text="Tekan untuk"
+                android:maxLines="2"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/colorBlack"
+                android:textSize="6dp" />
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:textAlignment="gravity"
+                android:text="Menghubungi Penjual"
+                android:maxLines="2"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/colorBlack"
+                android:textSize="6dp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
