@@ -13,4 +13,14 @@ public interface BaseApiService {
     Call<ResponseBody> loginRequest(@Field("email") String email,
                                     @Field("password") String password
     );
+    @FormUrlEncoded
+    @POST("Akun/insertAkun")
+    Call<ResponseBody> insertAkun(@Field("email") String email,
+                                    @Field("password") String password,
+                                  @Field("no_hp") int noHP,
+                                  @Field("id_kecamatan") int idKecamatan,
+                                  @Field("nama") String nama,
+                                  @Field("otp") int otp,
+                                  @Field("avatar") String avatar
+    );
 }

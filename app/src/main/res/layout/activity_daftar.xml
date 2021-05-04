@@ -53,7 +53,10 @@
         <Spinner
             android:id="@+id/sp_kecamatanDaftar"
             android:layout_width="225dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:spinnerMode="dialog"
+            android:backgroundTint="@color/colorWhite"
+            android:entries="@array/listDaftarKecamatan"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="wrap_content"
@@ -121,7 +124,7 @@
         android:gravity="right"
         >
         <Button
-            android:id="@+id/btn_Login"
+            android:id="@+id/btn_verifikasi"
             android:layout_marginTop="170dp"
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"

@@ -9,7 +9,7 @@
     android:ellipsize="marquee"
     android:drawableLeft="@drawable/ic_map"
     android:paddingStart="20dp"
-    android:textColor="@color/colorBlack"
+    android:textColor="@color/colorWhite"
     android:background="@drawable/bg_spinner"
-    android:backgroundTint="@color/colorBlack"
+    android:backgroundTint="@color/whiteBodyColor"
     />

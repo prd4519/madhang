@@ -6,24 +6,32 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.example.madhang_ae.MainActivity;
 import com.example.madhang_ae.R;
+import com.example.madhang_ae.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.HashMap;
 
 public class NavigationPembeli extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
         NavigationView.OnNavigationItemSelectedListener {
     private BottomNavigationView bottomNavigationViewPembeli;
+    private SessionManager sessionManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.ColorButton));
         setContentView(R.layout.activity_navigation_pembeli);
         loadFragment(new MakananFragment());
+        sessionManager = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = sessionManager.getUserDetails();
+        String name = user.get(SessionManager.kunci_mail);
         bottomNavigationViewPembeli = findViewById(R.id.navigationPembeli);
         bottomNavigationViewPembeli.setOnNavigationItemSelectedListener(this);
 

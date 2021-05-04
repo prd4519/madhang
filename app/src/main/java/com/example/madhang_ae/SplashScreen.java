@@ -9,13 +9,14 @@ import android.view.Window;
 import android.view.WindowManager;
 
 public class SplashScreen extends AppCompatActivity {
-
+    SessionManager sessionManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
+        sessionManager = new SessionManager(getApplicationContext());
         // langsung pindah ke MainActivity atau activity lain
         // begitu memasuki splash screen ini
 
@@ -24,6 +25,7 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(SplashScreen.this, MainActivity.class);
                 startActivity(intent);
+                sessionManager.checkLogin();
                 finish();
             }
         }, 2000);

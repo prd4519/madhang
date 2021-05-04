@@ -3,4 +3,21 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Daftar">Daftar</string>
+    <string-array name="listDaftarKecamatan">
+        <item>Balerejo</item>
+        <item>Dagangan</item>
+        <item>Dolopo</item>
+        <item>Geger</item>
+        <item>Gemarang</item>
+        <item>Jiwan</item>
+        <item>Kare</item>
+        <item>Kebonsari</item>
+        <item>Madiun</item>
+        <item>Mejayan</item>
+        <item>Pilangkenceng</item>
+        <item>Saradan</item>
+        <item>Sawahan</item>
+        <item>Wonoasri</item>
+        <item>Wungu</item>
+    </string-array>
 </resources>
