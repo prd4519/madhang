@@ -4,6 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Daftar">Daftar</string>
     <string-array name="listDaftarKecamatan">
+        <item>- Pilih Kecamatan -</item>
         <item>Balerejo</item>
         <item>Dagangan</item>
         <item>Dolopo</item>

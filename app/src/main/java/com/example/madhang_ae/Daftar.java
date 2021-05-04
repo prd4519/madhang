@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.madhang_ae.API.BaseApiService;
 import com.example.madhang_ae.API.UtilsApi;
@@ -23,72 +26,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Daftar extends AppCompatActivity {
+public class Daftar extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Spinner kecamatanDaftar;
     private EditText etEmail,etPassword, etnama, etnoHp;
-    private String email,password,nama,noHp;
-    private int kecamatan,code;
+    private String email,password,nama,kecamatan,noHp;
+    private int code,id;
+    long idKecamatan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.ColorButton));
         setContentView(R.layout.activity_daftar);
-        kecamatanDaftar = findViewById(R.id.kecamatanSpinner);
+        kecamatanDaftar = findViewById(R.id.sp_kecamatanDaftar);
         etEmail = findViewById(R.id.et_emailDaftar);
         etPassword = findViewById(R.id.et_passwordDaftar);
         etnama = findViewById(R.id.et_namaDaftar);
         etnoHp = findViewById(R.id.et_noHPDaftar);
-        switch (kecamatanDaftar.getSelectedItem().toString()){
-            case "Balerejo" :
-                kecamatan = 1;
-                break;
-            case "Dagangan" :
-                kecamatan = 2;
-                break;
-            case "Dolopo" :
-                kecamatan = 3;
-                break;
-            case "Geger" :
-                kecamatan = 4;
-                break;
-            case "Gemarang" :
-                kecamatan = 5;
-                break;
-            case "Jiwan" :
-                kecamatan = 6;
-                break;
-            case "Kare" :
-                kecamatan = 7;
-                break;
-            case "Kebonsari" :
-                kecamatan = 8;
-                break;
-            case "Madiun" :
-                kecamatan = 9;
-                break;
-            case "Mejayan" :
-                kecamatan = 10;
-                break;
-            case "Pilangkenceng" :
-                kecamatan = 11;
-                break;
-            case "Saradan" :
-                kecamatan = 12;
-                break;
-            case "Sawahan" :
-                kecamatan = 13;
-                break;
-            case "Wonoasri" :
-                kecamatan = 14;
-                break;
-            case "Wungu" :
-                kecamatan = 15;
-                break;
-        }
-        email = etEmail.getText().toString();
-        password = etPassword.getText().toString();
-        noHp = etnoHp.getText().toString();
-        nama = etnama.getText().toString();
+
         FloatingActionButton back = (FloatingActionButton) findViewById(R.id.btn_kembaliDaftar);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,27 +51,41 @@ public class Daftar extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.listDaftarKecamatan,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        kecamatanDaftar.setAdapter(adapter);
+        kecamatanDaftar.setOnItemSelectedListener(this);
         Button Daftar = (Button) findViewById(R.id.btn_verifikasi);
         Daftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                verifikasiOTP();
+                if (idKecamatan == 0){
+                    Toast.makeText(Daftar.this, "Mohon Pilih Kecamatan", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(Daftar.this, "id" + idKecamatan + "nama :" + kecamatan, Toast.LENGTH_SHORT).show();
+                    verifikasiOTP();
+                }
+
             }
         });
     }
 
     private void verifikasiOTP() {
+        int id = (int) idKecamatan;
+        email = etEmail.getText().toString();
+        password = etPassword.getText().toString();
+        noHp = etnoHp.getText().toString();
+        nama = etnama.getText().toString();
          Random codeOtp = new Random();
          code = codeOtp.nextInt(8999)+1000;
         BaseApiService mApiService = UtilsApi.getApiService();
-        Call<ResponseBody> insert = mApiService.insertAkun(email,password,Integer.parseInt(noHp),kecamatan,nama,code,null);
+        Call<ResponseBody> insert = mApiService.insertAkun(email,password,noHp,id,nama,code);
         insert.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Intent i = new Intent(Daftar.this, otp.class);
-                i.putExtra("email",email);
-                i.putExtra("otp", String.valueOf(code));
+                i.putExtra("emailVerifikasi",email);
+                i.putExtra("otpVerifikasi", String.valueOf(code));
                 startActivity(i);
             }
 
@@ -127,5 +95,69 @@ public class Daftar extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        kecamatan = parent.getItemAtPosition(position).toString();
+        idKecamatan = parent.getItemIdAtPosition(position);
+        if (idKecamatan == 0){
+            Toast.makeText(this, "Mohon Pilih Kecamatan", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(this, "id" + idKecamatan + "nama :" + kecamatan, Toast.LENGTH_SHORT).show();
+        }
+//        switch (kecamatan){
+//            case "Balerejo" :
+//                idKecamatan = 1;
+//                break;
+//            case "Dagangan":
+//                idKecamatan = 2;
+//                break;
+//            case "Dolopo":
+//                idKecamatan = 3;
+//                break;
+//            case "Geger":
+//                idKecamatan = 4;
+//                break;
+//            case "Gemarang":
+//                idKecamatan = 5;
+//                break;
+//            case "Jiwan":
+//                idKecamatan = 6;
+//                break;
+//            case "Kare":
+//                idKecamatan = 7;
+//                break;
+//            case "Kebonsari":
+//                idKecamatan = 8;
+//                break;
+//            case "Madiun":
+//                idKecamatan = 9;
+//                break;
+//            case "Mejayan":
+//                idKecamatan = 10;
+//                break;
+//            case "Pilangkenceng":
+//                idKecamatan = 11;
+//                break;
+//            case "Saradan":
+//                idKecamatan = 12;
+//                break;
+//            case "Sawahan":
+//                idKecamatan = 13;
+//                break;
+//            case "Wonoasri":
+//                idKecamatan = 14;
+//                break;
+//            case "Wungu":
+//                idKecamatan = 15;
+//                break;
+//        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

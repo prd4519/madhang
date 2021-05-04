@@ -29,6 +29,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     EditText etEmail, etPassword;
     Button daftar,login;
+    SessionManager sessionManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,13 +73,15 @@ public class MainActivity extends AppCompatActivity {
                             String avatar = jsonResult.getJSONObject("login").getString("avatar");
 
                             Intent intent = new Intent(getApplicationContext(), NavigationPembeli.class);
-                            intent.putExtra("nama", name);
-                            intent.putExtra("id", id);
-                            intent.putExtra("email", email);
-                            intent.putExtra("id_kecamatan", idKecamatan);
-                            intent.putExtra("noHp", noHp);
-                            intent.putExtra("avatar", avatar);
+                            intent.putExtra("namaAkun", name);
+                            intent.putExtra("idAkun", id);
+                            intent.putExtra("emailAkun", email);
+                            intent.putExtra("id_kecamatanAkun", idKecamatan);
+                            intent.putExtra("noHpAkun", noHp);
+                            intent.putExtra("avatarAkun", avatar);
                             startActivity(intent);
+                            sessionManager = new SessionManager(getApplicationContext());
+                            sessionManager.createSession(email);
                             finish();
                         } else {
                             String error_msg = jsonResult.getString("error_msg");

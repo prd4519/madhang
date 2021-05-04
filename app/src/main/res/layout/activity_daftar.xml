@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:spinnerMode="dialog"
             android:backgroundTint="@color/colorWhite"
-            android:entries="@array/listDaftarKecamatan"/>
+            />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="wrap_content"
@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorWhite"
                     android:hint="No HP"
-                    android:inputType="number"
+                    android:inputType="phone"
                     android:textColorHint="@color/colorWhite"
                     android:textSize="12dp" />
             </com.google.android.material.textfield.TextInputLayout>

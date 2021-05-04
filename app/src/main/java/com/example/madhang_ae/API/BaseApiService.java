@@ -16,11 +16,14 @@ public interface BaseApiService {
     @FormUrlEncoded
     @POST("Akun/insertAkun")
     Call<ResponseBody> insertAkun(@Field("email") String email,
-                                    @Field("password") String password,
-                                  @Field("no_hp") int noHP,
+                                  @Field("password") String password,
+                                  @Field("no_hp") String noHP,
                                   @Field("id_kecamatan") int idKecamatan,
                                   @Field("nama") String nama,
-                                  @Field("otp") int otp,
-                                  @Field("avatar") String avatar
+                                  @Field("otp") int otp
+
     );
+    @FormUrlEncoded
+    @POST("Akun/Verifikasi")
+    Call<ResponseBody> verifikasi(@Field("email") String email,@Field("otp")int otp);
 }
