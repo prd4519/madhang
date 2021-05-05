@@ -49,10 +49,11 @@ public class Daftar extends AppCompatActivity implements AdapterView.OnItemSelec
             public void onClick(View view) {
                 Intent i = new Intent(Daftar.this, MainActivity.class);
                 startActivity(i);
+                finish();
             }
         });
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.listDaftarKecamatan,android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.listDaftarKecamatan,R.layout.custom_spinner);
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
         kecamatanDaftar.setAdapter(adapter);
         kecamatanDaftar.setOnItemSelectedListener(this);
         Button Daftar = (Button) findViewById(R.id.btn_verifikasi);

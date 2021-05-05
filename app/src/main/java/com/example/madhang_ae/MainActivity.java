@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loginRequest();
+                finish();
             }
         });
         daftar = (Button) findViewById(R.id.btn_Daftar);
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,Daftar.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -80,9 +82,10 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("noHpAkun", noHp);
                             intent.putExtra("avatarAkun", avatar);
                             startActivity(intent);
+                            finish();
                             sessionManager = new SessionManager(getApplicationContext());
                             sessionManager.createSession(email);
-                            finish();
+
                         } else {
                             String error_msg = jsonResult.getString("error_msg");
                             Toast.makeText(MainActivity.this, error_msg, Toast.LENGTH_SHORT).show();

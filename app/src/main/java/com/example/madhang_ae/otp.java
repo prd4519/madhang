@@ -72,9 +72,20 @@ public class otp extends AppCompatActivity {
                     try {
                         JSONObject jsonResult = new JSONObject(response.body().string());
                         if (jsonResult.getString("error").equals("false")) {
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(otp.this);
+                            builder.setCancelable(false);
+                            builder.setTitle(Html.fromHtml("<font color='#509324'>Verifikasi Success</font>"));
+                            builder.setMessage("Silahkan login kembali");
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                            builder.show();
+
                         } else {
                             String error_msg = jsonResult.getString("error_msg");
                             Toast.makeText(otp.this, error_msg, Toast.LENGTH_SHORT).show();
@@ -147,17 +158,7 @@ public class otp extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if(s.equals("Success")){
-                AlertDialog.Builder builder = new AlertDialog.Builder(otp.this);
-                builder.setCancelable(false);
-                builder.setTitle(Html.fromHtml("<font color='#509324'>Success</font>"));
-                builder.setMessage("Mail Send Successfully.");
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.show();
+                Toast.makeText(otp.this, "Kode OTP telah terkirim, mohon cek email anda", Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(getApplicationContext(),
                         "Something Went Wrong?", Toast.LENGTH_SHORT).show();
