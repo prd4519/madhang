@@ -4,9 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_bgmakanan"
-    tools:context=".Pembeli.MakananFragment">
+    tools:context=".Pembeli.MakananFragment"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
+    <include android:layout_gravity="bottom"
+        layout="@layout/bs_makanan"
+        android:layout_width="match_parent"
+        android:layout_height="515dp" />
 
 
 </FrameLayout>

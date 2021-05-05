@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomSheetMakanan"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
-    <Spinner
-        android:id="@+id/kecamatanSpinner"
-        android:layout_width="match_parent"
-        android:layout_margin="5dp"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dialog"
+    android:layout_height="513dp"
+    android:background="@drawable/ic_bg_bottomsheet"
+    android:orientation="vertical"
+    app:behavior_peekHeight="?actionBarSize"
+    app:layout_behavior="@string/bottom_sheet_behavior">
 
-        />
+    <!--expand to top android:layout_height="match_parent"-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@drawable/bg_roundede2"
+            android:orientation="vertical"
+            android:gravity="center">
+            <View
+                android:layout_width="33dp"
+                android:layout_height="2.84dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/ic_rectangle" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="25dp"
+                style="@style/spinner_style"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="15dp"
+        android:id="@+id/rv_makanan"
+        tools:listitem="@layout/card_item_makanan"/>
 </LinearLayout>

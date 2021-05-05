@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <corners android:radius="25dp"/>
-    <stroke android:color="@color/colorBlack" android:width="1dp"/>
-    <size android:width="309dp" android:height="38dp"/>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-</shape>
+    <item><layer-list>
+        <item><shape>
+            <solid android:color="@color/colorWhite"/>
+
+            <stroke android:width="1dp" android:color="#000000" />
+
+            <corners android:radius="25dp" />
+
+            <padding android:bottom="3dp" android:left="3dp" android:right="3dp" android:top="3dp" />
+        </shape></item>
+    </layer-list></item>
+
+</selector>
