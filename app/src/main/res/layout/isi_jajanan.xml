@@ -4,9 +4,8 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     >
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_item_makanan"
+        android:id="@+id/rv_item_jajanan"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/card_item_makanan"/>

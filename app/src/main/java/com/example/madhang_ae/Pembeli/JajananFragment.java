@@ -12,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.example.madhang_ae.EditProfile;
 import com.example.madhang_ae.Penjual.NavigationPenjual;
 import com.example.madhang_ae.R;
 import com.example.madhang_ae.SessionManager;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -26,11 +28,15 @@ public class JajananFragment extends Fragment {
     AlertDialog alertDialog;
     SessionManager sessionManager;
     CircleImageView fabPop;
-
+    private BottomSheetBehavior bsJajanan;
+    private LinearLayout linearLayoutbs;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_jajanan, container, false);
+        linearLayoutbs = v.findViewById(R.id.bottomSheetJajanan);
+        bsJajanan = BottomSheetBehavior.from(linearLayoutbs);
+        bsJajanan.setState(BottomSheetBehavior.STATE_EXPANDED);
         fabPop = v.findViewById(R.id.popup3);
         fabPop.setOnClickListener(new View.OnClickListener() {
             @Override

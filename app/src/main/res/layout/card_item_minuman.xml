@@ -24,7 +24,7 @@
                 card_view:cardPreventCornerOverlap="false"
                 card_view:cardCornerRadius="7dp">
                 <ImageView
-                    android:id="@+id/imageMakanan"
+                    android:id="@+id/imageMinuman"
                     tools:ignore="ContentDescription"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -34,7 +34,7 @@
 
 
             <TextView
-                android:id="@+id/namaMakanan"
+                android:id="@+id/namaMinuman"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/frutorial_title"
@@ -44,7 +44,7 @@
                 android:textStyle="bold"
                 android:textSize="10dp" />
             <TextView
-                android:id="@+id/namaDesaMakanan"
+                android:id="@+id/namaDesaMinuman"
                 android:layout_width="match_parent"
                 android:fontFamily="@font/roboto"
                 android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                 android:text="Nama Desa"
                 android:textSize="7dp" />
             <TextView
-                android:id="@+id/waktuMakanan"
+                android:id="@+id/waktuMinuman"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorBlack"
@@ -64,7 +64,7 @@
                 android:textSize="8dp" />
 
             <TextView
-                android:id="@+id/hargaMakanan"
+                android:id="@+id/hargaMinuman"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"

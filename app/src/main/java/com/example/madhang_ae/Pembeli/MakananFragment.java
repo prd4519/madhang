@@ -38,13 +38,14 @@ public class MakananFragment extends Fragment  {
     AlertDialog alertDialog;
     SessionManager sessionManager;
     CircleImageView fabPop;
-
+    View layoutMakanan;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_makanan, container, false);
         linearLayoutbs = v.findViewById(R.id.bottomSheetMakanan);
+        layoutMakanan = v.findViewById(R.id.includeMakanan);
         bsMakanan = BottomSheetBehavior.from(linearLayoutbs);
         bsMakanan.setState(BottomSheetBehavior.STATE_EXPANDED);
         fabPop = v.findViewById(R.id.popup);

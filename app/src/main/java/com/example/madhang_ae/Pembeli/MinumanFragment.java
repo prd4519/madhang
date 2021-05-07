@@ -27,13 +27,17 @@ public class MinumanFragment extends Fragment {
     AlertDialog alertDialog;
     SessionManager sessionManager;
     CircleImageView fabPop;
-
+    private BottomSheetBehavior bsMinuman;
+    private LinearLayout linearLayoutbs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_minuman, container, false);
+        linearLayoutbs = v.findViewById(R.id.bottomSheetMinuman);
+        bsMinuman = BottomSheetBehavior.from(linearLayoutbs);
+        bsMinuman.setState(BottomSheetBehavior.STATE_EXPANDED);
         fabPop = v.findViewById(R.id.popup1);
         fabPop.setOnClickListener(new View.OnClickListener() {
             @Override
