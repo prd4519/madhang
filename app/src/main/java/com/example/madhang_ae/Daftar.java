@@ -3,6 +3,7 @@ package com.example.madhang_ae;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlarmManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -70,6 +71,7 @@ public class Daftar extends AppCompatActivity implements AdapterView.OnItemSelec
             }
         });
     }
+
 
     private void verifikasiOTP() {
         int id = (int) idKecamatan;
