@@ -55,6 +55,6 @@
             android:src="@drawable/ic_oops2"
             android:layout_gravity="center"
             android:visibility="gone"/>
-        <include layout="@layout/isi_jajanan" />
+        <include layout="@layout/isi_jajanan" android:id="@+id/includeJajanan"/>
     </LinearLayout>
 </LinearLayout>
