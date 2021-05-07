@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loginRequest();
-                finish();
             }
         });
         daftar = (Button) findViewById(R.id.btn_Daftar);

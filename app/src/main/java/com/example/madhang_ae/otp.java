@@ -3,6 +3,8 @@ package com.example.madhang_ae;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -42,6 +44,8 @@ public class otp extends AppCompatActivity {
     String sEmail,sPassword,email,Codeotp;
     EditText etOtp;
     Button btnVerifikasi;
+    AlertDialog.Builder dialogBuilder;
+    AlertDialog alertDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.ColorButton));
@@ -72,19 +76,20 @@ public class otp extends AppCompatActivity {
                     try {
                         JSONObject jsonResult = new JSONObject(response.body().string());
                         if (jsonResult.getString("error").equals("false")) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(otp.this);
-                            builder.setCancelable(false);
-                            builder.setTitle(Html.fromHtml("<font color='#509324'>Verifikasi Success</font>"));
-                            builder.setMessage("Silahkan login kembali");
-                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            });
-                            builder.show();
+                            showAlertDialog();
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(otp.this);
+//                            builder.setCancelable(false);
+//                            builder.setTitle(Html.fromHtml("<font color='#509324'>Verifikasi Success</font>"));
+//                            builder.setMessage("Silahkan login kembali");
+//                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                                    startActivity(intent);
+//                                    finish();
+//                                }
+//                            });
+//                            builder.show();
 
                         } else {
                             String error_msg = jsonResult.getString("error_msg");
@@ -103,6 +108,24 @@ public class otp extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(otp.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+    private void showAlertDialog(){
+        dialogBuilder = new AlertDialog.Builder(otp.this);
+        View layoutView = getLayoutInflater().inflate(R.layout.layout_verification_success, null);
+        Button dialogButton = layoutView.findViewById(R.id.btnDialog);
+        dialogBuilder.setView(layoutView);
+        alertDialog = dialogBuilder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+                alertDialog.dismiss();
             }
         });
     }
