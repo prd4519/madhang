@@ -41,7 +41,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_bg_bottomsheet2">
+        android:background="@drawable/ic_bgbottomsheet2">
 
         <include layout="@layout/isi_makanan" />
     </LinearLayout>
