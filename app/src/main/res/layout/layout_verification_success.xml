@@ -6,22 +6,29 @@
     android:orientation="vertical"
     android:gravity="center">
     <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         app:lottie_rawRes="@raw/success_tick"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        android:layout_marginVertical="20dp"
+        android:layout_marginVertical="10dp"
         />
-    <Button
-        android:id="@+id/btnDialog"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_verification"
+        android:text="Verifikasi Berhasil"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        android:textColor="@color/ColorButton"/>
+    <Button
+        android:id="@+id/btnDialog"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
         android:text="Ok"
         android:elevation="0dp"
         android:layout_marginVertical="5dp"
-        android:textColor="@color/ColorButton"
+        android:textColor="@color/colorWhite"
         android:textSize="18sp"
         />
 </LinearLayout>
