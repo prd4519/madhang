@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottomSheetMakanan"
     android:layout_width="match_parent"
-    android:layout_height="525dp"
+    android:layout_height="512dp"
     android:background="@drawable/bg_rounded"
     android:orientation="vertical"
     app:behavior_peekHeight="?actionBarSize"
@@ -41,7 +41,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_bg_bottomsheet">
+        android:background="@drawable/ic_bg_bottomsheet2">
 
         <include layout="@layout/isi_makanan" />
     </LinearLayout>
