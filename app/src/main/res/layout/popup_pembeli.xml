@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="230dp"
+    android:layout_marginHorizontal="50dp"
+    android:layout_gravity="center"
+    android:elevation="6dp"
+    app:cardCornerRadius="15dp"
+    app:cardBackgroundColor="#07262A">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:paddingVertical="10dp"
+        android:background="@drawable/bg_popup">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center|top">
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:src="@drawable/example"
+                android:layout_gravity="center|top"
+                android:layout_marginVertical="10dp"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FFFFFF"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_nama"
+                android:text="Nama"
+                android:textSize="16dp"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/roboto"
+                android:layout_gravity="center|top"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_kecamatan"
+                android:text="Kecamatan"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/roboto_thin"
+                android:layout_gravity="center|top"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center|bottom">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtProfile"
+                android:text="@string/edtProfile"
+                android:textSize="18dp"
+                android:textColor="@color/colorWhite"
+                android:background="@null"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_gravity="center"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dshbrPenjual"
+                android:text="@string/Penjual"
+                android:textSize="18dp"
+                android:textColor="@color/colorWhite"
+                android:background="@null"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_gravity="center"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Logout"
+                android:text="@string/Logout"
+                android:textSize="18dp"
+                android:textColor="@color/colorWhite"
+                android:background="@null"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>

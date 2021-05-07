@@ -3,6 +3,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Daftar">Daftar</string>
+    <string name="edtProfile"><u><b>Edit Profile</b></u></string>
+    <string name="Penjual"><u><b>Dashboard Penjual</b></u></string>
+    <string name="Pembeli"><u><b>Dashboard Pembeli</b></u></string>
+    <string name="Logout"><u><b>Logout</b></u></string>
     <string-array name="listDaftarKecamatan">
         <item>- Pilih Kecamatan -</item>
         <item>Balerejo</item>
@@ -21,4 +25,15 @@
         <item>Wonoasri</item>
         <item>Wungu</item>
     </string-array>
+    <string name="title_activity_drawer_pembeli">drawerPembeli</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 </resources>
