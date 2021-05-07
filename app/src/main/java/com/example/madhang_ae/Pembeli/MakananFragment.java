@@ -28,6 +28,7 @@ public class MakananFragment extends Fragment  {
         linearLayoutbs = v.findViewById(R.id.bottomSheetMakanan);
         bsMakanan = BottomSheetBehavior.from(linearLayoutbs);
         bsMakanan.setState(BottomSheetBehavior.STATE_EXPANDED);
+
         return v;
     }
 
