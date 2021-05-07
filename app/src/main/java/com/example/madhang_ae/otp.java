@@ -117,6 +117,7 @@ public class otp extends AppCompatActivity {
         Button dialogButton = layoutView.findViewById(R.id.btnDialog);
         dialogBuilder.setView(layoutView);
         alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(false);
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
         dialogButton.setOnClickListener(new View.OnClickListener() {

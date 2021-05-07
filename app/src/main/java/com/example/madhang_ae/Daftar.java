@@ -20,6 +20,10 @@ import com.example.madhang_ae.API.BaseApiService;
 import com.example.madhang_ae.API.UtilsApi;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.Random;
 
 import okhttp3.ResponseBody;
@@ -86,10 +90,15 @@ public class Daftar extends AppCompatActivity implements AdapterView.OnItemSelec
         insert.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Intent i = new Intent(Daftar.this, otp.class);
-                i.putExtra("emailVerifikasi",email);
-                i.putExtra("otpVerifikasi", String.valueOf(code));
-                startActivity(i);
+                if (response.isSuccessful()) {
+                    Intent i = new Intent(Daftar.this, otp.class);
+                    i.putExtra("emailVerifikasi",email);
+                    i.putExtra("otpVerifikasi", String.valueOf(code));
+                    startActivity(i);
+
+                } else {
+                    Toast.makeText(Daftar.this, "Email Already Exist", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
