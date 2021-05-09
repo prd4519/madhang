@@ -25,6 +25,13 @@
         <item>Wonoasri</item>
         <item>Wungu</item>
     </string-array>
+    <string-array name="listDaftarKategori">
+        <item>- Pilih Kategori -</item>
+        <item>Makanan</item>
+        <item>Minuman</item>
+        <item>Lauk</item>
+        <item>Jajanan</item>
+    </string-array>
     <string name="title_activity_drawer_pembeli">drawerPembeli</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
