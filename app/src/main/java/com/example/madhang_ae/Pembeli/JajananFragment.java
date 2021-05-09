@@ -37,6 +37,8 @@ public class JajananFragment extends Fragment {
         linearLayoutbs = v.findViewById(R.id.bottomSheetJajanan);
         bsJajanan = BottomSheetBehavior.from(linearLayoutbs);
         bsJajanan.setState(BottomSheetBehavior.STATE_EXPANDED);
+        sessionManager = new SessionManager(getContext());
+
         fabPop = v.findViewById(R.id.popup3);
         fabPop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +66,6 @@ public class JajananFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), EditProfile.class);
                 startActivity(intent);
-                getActivity().finish();
                 alertDialog.dismiss();
             }
         });
@@ -81,6 +82,7 @@ public class JajananFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 sessionManager.logout();
+                getActivity().finish();
             }
         });
     }

@@ -39,6 +39,7 @@ public class MinumanFragment extends Fragment {
         bsMinuman = BottomSheetBehavior.from(linearLayoutbs);
         bsMinuman.setState(BottomSheetBehavior.STATE_EXPANDED);
         fabPop = v.findViewById(R.id.popup1);
+        sessionManager = new SessionManager(getContext());
         fabPop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,7 +66,6 @@ public class MinumanFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), EditProfile.class);
                 startActivity(intent);
-                getActivity().finish();
                 alertDialog.dismiss();
             }
         });
@@ -82,6 +82,7 @@ public class MinumanFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 sessionManager.logout();
+                getActivity().finish();
             }
         });
     }

@@ -101,7 +101,7 @@ public class otp extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(otp.this, "GAGAL", Toast.LENGTH_SHORT).show();
+                    showAlertDialogWrong();
                 }
             }
 
@@ -117,7 +117,6 @@ public class otp extends AppCompatActivity {
         Button dialogButton = layoutView.findViewById(R.id.btnDialog);
         dialogBuilder.setView(layoutView);
         alertDialog = dialogBuilder.create();
-        alertDialog.setCancelable(false);
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
         dialogButton.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +129,21 @@ public class otp extends AppCompatActivity {
             }
         });
     }
-
+    private void showAlertDialogWrong(){
+        dialogBuilder = new AlertDialog.Builder(otp.this);
+        View layoutView = getLayoutInflater().inflate(R.layout.layout_verification_wrong, null);
+        Button dialogButtonWrong = layoutView.findViewById(R.id.btnDialogWrong);
+        dialogBuilder.setView(layoutView);
+        alertDialog = dialogBuilder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+        dialogButtonWrong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.cancel();
+            }
+        });
+    }
     public void sendVerification() {
 
         Properties properties = new Properties();

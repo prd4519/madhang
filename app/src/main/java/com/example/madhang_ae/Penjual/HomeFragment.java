@@ -32,6 +32,8 @@ public class HomeFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         fabPop = v.findViewById(R.id.popupp);
+        sessionManager = new SessionManager(getContext());
+
         fabPop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +59,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), EditProfile.class);
                 startActivity(intent);
-                getActivity().finish();
+
                 alertDialog.dismiss();
             }
         });
@@ -73,7 +75,9 @@ public class HomeFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getActivity().finish();
                 sessionManager.logout();
+
             }
         });
     }

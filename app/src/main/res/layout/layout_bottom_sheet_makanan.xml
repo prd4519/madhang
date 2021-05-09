@@ -31,6 +31,8 @@
                 android:layout_height="wrap_content">
 
                 <Spinner
+                    android:id="@+id/kecamatanMakanan"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
@@ -56,6 +58,7 @@
             android:src="@drawable/ic_oops2"
             android:layout_gravity="center"
             android:visibility="gone"/>
+
         <include
             android:id="@+id/includeMakanan"
             layout="@layout/isi_makanan" />

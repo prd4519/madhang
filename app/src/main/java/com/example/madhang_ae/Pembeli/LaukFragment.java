@@ -37,6 +37,8 @@ public class LaukFragment extends Fragment {
         bsLauk = BottomSheetBehavior.from(linearLayoutbs);
         bsLauk.setState(BottomSheetBehavior.STATE_EXPANDED);
         fabPop = v.findViewById(R.id.popup2);
+        sessionManager = new SessionManager(getContext());
+
         fabPop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,7 +65,6 @@ public class LaukFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), EditProfile.class);
                 startActivity(intent);
-                getActivity().finish();
                 alertDialog.dismiss();
             }
         });
@@ -80,6 +81,7 @@ public class LaukFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 sessionManager.logout();
+                getActivity().finish();
             }
         });
     }

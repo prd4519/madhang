@@ -49,6 +49,8 @@ public class MakananFragment extends Fragment  {
         bsMakanan = BottomSheetBehavior.from(linearLayoutbs);
         bsMakanan.setState(BottomSheetBehavior.STATE_EXPANDED);
         fabPop = v.findViewById(R.id.popup);
+        sessionManager = new SessionManager(getContext());
+
         fabPop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,7 +77,6 @@ public class MakananFragment extends Fragment  {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), EditProfile.class);
                 startActivity(intent);
-                getActivity().finish();
                 alertDialog.dismiss();
             }
         });
@@ -92,6 +93,7 @@ public class MakananFragment extends Fragment  {
             @Override
             public void onClick(View view) {
                 sessionManager.logout();
+                getActivity().finish();
             }
         });
     }

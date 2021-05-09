@@ -32,6 +32,8 @@ public class MenuFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_menu, container, false);
+        sessionManager = new SessionManager(getContext());
+
         fabPop = v.findViewById(R.id.popupp1);
         fabPop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +60,7 @@ public class MenuFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), EditProfile.class);
                 startActivity(intent);
-                getActivity().finish();
+
                 alertDialog.dismiss();
             }
         });
@@ -75,6 +77,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 sessionManager.logout();
+                getActivity().finish();
             }
         });
     }
