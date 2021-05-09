@@ -12,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.example.madhang_ae.EditProfile;
 import com.example.madhang_ae.Pembeli.NavigationPembeli;
 import com.example.madhang_ae.R;
 import com.example.madhang_ae.SessionManager;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -25,7 +27,9 @@ public class MenuFragment extends Fragment {
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
     SessionManager sessionManager;
-    CircleImageView fabPop;
+    private BottomSheetBehavior bsMenu;
+    private LinearLayout linearLayoutbs;
+//    CircleImageView fabPop;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,14 +37,16 @@ public class MenuFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_menu, container, false);
         sessionManager = new SessionManager(getContext());
-
-        fabPop = v.findViewById(R.id.popupp1);
-        fabPop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPopUpp1();
-            }
-        });
+        linearLayoutbs = v.findViewById(R.id.bottomSheetMenu);
+        bsMenu = BottomSheetBehavior.from(linearLayoutbs);
+        bsMenu.setState(BottomSheetBehavior.STATE_EXPANDED);
+//        fabPop = v.findViewById(R.id.popupp1);
+//        fabPop.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showPopUpp1();
+//            }
+//        });
         return v;
     }
 

@@ -26,7 +26,7 @@ public class MinumanFragment extends Fragment {
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
     SessionManager sessionManager;
-    CircleImageView fabPop;
+//    CircleImageView fabPop;
     private BottomSheetBehavior bsMinuman;
     private LinearLayout linearLayoutbs;
 
@@ -38,14 +38,14 @@ public class MinumanFragment extends Fragment {
         linearLayoutbs = v.findViewById(R.id.bottomSheetMinuman);
         bsMinuman = BottomSheetBehavior.from(linearLayoutbs);
         bsMinuman.setState(BottomSheetBehavior.STATE_EXPANDED);
-        fabPop = v.findViewById(R.id.popup1);
+//        fabPop = v.findViewById(R.id.popup1);
         sessionManager = new SessionManager(getContext());
-        fabPop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPopUp1();
-            }
-        });
+//        fabPop.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showPopUp1();
+//            }
+//        });
 
         return v;
     }

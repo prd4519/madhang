@@ -37,7 +37,7 @@ public class MakananFragment extends Fragment  {
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
     SessionManager sessionManager;
-    CircleImageView fabPop;
+//    CircleImageView fabPop;
     View layoutMakanan;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,15 +48,15 @@ public class MakananFragment extends Fragment  {
         layoutMakanan = v.findViewById(R.id.includeMakanan);
         bsMakanan = BottomSheetBehavior.from(linearLayoutbs);
         bsMakanan.setState(BottomSheetBehavior.STATE_EXPANDED);
-        fabPop = v.findViewById(R.id.popup);
+//        fabPop = v.findViewById(R.id.popup);
         sessionManager = new SessionManager(getContext());
 
-        fabPop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPopUp();
-            }
-        });
+//        fabPop.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showPopUp();
+//            }
+//        });
 
         return v;
     }

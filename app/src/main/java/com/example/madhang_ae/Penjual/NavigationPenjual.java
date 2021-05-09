@@ -16,21 +16,28 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.example.madhang_ae.EditProfile;
 import com.example.madhang_ae.MainActivity;
 import com.example.madhang_ae.Pembeli.JajananFragment;
 import com.example.madhang_ae.Pembeli.LaukFragment;
 import com.example.madhang_ae.Pembeli.MakananFragment;
 import com.example.madhang_ae.Pembeli.MinumanFragment;
+import com.example.madhang_ae.Pembeli.NavigationPembeli;
 import com.example.madhang_ae.R;
+import com.example.madhang_ae.SessionManager;
 import com.example.madhang_ae.otp;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class NavigationPenjual extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
         NavigationView.OnNavigationItemSelectedListener  {
     private BottomNavigationView bottomNavigationViewPenjual;
+    private SessionManager sessionManager;
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
+    CircleImageView fabPopPenjual;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +46,50 @@ public class NavigationPenjual extends AppCompatActivity implements BottomNaviga
         loadFragment(new HomeFragment());
         bottomNavigationViewPenjual = findViewById(R.id.navigationPenjual);
         bottomNavigationViewPenjual.setOnNavigationItemSelectedListener(this);
+        fabPopPenjual = findViewById(R.id.popupPenjual);
+        fabPopPenjual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopUpp1();
+            }
+        });
+    }
+    private void showPopUpp1(){
+        dialogBuilder = new AlertDialog.Builder(NavigationPenjual.this);
+        View layoutView = getLayoutInflater().inflate(R.layout.popup_penjual, null);
+        Button edtProfile = layoutView.findViewById(R.id.edtProfileJual);
+        Button dashboardpembeli = layoutView.findViewById(R.id.dshbrPembeli);
+        Button logout = layoutView.findViewById(R.id.LogoutJual);
+        dialogBuilder.setView(layoutView);
+        alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(true);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+        edtProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NavigationPenjual.this, EditProfile.class);
+                startActivity(intent);
+
+                alertDialog.dismiss();
+            }
+        });
+        dashboardpembeli.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NavigationPenjual.this, NavigationPembeli.class);
+                startActivity(intent);
+                finish();
+                alertDialog.dismiss();
+            }
+        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sessionManager.logout();
+                finish();
+            }
+        });
     }
     private boolean loadFragment(Fragment fragment) {
         if (fragment != null) {

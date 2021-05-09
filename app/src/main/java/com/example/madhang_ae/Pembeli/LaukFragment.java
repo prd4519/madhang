@@ -26,7 +26,7 @@ public class LaukFragment extends Fragment {
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
     SessionManager sessionManager;
-    CircleImageView fabPop;
+//    CircleImageView fabPop;
     private BottomSheetBehavior bsLauk;
     private LinearLayout linearLayoutbs;
     @Override
@@ -36,15 +36,15 @@ public class LaukFragment extends Fragment {
         linearLayoutbs = v.findViewById(R.id.bottomSheetLauk);
         bsLauk = BottomSheetBehavior.from(linearLayoutbs);
         bsLauk.setState(BottomSheetBehavior.STATE_EXPANDED);
-        fabPop = v.findViewById(R.id.popup2);
+//        fabPop = v.findViewById(R.id.popup2);
         sessionManager = new SessionManager(getContext());
 
-        fabPop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPopUp2();
-            }
-        });
+//        fabPop.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showPopUp2();
+//            }
+//        });
 
         return v;
     }

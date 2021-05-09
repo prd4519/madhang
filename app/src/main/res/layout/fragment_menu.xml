@@ -16,16 +16,7 @@
         app:lottie_loop="true"
         />
     <include layout="@layout/layout_bottom_sheet_tambah_menu"/>
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:id="@+id/popupp1"
-        android:layout_gravity="right"
-        android:layout_margin="20dp"
-        android:elevation="6dp"
-        app:civ_border_width="1dp"
-        app:civ_border_color="#FFFFFF"
-        android:src="@drawable/example"/>
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

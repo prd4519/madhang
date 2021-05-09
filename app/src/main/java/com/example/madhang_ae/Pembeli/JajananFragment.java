@@ -27,7 +27,7 @@ public class JajananFragment extends Fragment {
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
     SessionManager sessionManager;
-    CircleImageView fabPop;
+//    CircleImageView fabPop;
     private BottomSheetBehavior bsJajanan;
     private LinearLayout linearLayoutbs;
     @Override
@@ -39,13 +39,13 @@ public class JajananFragment extends Fragment {
         bsJajanan.setState(BottomSheetBehavior.STATE_EXPANDED);
         sessionManager = new SessionManager(getContext());
 
-        fabPop = v.findViewById(R.id.popup3);
-        fabPop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPopUp3();
-            }
-        });
+//        fabPop = v.findViewById(R.id.popup3);
+//        fabPop.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showPopUp3();
+//            }
+//        });
 
         return v;
     }
