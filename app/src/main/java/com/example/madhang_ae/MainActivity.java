@@ -3,8 +3,13 @@ package com.example.madhang_ae;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -30,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     EditText etEmail, etPassword;
     Button daftar,login;
     SessionManager sessionManager;
+    AlertDialog.Builder dialogBuilder,failBuilder;
+    AlertDialog customDialog,failDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +45,16 @@ public class MainActivity extends AppCompatActivity {
         login = findViewById(R.id.btn_Login);
         etEmail = findViewById(R.id.et_emailLogin);
         etPassword = findViewById(R.id.et_passwordLogin);
+        dialogBuilder = new AlertDialog.Builder(MainActivity.this);
+        View layoutView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+        dialogBuilder.setView(layoutView);
+        customDialog = dialogBuilder.create();
+        customDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        failBuilder = new AlertDialog.Builder(MainActivity.this);
+        View layoutView1 = getLayoutInflater().inflate(R.layout.custom_dialog_fail, null);
+        failBuilder.setView(layoutView1);
+        failDialog = failBuilder.create();
+        failDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loginRequest() {
+        customDialog.show();
         BaseApiService mApiService = UtilsApi.getApiService();
         Call<ResponseBody> login = mApiService.loginRequest(etEmail.getText().toString(),etPassword.getText().toString());
         login.enqueue(new Callback<ResponseBody>() {
@@ -65,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     try {
                         JSONObject jsonResult = new JSONObject(response.body().string());
+                        customDialog.hide();
                         if (jsonResult.getString("error").equals("false")) {
                             String name = jsonResult.getJSONObject("login").getString("nama");
                             String id = jsonResult.getJSONObject("login").getString("id");
@@ -88,7 +107,14 @@ public class MainActivity extends AppCompatActivity {
 
                         } else {
                             String error_msg = jsonResult.getString("error_msg");
-                            Toast.makeText(MainActivity.this, error_msg, Toast.LENGTH_SHORT).show();
+                            failDialog.show();
+                            Runnable dismissAlert = new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (failDialog != null)
+                                        failDialog.dismiss();
+                                }
+                            }; new Handler().postDelayed(dismissAlert, 3000);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -105,6 +131,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("debug","OnFailure : Error -> "+t.getMessage());
             }
         });
+    }
+
+    private void showAlertDialog(){
+        dialogBuilder = new AlertDialog.Builder(MainActivity.this);
+        View layoutView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+        dialogBuilder.setView(layoutView);
+        customDialog = dialogBuilder.create();
+        customDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
     }
 
 
