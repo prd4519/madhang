@@ -93,13 +93,6 @@ public class MainActivity extends AppCompatActivity {
                             String avatar = jsonResult.getJSONObject("login").getString("avatar");
                             String password = etPassword.getText().toString();
                             Intent intent = new Intent(getApplicationContext(), NavigationPembeli.class);
-                            intent.putExtra("namaAkun", name);
-                            intent.putExtra("idAkun", id);
-                            intent.putExtra("emailAkun", email);
-                            intent.putExtra("passwordAkun", password);
-                            intent.putExtra("id_kecamatanAkun", idKecamatan);
-                            intent.putExtra("noHpAkun", noHp);
-                            intent.putExtra("avatarAkun", avatar);
                             startActivity(intent);
                             finish();
                             sessionManager = new SessionManager(getApplicationContext());

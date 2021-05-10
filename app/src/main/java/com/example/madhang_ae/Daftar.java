@@ -115,9 +115,10 @@ public class Daftar extends AppCompatActivity implements AdapterView.OnItemSelec
         idKecamatan = parent.getItemIdAtPosition(position);
         if (idKecamatan == 0){
             Toast.makeText(this, "Mohon Pilih Kecamatan", Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(this, "id" + idKecamatan + "nama :" + kecamatan, Toast.LENGTH_SHORT).show();
         }
+//        else {
+//            Toast.makeText(this, "id" + idKecamatan + "nama :" + kecamatan, Toast.LENGTH_SHORT).show();
+//        }
 //        switch (kecamatan){
 //            case "Balerejo" :
 //                idKecamatan = 1;

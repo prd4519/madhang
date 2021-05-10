@@ -55,7 +55,7 @@
                 android:id="@+id/prevImage"
                 android:layout_marginTop="30dp"
                 android:src="@drawable/ic_upload"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 app:riv_corner_radius="7dp"
                 app:riv_mutate_background="true"
                 app:riv_border_color="@color/colorBlack"
@@ -107,6 +107,7 @@
                     android:textColor="@color/colorBlack"/>
             </com.google.android.material.textfield.TextInputLayout>
             <Button
+                android:id="@+id/btn_SimpanItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="simpan"
