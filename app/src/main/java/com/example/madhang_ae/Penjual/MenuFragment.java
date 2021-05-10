@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.example.madhang_ae.EditProfile;
@@ -19,18 +20,19 @@ import com.example.madhang_ae.Pembeli.NavigationPembeli;
 import com.example.madhang_ae.R;
 import com.example.madhang_ae.SessionManager;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MenuFragment extends Fragment {
-    AlertDialog.Builder dialogBuilder;
-    AlertDialog alertDialog;
+
     SessionManager sessionManager;
     private BottomSheetBehavior bsMenu;
     private LinearLayout linearLayoutbs;
-//    CircleImageView fabPop;
-
+    RoundedImageView imageItem;
+    EditText etNama,etHarga,etDesa;
+    String idKategori;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,51 +42,8 @@ public class MenuFragment extends Fragment {
         linearLayoutbs = v.findViewById(R.id.bottomSheetMenu);
         bsMenu = BottomSheetBehavior.from(linearLayoutbs);
         bsMenu.setState(BottomSheetBehavior.STATE_EXPANDED);
-//        fabPop = v.findViewById(R.id.popupp1);
-//        fabPop.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                showPopUpp1();
-//            }
-//        });
+
         return v;
     }
 
-    private void showPopUpp1(){
-        dialogBuilder = new AlertDialog.Builder(getActivity());
-        View layoutView = getLayoutInflater().inflate(R.layout.popup_penjual, null);
-        Button edtProfile = layoutView.findViewById(R.id.edtProfileJual);
-        Button dashboardpembeli = layoutView.findViewById(R.id.dshbrPembeli);
-        Button logout = layoutView.findViewById(R.id.LogoutJual);
-        dialogBuilder.setView(layoutView);
-        alertDialog = dialogBuilder.create();
-        alertDialog.setCancelable(true);
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        alertDialog.show();
-        edtProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), EditProfile.class);
-                startActivity(intent);
-
-                alertDialog.dismiss();
-            }
-        });
-        dashboardpembeli.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), NavigationPembeli.class);
-                startActivity(intent);
-                getActivity().finish();
-                alertDialog.dismiss();
-            }
-        });
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sessionManager.logout();
-                getActivity().finish();
-            }
-        });
-    }
 }
