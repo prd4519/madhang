@@ -7,6 +7,7 @@
     <string name="Penjual"><u><b>Dashboard Penjual</b></u></string>
     <string name="Pembeli"><u><b>Dashboard Pembeli</b></u></string>
     <string name="Logout"><u><b>Logout</b></u></string>
+    <string name="Password"><u><b>Edit Password</b></u></string>
     <string-array name="listDaftarKecamatan">
         <item>- Pilih Kecamatan -</item>
         <item>Balerejo</item>

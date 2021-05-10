@@ -10,6 +10,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="right"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="160dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/img_EditProfile"
+            android:elevation="6dp"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#FFFFFF"
+            android:src="@drawable/example"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginHorizontal="20dp"
         android:gravity="center|right"
         android:orientation="vertical">
@@ -25,35 +41,13 @@
                 android:layout_width="225dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorWhite"
+                android:textColorHighlight="@color/colorWhite"
+                android:defaultFocusHighlightEnabled="true"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/colorWhite"
                 android:textSize="12dp" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColorHint="@color/colorWhite"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/colorWhite">
-
-            <EditText
-                android:id="@+id/et_passwordEdit"
-                android:layout_width="225dp"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorWhite"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:textColor="@color/colorWhite"
-                android:textSize="12dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Spinner
-            android:id="@+id/sp_kecamatanEdit"
-            android:layout_width="225dp"
-            android:layout_height="wrap_content"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="wrap_content"
@@ -66,6 +60,7 @@
                 android:layout_width="225dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorWhite"
+                android:textColorHighlight="@color/colorWhite"
                 android:hint="Nama Lengkap"
                 android:inputType="text"
                 android:textColorHint="@color/colorWhite"
@@ -117,9 +112,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="20dp"
         android:gravity="right"
-        >
+        android:layout_marginHorizontal="20dp">
+
+        <Button
+            android:id="@+id/btn_EditPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="27dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="120dp"
+            android:background="@null"
+            android:elevation="7dp"
+            android:text="@string/Password"
+            android:textColor="@color/colorWhite"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="20dp"
+        android:gravity="right">
         <Button
             android:id="@+id/btn_Edit"
             android:layout_marginTop="170dp"
@@ -140,6 +154,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_kembaliEdit"
+            android:src="@drawable/ic_baseline_arrow_back_24"
             android:backgroundTint="#0A767A">
 
         </com.google.android.material.floatingactionbutton.FloatingActionButton>

@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity android:name=".EditPassword"></activity>
         <activity android:name=".EditProfile" />
         <activity android:name=".Penjual.NavigationPenjual" />
         <activity android:name=".Pembeli.NavigationPembeli" />
