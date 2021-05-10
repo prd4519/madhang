@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.madhang_ae.EditProfile;
 import com.example.madhang_ae.MainActivity;
@@ -29,12 +30,15 @@ import com.example.madhang_ae.otp;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.HashMap;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NavigationPenjual extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
         NavigationView.OnNavigationItemSelectedListener  {
     private BottomNavigationView bottomNavigationViewPenjual;
     private SessionManager sessionManager;
+    private String name,id,email,idKecamatan,noHp,avatar,password;
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
     CircleImageView fabPopPenjual;
@@ -44,6 +48,11 @@ public class NavigationPenjual extends AppCompatActivity implements BottomNaviga
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.ColorButton));
         setContentView(R.layout.activity_navigation_penjual);
         loadFragment(new HomeFragment());
+        sessionManager = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = sessionManager.getUserDetails();
+        name = user.get(SessionManager.kunci_name);
+        email = user.get(SessionManager.kunci_mail);
+        avatar = user.get(SessionManager.kunci_ava);
         bottomNavigationViewPenjual = findViewById(R.id.navigationPenjual);
         bottomNavigationViewPenjual.setOnNavigationItemSelectedListener(this);
         fabPopPenjual = findViewById(R.id.popupPenjual);
@@ -60,6 +69,11 @@ public class NavigationPenjual extends AppCompatActivity implements BottomNaviga
         Button edtProfile = layoutView.findViewById(R.id.edtProfileJual);
         Button dashboardpembeli = layoutView.findViewById(R.id.dshbrPembeli);
         Button logout = layoutView.findViewById(R.id.LogoutJual);
+        CircleImageView imageAkun = layoutView.findViewById(R.id.profile_imageJual);
+        TextView namaUser = layoutView.findViewById(R.id.txt_namaJual);
+        namaUser.setText(name);
+        TextView emailUser = layoutView.findViewById(R.id.txt_emailJual);
+        emailUser.setText(email);
         dialogBuilder.setView(layoutView);
         alertDialog = dialogBuilder.create();
         alertDialog.setCancelable(true);
@@ -70,7 +84,6 @@ public class NavigationPenjual extends AppCompatActivity implements BottomNaviga
             public void onClick(View view) {
                 Intent intent = new Intent(NavigationPenjual.this, EditProfile.class);
                 startActivity(intent);
-
                 alertDialog.dismiss();
             }
         });

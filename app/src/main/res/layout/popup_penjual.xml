@@ -46,8 +46,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txt_kecamatanJual"
-                android:text="Kecamatan"
+                android:id="@+id/txt_emailJual"
+                android:text="Email"
                 android:textColor="@color/colorWhite"
                 android:fontFamily="@font/roboto_thin"
                 android:layout_gravity="center|top"/>

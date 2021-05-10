@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.madhang_ae.EditProfile;
 import com.example.madhang_ae.MainActivity;
@@ -32,6 +33,7 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
         NavigationView.OnNavigationItemSelectedListener {
     private BottomNavigationView bottomNavigationViewPembeli;
     private SessionManager sessionManager;
+    private String name,id,email,idKecamatan,noHp,avatar,password;
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
     CircleImageView fabPopPembeli;
@@ -44,7 +46,11 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
         sessionManager = new SessionManager(getApplicationContext());
         fabPopPembeli = findViewById(R.id.popupPembeli);
         HashMap<String, String> user = sessionManager.getUserDetails();
-        String name = user.get(SessionManager.kunci_mail);
+        name = user.get(SessionManager.kunci_name);
+        email = user.get(SessionManager.kunci_mail);
+        avatar = user.get(SessionManager.kunci_ava);
+
+
         bottomNavigationViewPembeli = findViewById(R.id.navigationPembeli);
         bottomNavigationViewPembeli.setOnNavigationItemSelectedListener(this);
         fabPopPembeli.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +66,11 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
         Button edtProfile = layoutView.findViewById(R.id.edtProfile);
         Button dashboardpnjl = layoutView.findViewById(R.id.dshbrPenjual);
         Button logout = layoutView.findViewById(R.id.Logout);
+        CircleImageView imageAkun = layoutView.findViewById(R.id.profile_image);
+        TextView namaUser = layoutView.findViewById(R.id.txt_nama);
+        namaUser.setText(name);
+        TextView emailUser = layoutView.findViewById(R.id.txt_email);
+        emailUser.setText(email);
         dialogBuilder.setView(layoutView);
         alertDialog = dialogBuilder.create();
         alertDialog.setCancelable(true);
@@ -69,6 +80,7 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(NavigationPembeli.this, EditProfile.class);
+
                 startActivity(intent);
                 alertDialog.dismiss();
             }
@@ -77,6 +89,7 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(NavigationPembeli.this, NavigationPenjual.class);
+
                 startActivity(intent);
                 finish();
                 alertDialog.dismiss();
