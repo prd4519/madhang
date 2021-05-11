@@ -2,8 +2,7 @@ package com.example.madhang_ae.Model;
 
 public class ModelMakanan {
     private int id,id_kecamatan,id_kategori,id_user,harga,shift;
-    private double no_hp;
-    private String desa,nama,image;
+    private String desa,nama,image,no_hp;
 
     public int getId() {
         return id;
@@ -53,11 +52,11 @@ public class ModelMakanan {
         this.shift = shift;
     }
 
-    public double getNo_hp() {
+    public String getNo_hp() {
         return no_hp;
     }
 
-    public void setNo_hp(double no_hp) {
+    public void setNo_hp(String no_hp) {
         this.no_hp = no_hp;
     }
 

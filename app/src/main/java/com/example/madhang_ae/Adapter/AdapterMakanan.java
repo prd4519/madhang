@@ -59,7 +59,7 @@ public class AdapterMakanan extends RecyclerView.Adapter<AdapterMakanan.HolderDa
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(UtilsApi.WA_URL+mm.getNo_hp()));
+                i.setData(Uri.parse(UtilsApi.WA_URL+"62"+mm.getNo_hp()));
                 v.getContext().startActivity(i);
             }
         });
