@@ -17,10 +17,10 @@
         <com.makeramen.roundedimageview.RoundedImageView
             android:layout_width="124dp"
             android:layout_height="78dp"
-            android:id="@+id/imageMinuman"
+            android:id="@+id/imagePenjual"
             android:src="@drawable/example"
             android:layout_gravity="center"
-            android:scaleType="fitCenter"
+            android:scaleType="fitXY"
             app:riv_corner_radius="7dp"
             app:riv_mutate_background="true"
             app:riv_border_color="@color/colorWhite"

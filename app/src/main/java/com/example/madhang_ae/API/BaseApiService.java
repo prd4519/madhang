@@ -1,6 +1,9 @@
 package com.example.madhang_ae.API;
 
 
+import com.example.madhang_ae.Model.ModelPenjual;
+import com.example.madhang_ae.ResponseModel.ResponseModelPenjual;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -42,4 +45,10 @@ public interface BaseApiService {
             ,@Part("no_hp") RequestBody no_hp
             ,@Part("harga") RequestBody harga
             ,@Part("id_user") RequestBody id_user);
+    @FormUrlEncoded
+    @POST("Item/getAllItem")
+    Call<ResponseModelPenjual> getAllItem(@Field("id_user") int id_user);
+    @FormUrlEncoded
+    @POST("Item/getAllItemByKategori")
+    Call<ResponseModelPenjual> getAllItemByKategori(@Field("id_user") int id_user,@Field("id_kategori") int id_kategori);
 }

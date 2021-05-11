@@ -29,9 +29,14 @@
     <string-array name="listDaftarKategori">
         <item>- Pilih Kategori -</item>
         <item>Makanan</item>
-        <item>Minuman</item>
         <item>Lauk</item>
+        <item>Minuman</item>
         <item>Jajanan</item>
+    </string-array>
+    <string-array name="listDaftarShift">
+        <item>- Pilih Shift -</item>
+        <item>1. 06:00 - 12:00</item>
+        <item>2. 12:01 - 18:00</item>
     </string-array>
     <string name="title_activity_drawer_pembeli">drawerPembeli</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

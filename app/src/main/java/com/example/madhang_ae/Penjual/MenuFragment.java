@@ -43,6 +43,8 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -56,7 +58,7 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
     EditText etNama,etHarga,etDesa;
     long idKategori,shift;
     int idKategories,Shift;
-    Spinner kategori;
+    Spinner kategori,spShift;
     String namaDagangan,harga,desa,idUser,noHp,idKecamatan,mediaPath,postPath;
     Button simpanItem;
     private static final int REQUEST_PICK_PHOTO = 2;
@@ -82,9 +84,27 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
         idUser = user.get(SessionManager.kunci_id);
         idKecamatan = user.get(SessionManager.kunci_idKec);
         noHp = user.get(SessionManager.kunci_noHp);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.listDaftarKategori,R.layout.custom_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.listDaftarKategori,R.layout.custom_spinner2);
         adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
         kategori.setAdapter(adapter);
+        etNama = v.findViewById(R.id.et_namaDagangan);
+        etHarga = v.findViewById(R.id.et_hargaDagangan);
+        etDesa = v.findViewById(R.id.et_namaDesaDagangan);
+        spShift = v.findViewById(R.id.sp_shiftInput);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(),R.array.listDaftarShift,R.layout.custom_spinner2);
+        adapter2.setDropDownViewResource(R.layout.custom_spinner_dropdown);
+        spShift.setAdapter(adapter2);
+        spShift.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                shift = parent.getItemIdAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         kategori.setOnItemSelectedListener(this);
         simpanItem = v.findViewById(R.id.btn_SimpanItem);
         imageItem = v.findViewById(R.id.prevImage);
@@ -107,8 +127,8 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
     private void inputItem() {
         idKategories = (int) idKategori;
         Shift = (int) shift;
-        if (idKategories == 0){
-            Toast.makeText(getContext(), "Mohon Pilih Kategori", Toast.LENGTH_SHORT).show();
+        if (idKategories == 0 && Shift == 0){
+            Toast.makeText(getContext(), "Mohon Pilih Kategori dan Shift", Toast.LENGTH_SHORT).show();
         }else{
             namaDagangan = etNama.getText().toString();
             harga = etHarga.getText().toString();
@@ -125,7 +145,20 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
                     ,RequestBody.create(MediaType.parse("text/plain"), noHp)
                     ,RequestBody.create(MediaType.parse("text/plain"), harga)
                     ,RequestBody.create(MediaType.parse("text/plain"), idUser));
+            inputItem.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    Toast.makeText(getContext(), "Berhasil Input Data", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getContext(),NavigationPenjual.class);
+                    startActivity(i);
+                    getActivity().finish();
+                }
 
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
