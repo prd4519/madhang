@@ -116,6 +116,14 @@
                     android:textSize="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contoh : 85555555555 / Tanpa Angka 0"
+            android:textStyle="italic"
+            android:textSize="8dp"
+            android:textColor="@color/colorWhite"
+            android:layout_marginRight="3dp"/>
     </LinearLayout>
 
     <LinearLayout
