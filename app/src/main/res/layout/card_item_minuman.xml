@@ -23,7 +23,7 @@
                 android:layout_height="110dp"
                 android:id="@+id/imageMinuman"
                 android:src="@drawable/example"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 card_view:riv_corner_radius="7dp"
                 card_view:riv_mutate_background="true"
                 card_view:riv_border_color="@color/colorWhite"
