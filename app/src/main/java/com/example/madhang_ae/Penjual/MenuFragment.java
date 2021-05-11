@@ -133,32 +133,37 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
             namaDagangan = etNama.getText().toString();
             harga = etHarga.getText().toString();
             desa = etDesa.getText().toString();
-            File imagefile = new File(mediaPath);
-            RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"), imagefile);
-            MultipartBody.Part partImage = MultipartBody.Part.createFormData("image", imagefile.getName(), reqBody);
-            BaseApiService mApiService = UtilsApi.getApiService();
-            Call<ResponseBody> inputItem = mApiService.inputItem(partImage,RequestBody.create(MediaType.parse("text/plain"), namaDagangan)
-                    ,RequestBody.create(MediaType.parse("text/plain"), String.valueOf(idKategories))
-                    ,RequestBody.create(MediaType.parse("text/plain"), idKecamatan)
-                    ,RequestBody.create(MediaType.parse("text/plain"), desa)
-                    ,RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Shift))
-                    ,RequestBody.create(MediaType.parse("text/plain"), noHp)
-                    ,RequestBody.create(MediaType.parse("text/plain"), harga)
-                    ,RequestBody.create(MediaType.parse("text/plain"), idUser));
-            inputItem.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Toast.makeText(getContext(), "Berhasil Input Data", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getContext(),NavigationPenjual.class);
-                    startActivity(i);
-                    getActivity().finish();
-                }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            if (namaDagangan.equals("")|harga.equals("")|desa.equals("")|mediaPath == null){
+                Toast.makeText(getContext(), "Mohon Lengkapi Data diatas", Toast.LENGTH_SHORT).show();
+            }else{
+                File imagefile = new File(mediaPath);
+                RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"), imagefile);
+                MultipartBody.Part partImage = MultipartBody.Part.createFormData("image", imagefile.getName(), reqBody);
+                BaseApiService mApiService = UtilsApi.getApiService();
+                Call<ResponseBody> inputItem = mApiService.inputItem(partImage,RequestBody.create(MediaType.parse("text/plain"), namaDagangan)
+                        ,RequestBody.create(MediaType.parse("text/plain"), String.valueOf(idKategories))
+                        ,RequestBody.create(MediaType.parse("text/plain"), idKecamatan)
+                        ,RequestBody.create(MediaType.parse("text/plain"), desa)
+                        ,RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Shift))
+                        ,RequestBody.create(MediaType.parse("text/plain"), noHp)
+                        ,RequestBody.create(MediaType.parse("text/plain"), harga)
+                        ,RequestBody.create(MediaType.parse("text/plain"), idUser));
+                inputItem.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        Toast.makeText(getContext(), "Berhasil Input Data", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(getContext(),NavigationPenjual.class);
+                        startActivity(i);
+                        getActivity().finish();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         }
     }
 

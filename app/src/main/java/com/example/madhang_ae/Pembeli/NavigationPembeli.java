@@ -89,7 +89,6 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(NavigationPembeli.this, NavigationPenjual.class);
-
                 startActivity(intent);
                 finish();
                 alertDialog.dismiss();
