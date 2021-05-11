@@ -16,12 +16,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.madhang_ae.API.BaseApiService;
 import com.example.madhang_ae.API.UtilsApi;
+import com.example.madhang_ae.Adapter.AdapterLauk;
+import com.example.madhang_ae.Adapter.AdapterLauk;
 import com.example.madhang_ae.Adapter.AdapterLauk;
 import com.example.madhang_ae.EditProfile;
 import com.example.madhang_ae.Model.ModelLauk;
@@ -51,6 +55,8 @@ public class LaukFragment extends Fragment implements AdapterView.OnItemSelected
     private Spinner kecamatanLauk;
     private long idkecamatanLauk;
     private int idKecamatan;
+    private TextView nodata;
+    private ImageView nodataImage;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,6 +66,8 @@ public class LaukFragment extends Fragment implements AdapterView.OnItemSelected
         bsLauk.setState(BottomSheetBehavior.STATE_EXPANDED);
         sessionManager = new SessionManager(getContext());
         rvLauk = v.findViewById(R.id.rv_item_lauk);
+        nodata = v.findViewById(R.id.tv_nodata_lauk);
+        nodataImage = v.findViewById(R.id.image_nodata_lauk);
         rvLauk.setLayoutManager(new GridLayoutManager(getContext(),2));
         kecamatanLauk = v.findViewById(R.id.sp_kecamatanLauk);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.listDaftarKecamatan,R.layout.custom_spinner2);
@@ -80,9 +88,15 @@ public class LaukFragment extends Fragment implements AdapterView.OnItemSelected
                 @Override
                 public void onResponse(Call<ResponseModelLauk> call, Response<ResponseModelLauk> response) {
                     modelLaukList = response.body().getData();
-                    adLauk = new AdapterLauk(getContext(),modelLaukList);
-                    rvLauk.setAdapter(adLauk);
-                    adLauk.notifyDataSetChanged();
+                    if (modelLaukList.isEmpty()){
+                        rvLauk.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        nodataImage.setVisibility(View.VISIBLE);
+                    }else {
+                        adLauk = new AdapterLauk(getContext(), modelLaukList);
+                        rvLauk.setAdapter(adLauk);
+                        adLauk.notifyDataSetChanged();
+                    }
                 }
 
                 @Override
@@ -97,9 +111,15 @@ public class LaukFragment extends Fragment implements AdapterView.OnItemSelected
                 @Override
                 public void onResponse(Call<ResponseModelLauk> call, Response<ResponseModelLauk> response) {
                     modelLaukList = response.body().getData();
-                    adLauk = new AdapterLauk(getContext(),modelLaukList);
-                    rvLauk.setAdapter(adLauk);
-                    adLauk.notifyDataSetChanged();
+                    if (modelLaukList.isEmpty()){
+                        rvLauk.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        nodataImage.setVisibility(View.VISIBLE);
+                    }else {
+                        adLauk = new AdapterLauk(getContext(), modelLaukList);
+                        rvLauk.setAdapter(adLauk);
+                        adLauk.notifyDataSetChanged();
+                    }
                 }
 
                 @Override

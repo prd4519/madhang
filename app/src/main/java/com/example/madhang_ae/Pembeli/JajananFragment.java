@@ -16,12 +16,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.madhang_ae.API.BaseApiService;
 import com.example.madhang_ae.API.UtilsApi;
+import com.example.madhang_ae.Adapter.AdapterJajanan;
+import com.example.madhang_ae.Adapter.AdapterJajanan;
 import com.example.madhang_ae.Adapter.AdapterJajanan;
 import com.example.madhang_ae.EditProfile;
 import com.example.madhang_ae.Model.ModelJajanan;
@@ -50,6 +54,8 @@ public class JajananFragment extends Fragment implements AdapterView.OnItemSelec
     private Spinner kecamatanJajanan;
     private long idkecamatanJajanan;
     private int idKecamatan;
+    private TextView nodata;
+    private ImageView nodataImage;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,6 +65,8 @@ public class JajananFragment extends Fragment implements AdapterView.OnItemSelec
         bsJajanan.setState(BottomSheetBehavior.STATE_EXPANDED);
         sessionManager = new SessionManager(getContext());
         rvJajanan = v.findViewById(R.id.rv_item_jajanan);
+        nodata = v.findViewById(R.id.tv_nodata_jajanan);
+        nodataImage = v.findViewById(R.id.image_nodata_jajanan);
         rvJajanan.setLayoutManager(new GridLayoutManager(getContext(),2));
         kecamatanJajanan = v.findViewById(R.id.sp_kecamatanJajanan);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.listDaftarKecamatan,R.layout.custom_spinner2);
@@ -79,9 +87,15 @@ public class JajananFragment extends Fragment implements AdapterView.OnItemSelec
                 @Override
                 public void onResponse(Call<ResponseModelJajanan> call, Response<ResponseModelJajanan> response) {
                     modelJajananList = response.body().getData();
-                    adJajanan = new AdapterJajanan(getContext(),modelJajananList);
-                    rvJajanan.setAdapter(adJajanan);
-                    adJajanan.notifyDataSetChanged();
+                    if (modelJajananList.isEmpty()){
+                        rvJajanan.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        nodataImage.setVisibility(View.VISIBLE);
+                    }else {
+                        adJajanan = new AdapterJajanan(getContext(), modelJajananList);
+                        rvJajanan.setAdapter(adJajanan);
+                        adJajanan.notifyDataSetChanged();
+                    }
                 }
 
                 @Override
@@ -96,9 +110,15 @@ public class JajananFragment extends Fragment implements AdapterView.OnItemSelec
                 @Override
                 public void onResponse(Call<ResponseModelJajanan> call, Response<ResponseModelJajanan> response) {
                     modelJajananList = response.body().getData();
-                    adJajanan = new AdapterJajanan(getContext(),modelJajananList);
-                    rvJajanan.setAdapter(adJajanan);
-                    adJajanan.notifyDataSetChanged();
+                    if (modelJajananList.isEmpty()){
+                        rvJajanan.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        nodataImage.setVisibility(View.VISIBLE);
+                    }else {
+                        adJajanan = new AdapterJajanan(getContext(), modelJajananList);
+                        rvJajanan.setAdapter(adJajanan);
+                        adJajanan.notifyDataSetChanged();
+                    }
                 }
 
                 @Override

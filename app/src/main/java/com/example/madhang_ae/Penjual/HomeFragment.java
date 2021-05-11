@@ -16,12 +16,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.madhang_ae.API.BaseApiService;
 import com.example.madhang_ae.API.UtilsApi;
+import com.example.madhang_ae.Adapter.AdapterPenjual;
+import com.example.madhang_ae.Adapter.AdapterPenjual;
 import com.example.madhang_ae.Adapter.AdapterPenjual;
 import com.example.madhang_ae.EditProfile;
 import com.example.madhang_ae.Model.ModelPenjual;
@@ -51,6 +55,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     int idUser,idKategoriDagangan;
     long idKategori;
     Spinner kategoriDagangan;
+    private TextView nodata;
+    private ImageView nodataImage;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,6 +70,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         HashMap<String, String> user = sessionManager.getUserDetails();
         idUser = Integer.parseInt(user.get(SessionManager.kunci_id));
         rvPenjual = v.findViewById(R.id.rv_item_penjual);
+        nodata = v.findViewById(R.id.tv_nodata_penjual);
+        nodataImage = v.findViewById(R.id.image_nodata_penjual);
         lmPenjual = new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
         rvPenjual.setLayoutManager(lmPenjual);
         kategoriDagangan = v.findViewById(R.id.sp_kategoriDagangan);
@@ -88,9 +96,15 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 @Override
                 public void onResponse(Call<ResponseModelPenjual> call, Response<ResponseModelPenjual> response) {
                     modelPenjualList = response.body().getData();
-                    adPenjual = new AdapterPenjual(getContext(),modelPenjualList);
-                    rvPenjual.setAdapter(adPenjual);
-                    adPenjual.notifyDataSetChanged();
+                    if (modelPenjualList.isEmpty()){
+                        rvPenjual.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        nodataImage.setVisibility(View.VISIBLE);
+                    }else {
+                        adPenjual = new AdapterPenjual(getContext(), modelPenjualList);
+                        rvPenjual.setAdapter(adPenjual);
+                        adPenjual.notifyDataSetChanged();
+                    }
                 }
 
                 @Override
@@ -105,9 +119,15 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 @Override
                 public void onResponse(Call<ResponseModelPenjual> call, Response<ResponseModelPenjual> response) {
                     modelPenjualList = response.body().getData();
-                    adPenjual = new AdapterPenjual(getContext(),modelPenjualList);
-                    rvPenjual.setAdapter(adPenjual);
-                    adPenjual.notifyDataSetChanged();
+                    if (modelPenjualList.isEmpty()){
+                        rvPenjual.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        nodataImage.setVisibility(View.VISIBLE);
+                    }else {
+                        adPenjual = new AdapterPenjual(getContext(), modelPenjualList);
+                        rvPenjual.setAdapter(adPenjual);
+                        adPenjual.notifyDataSetChanged();
+                    }
                 }
 
                 @Override

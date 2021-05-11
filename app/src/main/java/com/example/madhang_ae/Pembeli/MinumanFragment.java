@@ -16,12 +16,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.madhang_ae.API.BaseApiService;
 import com.example.madhang_ae.API.UtilsApi;
+import com.example.madhang_ae.Adapter.AdapterMinuman;
+import com.example.madhang_ae.Adapter.AdapterMinuman;
 import com.example.madhang_ae.Adapter.AdapterMinuman;
 import com.example.madhang_ae.EditProfile;
 import com.example.madhang_ae.Model.ModelMinuman;
@@ -49,6 +53,8 @@ public class MinumanFragment extends Fragment implements AdapterView.OnItemSelec
     private Spinner kecamatanMinuman;
     private long idkecamatanMinuman;
     private int idKecamatan;
+    private TextView nodata;
+    private ImageView nodataImage;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,6 +65,8 @@ public class MinumanFragment extends Fragment implements AdapterView.OnItemSelec
         bsMinuman.setState(BottomSheetBehavior.STATE_EXPANDED);
         sessionManager = new SessionManager(getContext());
         rvMinuman = v.findViewById(R.id.rv_item_minuman);
+        nodata = v.findViewById(R.id.tv_nodata_minuman);
+        nodataImage = v.findViewById(R.id.image_nodata_minuman);
         rvMinuman.setLayoutManager(new GridLayoutManager(getContext(),2));
         kecamatanMinuman = v.findViewById(R.id.sp_kecamatanMinuman);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.listDaftarKecamatan,R.layout.custom_spinner2);
@@ -79,9 +87,15 @@ public class MinumanFragment extends Fragment implements AdapterView.OnItemSelec
                 @Override
                 public void onResponse(Call<ResponseModelMinuman> call, Response<ResponseModelMinuman> response) {
                     modelMinumanList = response.body().getData();
-                    adMinuman = new AdapterMinuman(getContext(),modelMinumanList);
-                    rvMinuman.setAdapter(adMinuman);
-                    adMinuman.notifyDataSetChanged();
+                    if (modelMinumanList.isEmpty()){
+                        rvMinuman.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        nodataImage.setVisibility(View.VISIBLE);
+                    }else {
+                        adMinuman = new AdapterMinuman(getContext(), modelMinumanList);
+                        rvMinuman.setAdapter(adMinuman);
+                        adMinuman.notifyDataSetChanged();
+                    }
                 }
 
                 @Override
@@ -96,9 +110,15 @@ public class MinumanFragment extends Fragment implements AdapterView.OnItemSelec
                 @Override
                 public void onResponse(Call<ResponseModelMinuman> call, Response<ResponseModelMinuman> response) {
                     modelMinumanList = response.body().getData();
-                    adMinuman = new AdapterMinuman(getContext(),modelMinumanList);
-                    rvMinuman.setAdapter(adMinuman);
-                    adMinuman.notifyDataSetChanged();
+                    if (modelMinumanList.isEmpty()){
+                        rvMinuman.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        nodataImage.setVisibility(View.VISIBLE);
+                    }else {
+                        adMinuman = new AdapterMinuman(getContext(), modelMinumanList);
+                        rvMinuman.setAdapter(adMinuman);
+                        adMinuman.notifyDataSetChanged();
+                    }
                 }
 
                 @Override

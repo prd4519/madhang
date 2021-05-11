@@ -60,7 +60,7 @@ public interface BaseApiService {
     @GET("Item/getMakanan")
     Call<ResponseModelMakanan> getAllMakanan();
     @FormUrlEncoded
-    @POST("Item/getgetMakananByKecamatan")
+    @POST("Item/getMakananByKecamatan")
     Call<ResponseModelMakanan> getMakananByKecamatan(@Field("id_kecamatan") int id_kecamatan);
     @GET("Item/getMinuman")
     Call<ResponseModelMinuman> getAllMinuman();
