@@ -41,12 +41,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements AdapterView.OnItemSelectedListener {
-    AlertDialog.Builder dialogBuilder;
-    AlertDialog alertDialog;
     SessionManager sessionManager;
     private BottomSheetBehavior bsHome;
     private LinearLayout linearLayoutbs;
-//    CircleImageView fabPop;
     private RecyclerView rvPenjual;
     private RecyclerView.Adapter adPenjual;
     private RecyclerView.LayoutManager lmPenjual;

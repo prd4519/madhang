@@ -2,6 +2,7 @@ package com.example.madhang_ae.API;
 
 
 import com.example.madhang_ae.Model.ModelPenjual;
+import com.example.madhang_ae.ResponseModel.ResponseModelMakanan;
 import com.example.madhang_ae.ResponseModel.ResponseModelPenjual;
 
 import okhttp3.MultipartBody;
@@ -10,6 +11,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -51,4 +53,7 @@ public interface BaseApiService {
     @FormUrlEncoded
     @POST("Item/getAllItemByKategori")
     Call<ResponseModelPenjual> getAllItemByKategori(@Field("id_user") int id_user,@Field("id_kategori") int id_kategori);
+
+    @GET("Item/getMakanan")
+    Call<ResponseModelMakanan> getAllMakanan();
 }

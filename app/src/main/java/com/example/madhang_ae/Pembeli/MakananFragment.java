@@ -9,6 +9,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,84 +21,69 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.madhang_ae.API.BaseApiService;
+import com.example.madhang_ae.API.UtilsApi;
+import com.example.madhang_ae.Adapter.AdapterMakanan;
 import com.example.madhang_ae.EditProfile;
 import com.example.madhang_ae.MainActivity;
+import com.example.madhang_ae.Model.ModelMakanan;
 import com.example.madhang_ae.Penjual.HomeFragment;
 import com.example.madhang_ae.Penjual.NavigationPenjual;
 import com.example.madhang_ae.R;
+import com.example.madhang_ae.ResponseModel.ResponseModelMakanan;
 import com.example.madhang_ae.SessionManager;
 import com.example.madhang_ae.otp;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MakananFragment extends Fragment  {
     private BottomSheetBehavior bsMakanan;
     private LinearLayout linearLayoutbs;
-    AlertDialog.Builder dialogBuilder;
-    AlertDialog alertDialog;
     SessionManager sessionManager;
-//    CircleImageView fabPop;
-    View layoutMakanan;
+    private RecyclerView rvMakanan;
+    private RecyclerView.Adapter adMakanan;
+    private List<ModelMakanan> modelMakananList = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_makanan, container, false);
         linearLayoutbs = v.findViewById(R.id.bottomSheetMakanan);
-        layoutMakanan = v.findViewById(R.id.includeMakanan);
         bsMakanan = BottomSheetBehavior.from(linearLayoutbs);
         bsMakanan.setState(BottomSheetBehavior.STATE_EXPANDED);
-//        fabPop = v.findViewById(R.id.popup);
         sessionManager = new SessionManager(getContext());
-
-//        fabPop.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                showPopUp();
-//            }
-//        });
-
+        rvMakanan = v.findViewById(R.id.rv_item_makanan);
+        rvMakanan.setLayoutManager(new GridLayoutManager(getContext(),2));
+        TampilData();
         return v;
     }
 
-    private void showPopUp(){
-        dialogBuilder = new AlertDialog.Builder(getActivity());
-        View layoutView = getLayoutInflater().inflate(R.layout.popup_pembeli, null);
-        Button edtProfile = layoutView.findViewById(R.id.edtProfile);
-        Button dashboardpnjl = layoutView.findViewById(R.id.dshbrPenjual);
-        Button logout = layoutView.findViewById(R.id.Logout);
-        dialogBuilder.setView(layoutView);
-        alertDialog = dialogBuilder.create();
-        alertDialog.setCancelable(true);
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        alertDialog.show();
-        edtProfile.setOnClickListener(new View.OnClickListener() {
+    private void TampilData() {
+        BaseApiService mApiService = UtilsApi.getApiService();
+        Call<ResponseModelMakanan> showAll = mApiService.getAllMakanan();
+        showAll.enqueue(new Callback<ResponseModelMakanan>() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), EditProfile.class);
-                startActivity(intent);
-                alertDialog.dismiss();
+            public void onResponse(Call<ResponseModelMakanan> call, Response<ResponseModelMakanan> response) {
+                modelMakananList = response.body().getData();
+                adMakanan = new AdapterMakanan(getContext(),modelMakananList);
+                rvMakanan.setAdapter(adMakanan);
+                adMakanan.notifyDataSetChanged();
             }
-        });
-        dashboardpnjl.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), NavigationPenjual.class);
-                startActivity(intent);
-                getActivity().finish();
-                alertDialog.dismiss();
-            }
-        });
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sessionManager.logout();
-                getActivity().finish();
+            public void onFailure(Call<ResponseModelMakanan> call, Throwable t) {
+                Toast.makeText(getActivity(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 }
