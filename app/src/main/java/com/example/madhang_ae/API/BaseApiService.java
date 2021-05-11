@@ -56,4 +56,8 @@ public interface BaseApiService {
 
     @GET("Item/getMakanan")
     Call<ResponseModelMakanan> getAllMakanan();
+    @FormUrlEncoded
+    @POST("Item/getMakananByKecamatan")
+    Call<ResponseModelMakanan> getMakananByKecamatan(@Field("id_kecamatan") int id_kecamatan);
+
 }

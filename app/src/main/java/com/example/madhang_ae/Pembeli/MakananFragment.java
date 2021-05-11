@@ -46,13 +46,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MakananFragment extends Fragment  {
+public class MakananFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     private BottomSheetBehavior bsMakanan;
     private LinearLayout linearLayoutbs;
     SessionManager sessionManager;
     private RecyclerView rvMakanan;
     private RecyclerView.Adapter adMakanan;
     private List<ModelMakanan> modelMakananList = new ArrayList<>();
+    private Spinner kecamatanMakanan;
+    private long idkecamatanMakanan;
+    private int idKecamatan;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,26 +67,58 @@ public class MakananFragment extends Fragment  {
         sessionManager = new SessionManager(getContext());
         rvMakanan = v.findViewById(R.id.rv_item_makanan);
         rvMakanan.setLayoutManager(new GridLayoutManager(getContext(),2));
-        TampilData();
+        kecamatanMakanan = v.findViewById(R.id.sp_kecamatanMakanan);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.listDaftarKecamatan,R.layout.custom_spinner2);
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
+        kecamatanMakanan.setAdapter(adapter);
+        kecamatanMakanan.setOnItemSelectedListener(this);
         return v;
     }
 
-    private void TampilData() {
-        BaseApiService mApiService = UtilsApi.getApiService();
-        Call<ResponseModelMakanan> showAll = mApiService.getAllMakanan();
-        showAll.enqueue(new Callback<ResponseModelMakanan>() {
-            @Override
-            public void onResponse(Call<ResponseModelMakanan> call, Response<ResponseModelMakanan> response) {
-                modelMakananList = response.body().getData();
-                adMakanan = new AdapterMakanan(getContext(),modelMakananList);
-                rvMakanan.setAdapter(adMakanan);
-                adMakanan.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onFailure(Call<ResponseModelMakanan> call, Throwable t) {
-                Toast.makeText(getActivity(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
-            }
-        });
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        idkecamatanMakanan = parent.getItemIdAtPosition(position);
+        idKecamatan = (int) idkecamatanMakanan;
+        if (idKecamatan == 0){
+            BaseApiService mApiService = UtilsApi.getApiService();
+            Call<ResponseModelMakanan> showAll = mApiService.getAllMakanan();
+            showAll.enqueue(new Callback<ResponseModelMakanan>() {
+                @Override
+                public void onResponse(Call<ResponseModelMakanan> call, Response<ResponseModelMakanan> response) {
+                    modelMakananList = response.body().getData();
+                    adMakanan = new AdapterMakanan(getContext(),modelMakananList);
+                    rvMakanan.setAdapter(adMakanan);
+                    adMakanan.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onFailure(Call<ResponseModelMakanan> call, Throwable t) {
+                    Toast.makeText(getActivity(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else{
+            BaseApiService mApiService = UtilsApi.getApiService();
+            Call<ResponseModelMakanan> showAll = mApiService.getMakananByKecamatan(idKecamatan);
+            showAll.enqueue(new Callback<ResponseModelMakanan>() {
+                @Override
+                public void onResponse(Call<ResponseModelMakanan> call, Response<ResponseModelMakanan> response) {
+                    modelMakananList = response.body().getData();
+                    adMakanan = new AdapterMakanan(getContext(),modelMakananList);
+                    rvMakanan.setAdapter(adMakanan);
+                    adMakanan.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onFailure(Call<ResponseModelMakanan> call, Throwable t) {
+                    Toast.makeText(getActivity(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
