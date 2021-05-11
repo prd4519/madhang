@@ -34,6 +34,8 @@
                     android:id="@+id/sp_kecamatanLauk"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_spinner"
+                    android:layout_marginHorizontal="40dp"
                     />
             </RelativeLayout>
         </LinearLayout>
@@ -42,18 +44,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:background="@drawable/ic_bgbottomsheet2">
         <TextView
+            android:id="@+id/tv_nodata_lauk"
             android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
             android:text="@string/noData"
             android:layout_gravity="center"
             android:gravity="center"
             android:visibility="gone"/>
         <ImageView
+            android:id="@+id/image_nodata_lauk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_oops2"
+            android:src="@drawable/ic_oops3"
             android:layout_gravity="center"
             android:visibility="gone"/>
         <include layout="@layout/isi_lauk" android:id="@+id/includeLauk"/>

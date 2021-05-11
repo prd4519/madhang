@@ -34,6 +34,8 @@
                     android:id="@+id/sp_kecamatanJajanan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_spinner"
+                    android:layout_marginHorizontal="40dp"
                     />
             </RelativeLayout>
         </LinearLayout>
@@ -42,8 +44,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:background="@drawable/ic_bgbottomsheet2">
         <TextView
+            android:layout_marginTop="20dp"
+            android:id="@+id/tv_nodata_jajanan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/noData"
@@ -51,11 +56,12 @@
             android:gravity="center"
             android:visibility="gone"/>
         <ImageView
+            android:id="@+id/image_nodata_jajanan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_oops2"
+            android:src="@drawable/ic_oops3"
             android:layout_gravity="center"
             android:visibility="gone"/>
-        <include layout="@layout/isi_jajanan" android:id="@+id/includeJajanan"/>
+        <include layout="@layout/isi_jajanan" android:id="@+id/includeJajanan" />
     </LinearLayout>
 </LinearLayout>

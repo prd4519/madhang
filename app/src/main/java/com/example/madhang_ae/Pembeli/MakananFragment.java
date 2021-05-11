@@ -19,8 +19,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.madhang_ae.API.BaseApiService;
@@ -50,6 +52,8 @@ public class MakananFragment extends Fragment implements AdapterView.OnItemSelec
     private BottomSheetBehavior bsMakanan;
     private LinearLayout linearLayoutbs;
     SessionManager sessionManager;
+    private TextView nodata;
+    private ImageView nodataImage;
     private RecyclerView rvMakanan;
     private RecyclerView.Adapter adMakanan;
     private List<ModelMakanan> modelMakananList = new ArrayList<>();
@@ -66,6 +70,8 @@ public class MakananFragment extends Fragment implements AdapterView.OnItemSelec
         bsMakanan.setState(BottomSheetBehavior.STATE_EXPANDED);
         sessionManager = new SessionManager(getContext());
         rvMakanan = v.findViewById(R.id.rv_item_makanan);
+        nodata = v.findViewById(R.id.tv_nodata_makanan);
+        nodataImage = v.findViewById(R.id.image_nodata_makanan);
         rvMakanan.setLayoutManager(new GridLayoutManager(getContext(),2));
         kecamatanMakanan = v.findViewById(R.id.sp_kecamatanMakanan);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.listDaftarKecamatan,R.layout.custom_spinner2);
@@ -87,9 +93,15 @@ public class MakananFragment extends Fragment implements AdapterView.OnItemSelec
                 @Override
                 public void onResponse(Call<ResponseModelMakanan> call, Response<ResponseModelMakanan> response) {
                     modelMakananList = response.body().getData();
-                    adMakanan = new AdapterMakanan(getContext(),modelMakananList);
-                    rvMakanan.setAdapter(adMakanan);
-                    adMakanan.notifyDataSetChanged();
+                    if (modelMakananList.isEmpty()){
+                        rvMakanan.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        nodataImage.setVisibility(View.VISIBLE);
+                    }else {
+                        adMakanan = new AdapterMakanan(getContext(), modelMakananList);
+                        rvMakanan.setAdapter(adMakanan);
+                        adMakanan.notifyDataSetChanged();
+                    }
                 }
 
                 @Override
@@ -104,9 +116,15 @@ public class MakananFragment extends Fragment implements AdapterView.OnItemSelec
                 @Override
                 public void onResponse(Call<ResponseModelMakanan> call, Response<ResponseModelMakanan> response) {
                     modelMakananList = response.body().getData();
-                    adMakanan = new AdapterMakanan(getContext(),modelMakananList);
-                    rvMakanan.setAdapter(adMakanan);
-                    adMakanan.notifyDataSetChanged();
+                    if (modelMakananList.isEmpty()){
+                        rvMakanan.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        nodataImage.setVisibility(View.VISIBLE);
+                    }else {
+                        adMakanan = new AdapterMakanan(getContext(), modelMakananList);
+                        rvMakanan.setAdapter(adMakanan);
+                        adMakanan.notifyDataSetChanged();
+                    }
                 }
 
                 @Override

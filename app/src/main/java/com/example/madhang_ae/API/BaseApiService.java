@@ -2,7 +2,10 @@ package com.example.madhang_ae.API;
 
 
 import com.example.madhang_ae.Model.ModelPenjual;
+import com.example.madhang_ae.ResponseModel.ResponseModelJajanan;
+import com.example.madhang_ae.ResponseModel.ResponseModelLauk;
 import com.example.madhang_ae.ResponseModel.ResponseModelMakanan;
+import com.example.madhang_ae.ResponseModel.ResponseModelMinuman;
 import com.example.madhang_ae.ResponseModel.ResponseModelPenjual;
 
 import okhttp3.MultipartBody;
@@ -59,5 +62,19 @@ public interface BaseApiService {
     @FormUrlEncoded
     @POST("Item/getMakananByKecamatan")
     Call<ResponseModelMakanan> getMakananByKecamatan(@Field("id_kecamatan") int id_kecamatan);
-
+    @GET("Item/getMinuman")
+    Call<ResponseModelMinuman> getAllMinuman();
+    @FormUrlEncoded
+    @POST("Item/getMinumanByKecamatan")
+    Call<ResponseModelMinuman> getMinumanByKecamatan(@Field("id_kecamatan") int id_kecamatan);
+    @GET("Item/getLauk")
+    Call<ResponseModelLauk> getAllLauk();
+    @FormUrlEncoded
+    @POST("Item/getLaukByKecamatan")
+    Call<ResponseModelLauk> getLaukByKecamatan(@Field("id_kecamatan") int id_kecamatan);
+    @GET("Item/getJajanan")
+    Call<ResponseModelJajanan> getAllJajanan();
+    @FormUrlEncoded
+    @POST("Item/getJajananByKecamatan")
+    Call<ResponseModelJajanan> getJajananByKecamatan(@Field("id_kecamatan") int id_kecamatan);
 }

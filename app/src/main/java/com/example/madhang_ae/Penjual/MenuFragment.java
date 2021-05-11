@@ -84,14 +84,14 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
         idUser = user.get(SessionManager.kunci_id);
         idKecamatan = user.get(SessionManager.kunci_idKec);
         noHp = user.get(SessionManager.kunci_noHp);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.listDaftarKategori,R.layout.custom_spinner2);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.listDaftarKategori,R.layout.custom_spinner3);
         adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
         kategori.setAdapter(adapter);
         etNama = v.findViewById(R.id.et_namaDagangan);
         etHarga = v.findViewById(R.id.et_hargaDagangan);
         etDesa = v.findViewById(R.id.et_namaDesaDagangan);
         spShift = v.findViewById(R.id.sp_shiftInput);
-        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(),R.array.listDaftarShift,R.layout.custom_spinner2);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(),R.array.listDaftarShift,R.layout.custom_spinner3);
         adapter2.setDropDownViewResource(R.layout.custom_spinner_dropdown);
         spShift.setAdapter(adapter2);
         spShift.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

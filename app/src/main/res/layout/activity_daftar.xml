@@ -112,6 +112,7 @@
                     android:hint="No HP"
                     android:textColor="@color/colorWhite"
                     android:inputType="phone"
+                    android:maxLength="12"
                     android:textColorHint="@color/colorWhite"
                     android:textSize="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
