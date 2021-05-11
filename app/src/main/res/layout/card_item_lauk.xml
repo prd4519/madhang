@@ -40,6 +40,7 @@
                 android:fontFamily="@font/roboto"
                 android:text="Nama Dagangan"
                 android:textStyle="bold"
+                android:textAllCaps="true"
                 android:textSize="10dp" />
             <TextView
                 android:id="@+id/namaDesaLauk"

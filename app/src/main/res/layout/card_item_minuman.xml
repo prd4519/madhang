@@ -39,6 +39,7 @@
                 android:layout_marginHorizontal="5dp"
                 android:fontFamily="@font/roboto"
                 android:text="Nama Dagangan"
+                android:textAllCaps="true"
                 android:textStyle="bold"
                 android:textSize="10dp" />
             <TextView

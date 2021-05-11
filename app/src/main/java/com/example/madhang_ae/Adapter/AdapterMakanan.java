@@ -41,7 +41,7 @@ public class AdapterMakanan extends RecyclerView.Adapter<AdapterMakanan.HolderDa
     public void onBindViewHolder(@NonNull HolderDataMakanan holder, int position) {
         ModelMakanan mm = modelMakananList.get(position);
         holder.namaMakanan.setText(mm.getNama());
-        holder.namaDesa.setText(mm.getDesa());
+        holder.namaDesa.setText("Desa "+mm.getDesa());
         switch (mm.getShift()){
             case 1:
                 holder.waktuMakanan.setText("Tersedia Hingga 12:00");
