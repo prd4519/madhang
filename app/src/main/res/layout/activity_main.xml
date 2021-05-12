@@ -17,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColorHint="@color/colorWhite"
+        app:hintTextColor="@color/colorWhite"
         android:gravity="center">
         <EditText
             android:layout_width="225dp"
@@ -34,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:passwordToggleEnabled="true"
+        app:hintTextColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
         app:passwordToggleTint="@color/colorWhite"
         android:gravity="center">

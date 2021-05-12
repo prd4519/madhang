@@ -63,7 +63,7 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
                     .load(UtilsApi.IMAGE_URL+avatar)
                     .centerCrop()
                     .dontAnimate()
-               .placeholder(R.drawable.ic_person)
+               .placeholder(R.drawable.ic_person2)
                     .into(fabPopPembeli);
         fabPopPembeli.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +83,7 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
             Glide.with(this.getApplicationContext())
                     .load(UtilsApi.IMAGE_URL+avatar)
                     .apply(new RequestOptions().centerInside())
-                    .placeholder(R.drawable.ic_person)
+                    .placeholder(R.drawable.ic_person2)
                     .into(imageAkun);
         TextView namaUser = layoutView.findViewById(R.id.txt_nama);
         namaUser.setText(name);

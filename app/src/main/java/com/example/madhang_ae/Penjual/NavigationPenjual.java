@@ -63,7 +63,7 @@ public class NavigationPenjual extends AppCompatActivity implements BottomNaviga
                 .load(UtilsApi.IMAGE_URL+avatar)
                 .centerCrop()
                 .dontAnimate()
-                .placeholder(R.drawable.ic_person)
+                .placeholder(R.drawable.ic_person2)
                 .into(fabPopPenjual);
         fabPopPenjual.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +82,7 @@ public class NavigationPenjual extends AppCompatActivity implements BottomNaviga
         Glide.with(this.getApplicationContext())
                 .load(UtilsApi.IMAGE_URL+avatar)
                 .apply(new RequestOptions().centerInside())
-                .placeholder(R.drawable.ic_person)
+                .placeholder(R.drawable.ic_person2)
                 .into(imageAkun);
         TextView namaUser = layoutView.findViewById(R.id.txt_namaJual);
         namaUser.setText(name);

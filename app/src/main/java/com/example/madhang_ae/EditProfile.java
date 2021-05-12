@@ -82,7 +82,7 @@ public class EditProfile extends AppCompatActivity {
         etNoHp.setText(user.get(SessionManager.kunci_noHp));
             Glide.with(this.getApplicationContext())
                     .load(UtilsApi.IMAGE_URL + ava)
-                    .apply(new RequestOptions().circleCrop())
+                    .apply(new RequestOptions().fitCenter())
                     .placeholder(R.drawable.ic_person)
                     .into(imageProfil);
 

@@ -12,16 +12,31 @@
         android:layout_height="match_parent"
         android:gravity="right"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="160dp">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/img_EditProfile"
-            android:elevation="6dp"
-            android:scaleType="centerCrop"
-            app:civ_border_width="1dp"
-            app:civ_border_color="#FFFFFF"
-            android:src="@drawable/ic_person"/>
+        android:layout_marginVertical="160dp"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/img_EditProfile"
+                android:elevation="6dp"
+                android:scaleType="fitCenter"
+                app:civ_border_width="1dp"
+                app:civ_border_color="#FFFFFF"
+                android:src="@drawable/ic_person"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Foto Profil"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/colorWhite"
+                />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
