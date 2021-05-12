@@ -92,6 +92,9 @@ public class JajananFragment extends Fragment implements AdapterView.OnItemSelec
                         nodata.setVisibility(View.VISIBLE);
                         nodataImage.setVisibility(View.VISIBLE);
                     }else {
+                        rvJajanan.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.GONE);
+                        nodataImage.setVisibility(View.GONE);
                         adJajanan = new AdapterJajanan(getContext(), modelJajananList);
                         rvJajanan.setAdapter(adJajanan);
                         adJajanan.notifyDataSetChanged();
@@ -115,6 +118,9 @@ public class JajananFragment extends Fragment implements AdapterView.OnItemSelec
                         nodata.setVisibility(View.VISIBLE);
                         nodataImage.setVisibility(View.VISIBLE);
                     }else {
+                        rvJajanan.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.GONE);
+                        nodataImage.setVisibility(View.GONE);
                         adJajanan = new AdapterJajanan(getContext(), modelJajananList);
                         rvJajanan.setAdapter(adJajanan);
                         adJajanan.notifyDataSetChanged();

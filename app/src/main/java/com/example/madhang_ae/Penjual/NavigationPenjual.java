@@ -17,6 +17,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.madhang_ae.API.UtilsApi;
 import com.example.madhang_ae.EditProfile;
 import com.example.madhang_ae.MainActivity;
 import com.example.madhang_ae.Pembeli.JajananFragment;
@@ -56,6 +59,12 @@ public class NavigationPenjual extends AppCompatActivity implements BottomNaviga
         bottomNavigationViewPenjual = findViewById(R.id.navigationPenjual);
         bottomNavigationViewPenjual.setOnNavigationItemSelectedListener(this);
         fabPopPenjual = findViewById(R.id.popupPenjual);
+        Glide.with(this.getApplicationContext())
+                .load(UtilsApi.IMAGE_URL+avatar)
+                .centerCrop()
+                .dontAnimate()
+                .placeholder(R.drawable.ic_person)
+                .into(fabPopPenjual);
         fabPopPenjual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +79,11 @@ public class NavigationPenjual extends AppCompatActivity implements BottomNaviga
         Button dashboardpembeli = layoutView.findViewById(R.id.dshbrPembeli);
         Button logout = layoutView.findViewById(R.id.LogoutJual);
         CircleImageView imageAkun = layoutView.findViewById(R.id.profile_imageJual);
+        Glide.with(this.getApplicationContext())
+                .load(UtilsApi.IMAGE_URL+avatar)
+                .apply(new RequestOptions().centerInside())
+                .placeholder(R.drawable.ic_person)
+                .into(imageAkun);
         TextView namaUser = layoutView.findViewById(R.id.txt_namaJual);
         namaUser.setText(name);
         TextView emailUser = layoutView.findViewById(R.id.txt_emailJual);

@@ -23,14 +23,14 @@ public class SessionManager {
     public static final  String kunci_idKec = "keyidKec";
     public static final  String kunci_noHp = "keynoHp";
     public static final  String kunci_ava = "keyava";
-
+    public static final  String kunci_otp = "keyotp";
     public SessionManager(Context context) {
         pref = context.getSharedPreferences(pref_name, mode);
         editor = pref.edit();
         this.context = context;
     }
     public void createSession(String email,String name,String id
-            ,String password,String idKec, String noHp,String ava){
+            ,String password,String idKec, String noHp,String ava,String otp){
         editor.putBoolean(is_login,true);
         editor.putString(kunci_mail,email);
         editor.putString(kunci_name,name);
@@ -39,6 +39,7 @@ public class SessionManager {
         editor.putString(kunci_idKec,idKec);
         editor.putString(kunci_noHp,noHp);
         editor.putString(kunci_ava,ava);
+        editor.putString(kunci_otp,otp);
         editor.commit();
     }
     public void checkLogin(){
@@ -75,6 +76,8 @@ public class SessionManager {
         user.put(kunci_idKec, pref.getString(kunci_idKec, null));
         user.put(kunci_noHp, pref.getString(kunci_noHp, null));
         user.put(kunci_ava, pref.getString(kunci_ava, null));
+        user.put(kunci_otp, pref.getString(kunci_otp, null));
+
         return user;
     }
 }

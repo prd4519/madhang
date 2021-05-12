@@ -92,6 +92,9 @@ public class MinumanFragment extends Fragment implements AdapterView.OnItemSelec
                         nodata.setVisibility(View.VISIBLE);
                         nodataImage.setVisibility(View.VISIBLE);
                     }else {
+                        rvMinuman.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.GONE);
+                        nodataImage.setVisibility(View.GONE);
                         adMinuman = new AdapterMinuman(getContext(), modelMinumanList);
                         rvMinuman.setAdapter(adMinuman);
                         adMinuman.notifyDataSetChanged();
@@ -115,6 +118,9 @@ public class MinumanFragment extends Fragment implements AdapterView.OnItemSelec
                         nodata.setVisibility(View.VISIBLE);
                         nodataImage.setVisibility(View.VISIBLE);
                     }else {
+                        rvMinuman.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.GONE);
+                        nodataImage.setVisibility(View.GONE);
                         adMinuman = new AdapterMinuman(getContext(), modelMinumanList);
                         rvMinuman.setAdapter(adMinuman);
                         adMinuman.notifyDataSetChanged();

@@ -93,6 +93,9 @@ public class LaukFragment extends Fragment implements AdapterView.OnItemSelected
                         nodata.setVisibility(View.VISIBLE);
                         nodataImage.setVisibility(View.VISIBLE);
                     }else {
+                        rvLauk.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.GONE);
+                        nodataImage.setVisibility(View.GONE);
                         adLauk = new AdapterLauk(getContext(), modelLaukList);
                         rvLauk.setAdapter(adLauk);
                         adLauk.notifyDataSetChanged();
@@ -116,6 +119,9 @@ public class LaukFragment extends Fragment implements AdapterView.OnItemSelected
                         nodata.setVisibility(View.VISIBLE);
                         nodataImage.setVisibility(View.VISIBLE);
                     }else {
+                        rvLauk.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.GONE);
+                        nodataImage.setVisibility(View.GONE);
                         adLauk = new AdapterLauk(getContext(), modelLaukList);
                         rvLauk.setAdapter(adLauk);
                         adLauk.notifyDataSetChanged();

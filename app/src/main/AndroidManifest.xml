@@ -13,14 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EditPassword"></activity>
-        <activity android:name=".EditProfile" />
-        <activity android:name=".Penjual.NavigationPenjual" />
-        <activity android:name=".Pembeli.NavigationPembeli" />
-        <activity android:name=".otp" />
-        <activity android:name=".Daftar" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SplashScreen">
+        <activity android:name=".EditPassword" android:screenOrientation="portrait"/>
+        <activity android:name=".EditProfile"  android:screenOrientation="portrait"/>
+        <activity android:name=".Penjual.NavigationPenjual"  android:screenOrientation="portrait"/>
+        <activity android:name=".Pembeli.NavigationPembeli" android:screenOrientation="portrait"/>
+        <activity android:name=".otp"  android:screenOrientation="portrait"/>
+        <activity android:name=".Daftar"  android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".SplashScreen" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

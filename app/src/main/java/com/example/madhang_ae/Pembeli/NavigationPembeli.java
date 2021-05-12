@@ -6,9 +6,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
@@ -16,7 +18,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.madhang_ae.API.UtilsApi;
 import com.example.madhang_ae.EditProfile;
 import com.example.madhang_ae.MainActivity;
 import com.example.madhang_ae.Penjual.NavigationPenjual;
@@ -49,10 +55,16 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
         name = user.get(SessionManager.kunci_name);
         email = user.get(SessionManager.kunci_mail);
         avatar = user.get(SessionManager.kunci_ava);
-
-
+        password = user.get(SessionManager.kunci_pass);
+        String otp = user.get(SessionManager.kunci_otp);
         bottomNavigationViewPembeli = findViewById(R.id.navigationPembeli);
         bottomNavigationViewPembeli.setOnNavigationItemSelectedListener(this);
+       Glide.with(this.getApplicationContext())
+                    .load(UtilsApi.IMAGE_URL+avatar)
+                    .centerCrop()
+                    .dontAnimate()
+               .placeholder(R.drawable.ic_person)
+                    .into(fabPopPembeli);
         fabPopPembeli.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +72,7 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
             }
         });
     }
+
     private void showPopUp1(){
         dialogBuilder = new AlertDialog.Builder(NavigationPembeli.this);
         View layoutView = getLayoutInflater().inflate(R.layout.popup_pembeli, null);
@@ -67,6 +80,11 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
         Button dashboardpnjl = layoutView.findViewById(R.id.dshbrPenjual);
         Button logout = layoutView.findViewById(R.id.Logout);
         CircleImageView imageAkun = layoutView.findViewById(R.id.profile_image);
+            Glide.with(this.getApplicationContext())
+                    .load(UtilsApi.IMAGE_URL+avatar)
+                    .apply(new RequestOptions().centerInside())
+                    .placeholder(R.drawable.ic_person)
+                    .into(imageAkun);
         TextView namaUser = layoutView.findViewById(R.id.txt_nama);
         namaUser.setText(name);
         TextView emailUser = layoutView.findViewById(R.id.txt_email);
@@ -80,7 +98,6 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(NavigationPembeli.this, EditProfile.class);
-
                 startActivity(intent);
                 alertDialog.dismiss();
             }

@@ -35,6 +35,17 @@ public interface BaseApiService {
                                   @Field("otp") int otp
 
     );
+    @Multipart
+    @POST("Akun/updateAkun")
+    Call<ResponseBody> updateAkun (
+            @Part MultipartBody.Part image
+            ,@Part("nama") RequestBody nama
+            ,@Part("password") RequestBody password
+            ,@Part("id_kecamatan") RequestBody id_kecamatan
+            ,@Part("email") RequestBody email
+            ,@Part("otp") RequestBody otp
+            ,@Part("no_hp") RequestBody no_hp
+            ,@Part("id_user") RequestBody id_user);
     @FormUrlEncoded
     @POST("Akun/Verifikasi")
     Call<ResponseBody> verifikasi(@Field("email") String email,@Field("otp")int otp);

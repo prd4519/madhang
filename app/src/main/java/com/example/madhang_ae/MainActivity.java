@@ -91,12 +91,13 @@ public class MainActivity extends AppCompatActivity {
                             String idKecamatan = jsonResult.getJSONObject("login").getString("id_kecamatan");
                             String noHp = jsonResult.getJSONObject("login").getString("no_hp");
                             String avatar = jsonResult.getJSONObject("login").getString("avatar");
+                            String otp = jsonResult.getJSONObject("login").getString("otp");
                             String password = etPassword.getText().toString();
                             Intent intent = new Intent(getApplicationContext(), NavigationPembeli.class);
                             startActivity(intent);
                             finish();
                             sessionManager = new SessionManager(getApplicationContext());
-                            sessionManager.createSession(email,name,id,password,idKecamatan,noHp,avatar);
+                            sessionManager.createSession(email,name,id,password,idKecamatan,noHp,avatar,otp);
 
                         } else {
                             String error_msg = jsonResult.getString("error_msg");

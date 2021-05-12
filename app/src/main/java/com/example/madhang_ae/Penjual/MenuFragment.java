@@ -141,7 +141,8 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
                 RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"), imagefile);
                 MultipartBody.Part partImage = MultipartBody.Part.createFormData("image", imagefile.getName(), reqBody);
                 BaseApiService mApiService = UtilsApi.getApiService();
-                Call<ResponseBody> inputItem = mApiService.inputItem(partImage,RequestBody.create(MediaType.parse("text/plain"), namaDagangan)
+                Call<ResponseBody> inputItem = mApiService.inputItem(partImage
+                        ,RequestBody.create(MediaType.parse("text/plain"), namaDagangan)
                         ,RequestBody.create(MediaType.parse("text/plain"), String.valueOf(idKategories))
                         ,RequestBody.create(MediaType.parse("text/plain"), idKecamatan)
                         ,RequestBody.create(MediaType.parse("text/plain"), desa)

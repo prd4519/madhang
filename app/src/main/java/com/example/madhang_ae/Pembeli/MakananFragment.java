@@ -98,6 +98,9 @@ public class MakananFragment extends Fragment implements AdapterView.OnItemSelec
                         nodata.setVisibility(View.VISIBLE);
                         nodataImage.setVisibility(View.VISIBLE);
                     }else {
+                        rvMakanan.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.GONE);
+                        nodataImage.setVisibility(View.GONE);
                         adMakanan = new AdapterMakanan(getContext(), modelMakananList);
                         rvMakanan.setAdapter(adMakanan);
                         adMakanan.notifyDataSetChanged();
@@ -121,6 +124,9 @@ public class MakananFragment extends Fragment implements AdapterView.OnItemSelec
                         nodata.setVisibility(View.VISIBLE);
                         nodataImage.setVisibility(View.VISIBLE);
                     }else {
+                        rvMakanan.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.GONE);
+                        nodataImage.setVisibility(View.GONE);
                         adMakanan = new AdapterMakanan(getContext(), modelMakananList);
                         rvMakanan.setAdapter(adMakanan);
                         adMakanan.notifyDataSetChanged();

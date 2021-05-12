@@ -101,6 +101,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                         nodata.setVisibility(View.VISIBLE);
                         nodataImage.setVisibility(View.VISIBLE);
                     }else {
+                        rvPenjual.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.GONE);
+                        nodataImage.setVisibility(View.GONE);
                         adPenjual = new AdapterPenjual(getContext(), modelPenjualList);
                         rvPenjual.setAdapter(adPenjual);
                         adPenjual.notifyDataSetChanged();
@@ -124,6 +127,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                         nodata.setVisibility(View.VISIBLE);
                         nodataImage.setVisibility(View.VISIBLE);
                     }else {
+                        rvPenjual.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        nodataImage.setVisibility(View.VISIBLE);
                         adPenjual = new AdapterPenjual(getContext(), modelPenjualList);
                         rvPenjual.setAdapter(adPenjual);
                         adPenjual.notifyDataSetChanged();

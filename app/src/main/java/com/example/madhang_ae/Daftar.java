@@ -68,7 +68,6 @@ public class Daftar extends AppCompatActivity implements AdapterView.OnItemSelec
                 if (idKecamatan == 0){
                     Toast.makeText(Daftar.this, "Mohon Pilih Kecamatan", Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(Daftar.this, "id" + idKecamatan + "nama :" + kecamatan, Toast.LENGTH_SHORT).show();
                     verifikasiOTP();
                 }
 
@@ -83,89 +82,40 @@ public class Daftar extends AppCompatActivity implements AdapterView.OnItemSelec
         password = etPassword.getText().toString();
         noHp = etnoHp.getText().toString();
         nama = etnama.getText().toString();
-         Random codeOtp = new Random();
-         code = codeOtp.nextInt(8999)+1000;
-        BaseApiService mApiService = UtilsApi.getApiService();
-        Call<ResponseBody> insert = mApiService.insertAkun(email,password,noHp,id,nama,code);
-        insert.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    Intent i = new Intent(Daftar.this, otp.class);
-                    i.putExtra("emailVerifikasi",email);
-                    i.putExtra("otpVerifikasi", String.valueOf(code));
-                    startActivity(i);
+        if (email.equals("")|password.equals("")|noHp.equals("")|nama.equals("")){
+            Toast.makeText(this, "Harap Masukkan Data dengan benar", Toast.LENGTH_SHORT).show();
+        }else {
+            Random codeOtp = new Random();
+            code = codeOtp.nextInt(8999) + 1000;
+            BaseApiService mApiService = UtilsApi.getApiService();
+            Call<ResponseBody> insert = mApiService.insertAkun(email, password, noHp, id, nama, code);
+            insert.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        Intent i = new Intent(Daftar.this, otp.class);
+                        i.putExtra("emailVerifikasi", email);
+                        i.putExtra("otpVerifikasi", String.valueOf(code));
+                        startActivity(i);
 
-                } else {
-                    Toast.makeText(Daftar.this, "Email Already Exist", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Daftar.this, "Email Already Exist", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("RETRO", "ON FAILURE : " + t.getMessage());
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.d("RETRO", "ON FAILURE : " + t.getMessage());
 
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         kecamatan = parent.getItemAtPosition(position).toString();
         idKecamatan = parent.getItemIdAtPosition(position);
-        if (idKecamatan == 0){
-            Toast.makeText(this, "Mohon Pilih Kecamatan", Toast.LENGTH_SHORT).show();
-        }
-//        else {
-//            Toast.makeText(this, "id" + idKecamatan + "nama :" + kecamatan, Toast.LENGTH_SHORT).show();
-//        }
-//        switch (kecamatan){
-//            case "Balerejo" :
-//                idKecamatan = 1;
-//                break;
-//            case "Dagangan":
-//                idKecamatan = 2;
-//                break;
-//            case "Dolopo":
-//                idKecamatan = 3;
-//                break;
-//            case "Geger":
-//                idKecamatan = 4;
-//                break;
-//            case "Gemarang":
-//                idKecamatan = 5;
-//                break;
-//            case "Jiwan":
-//                idKecamatan = 6;
-//                break;
-//            case "Kare":
-//                idKecamatan = 7;
-//                break;
-//            case "Kebonsari":
-//                idKecamatan = 8;
-//                break;
-//            case "Madiun":
-//                idKecamatan = 9;
-//                break;
-//            case "Mejayan":
-//                idKecamatan = 10;
-//                break;
-//            case "Pilangkenceng":
-//                idKecamatan = 11;
-//                break;
-//            case "Saradan":
-//                idKecamatan = 12;
-//                break;
-//            case "Sawahan":
-//                idKecamatan = 13;
-//                break;
-//            case "Wonoasri":
-//                idKecamatan = 14;
-//                break;
-//            case "Wungu":
-//                idKecamatan = 15;
-//                break;
-//        }
 
     }
 

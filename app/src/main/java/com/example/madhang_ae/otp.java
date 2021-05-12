@@ -12,6 +12,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +47,7 @@ public class otp extends AppCompatActivity {
     Button btnVerifikasi;
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
+    TextView emailOtp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.ColorButton));
@@ -53,10 +55,12 @@ public class otp extends AppCompatActivity {
         setContentView(R.layout.activity_otp);
         etOtp = findViewById(R.id.et_otp);
         btnVerifikasi = findViewById(R.id.btn_verifikasiOTP);
+        emailOtp = findViewById(R.id.txt_email_otp);
         email = getIntent().getStringExtra("emailVerifikasi");
         Codeotp = getIntent().getStringExtra("otpVerifikasi");
         sEmail = "aemadhang@gmail.com";
         sPassword = "mboh4519";
+        emailOtp.setText("Masukkan kode OTP yang telah dikirimkan ke alamat email "+email);
         sendVerification();
         btnVerifikasi.setOnClickListener(new View.OnClickListener() {
             @Override
