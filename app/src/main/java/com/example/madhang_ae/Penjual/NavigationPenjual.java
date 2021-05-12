@@ -41,7 +41,7 @@ public class NavigationPenjual extends AppCompatActivity implements BottomNaviga
         NavigationView.OnNavigationItemSelectedListener  {
     private BottomNavigationView bottomNavigationViewPenjual;
     private SessionManager sessionManager;
-    private String name,id,email,idKecamatan,noHp,avatar,password;
+    private String name,email,avatar;
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
     CircleImageView fabPopPenjual;

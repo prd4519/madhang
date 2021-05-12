@@ -24,7 +24,7 @@
                 android:layout_height="100dp"
                 android:id="@+id/img_EditProfile"
                 android:elevation="6dp"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 app:civ_border_width="1dp"
                 app:civ_border_color="#FFFFFF"
                 android:src="@drawable/ic_person"/>

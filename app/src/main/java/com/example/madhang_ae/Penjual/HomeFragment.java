@@ -112,7 +112,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
                 @Override
                 public void onFailure(Call<ResponseModelPenjual> call, Throwable t) {
-                    Toast.makeText(getActivity(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
                 }
             });
         }else{
@@ -127,9 +127,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                         nodata.setVisibility(View.VISIBLE);
                         nodataImage.setVisibility(View.VISIBLE);
                     }else {
-                        rvPenjual.setVisibility(View.GONE);
-                        nodata.setVisibility(View.VISIBLE);
-                        nodataImage.setVisibility(View.VISIBLE);
+                        rvPenjual.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.GONE);
+                        nodataImage.setVisibility(View.GONE);
                         adPenjual = new AdapterPenjual(getContext(), modelPenjualList);
                         rvPenjual.setAdapter(adPenjual);
                         adPenjual.notifyDataSetChanged();
@@ -138,7 +138,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
                 @Override
                 public void onFailure(Call<ResponseModelPenjual> call, Throwable t) {
-                    Toast.makeText(getActivity(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
                 }
             });
         }

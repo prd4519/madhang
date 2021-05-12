@@ -103,7 +103,7 @@ public class JajananFragment extends Fragment implements AdapterView.OnItemSelec
 
                 @Override
                 public void onFailure(Call<ResponseModelJajanan> call, Throwable t) {
-                    Toast.makeText(getActivity(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
                 }
             });
         }else{

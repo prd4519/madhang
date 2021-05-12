@@ -18,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            app:hintTextColor="@color/colorWhite"
             android:textColorHint="@color/colorWhite">
 
             <EditText
@@ -35,6 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            app:hintTextColor="@color/colorWhite"
+
             android:textColorHint="@color/colorWhite"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/colorWhite">
@@ -61,6 +64,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:hintTextColor="@color/colorWhite"
+
             android:gravity="center"
             android:textColorHint="@color/colorWhite">
 
@@ -83,6 +88,8 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
+                app:hintTextColor="@color/colorWhite"
+
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:clickable="false">
@@ -102,6 +109,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                app:hintTextColor="@color/colorWhite"
+
                 android:textColorHint="@color/colorWhite">
 
                 <EditText
