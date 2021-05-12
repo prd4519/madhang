@@ -49,6 +49,10 @@ public interface BaseApiService {
     @FormUrlEncoded
     @POST("Akun/Verifikasi")
     Call<ResponseBody> verifikasi(@Field("email") String email,@Field("otp")int otp);
+    @FormUrlEncoded
+    @POST("Akun/updatePassword")
+    Call<ResponseBody> updatePassword(@Field("id_user") String idUser,@Field("password")String password);
+
     @Multipart
     @POST("Item/insertItem")
     Call<ResponseBody> inputItem (
