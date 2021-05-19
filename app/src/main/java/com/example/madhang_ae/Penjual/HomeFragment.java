@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -92,72 +93,60 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         idKategori = parent.getItemIdAtPosition(position);
         idKategoriDagangan = (int) idKategori;
         if (idKategoriDagangan == 0){
-            handler = new Handler();
-            final Runnable r = new Runnable() {
-                @Override
-                public void run() {
-                    BaseApiService mApiService = UtilsApi.getApiService();
-                    Call<ResponseModelPenjual> tampil = mApiService.getAllItem(idUser);
-                    tampil.enqueue(new Callback<ResponseModelPenjual>() {
-                        @Override
-                        public void onResponse(Call<ResponseModelPenjual> call, Response<ResponseModelPenjual> response) {
-                            modelPenjualList = response.body().getData();
-                            if (modelPenjualList.isEmpty()){
-                                rvPenjual.setVisibility(View.GONE);
-                                nodata.setVisibility(View.VISIBLE);
-                                nodataImage.setVisibility(View.VISIBLE);
-                            }else {
-                                rvPenjual.setVisibility(View.VISIBLE);
-                                nodata.setVisibility(View.GONE);
-                                nodataImage.setVisibility(View.GONE);
-                                adPenjual = new AdapterPenjual(getContext(), modelPenjualList);
-                                rvPenjual.setAdapter(adPenjual);
-                                adPenjual.notifyDataSetChanged();
-                            }
+                BaseApiService mApiService = UtilsApi.getApiService();
+                Call<ResponseModelPenjual> tampil = mApiService.getAllItem(idUser);
+                tampil.enqueue(new Callback<ResponseModelPenjual>() {
+                    @Override
+                    public void onResponse(Call<ResponseModelPenjual> call, Response<ResponseModelPenjual> response) {
+                        modelPenjualList = response.body().getData();
+                        if (modelPenjualList.isEmpty()) {
+                            rvPenjual.setVisibility(View.GONE);
+                            nodata.setVisibility(View.VISIBLE);
+                            nodataImage.setVisibility(View.VISIBLE);
+                        } else {
+                            rvPenjual.setVisibility(View.VISIBLE);
+                            nodata.setVisibility(View.GONE);
+                            nodataImage.setVisibility(View.GONE);
+                            adPenjual = new AdapterPenjual(getContext(), modelPenjualList);
+                            rvPenjual.setAdapter(adPenjual);
+                            adPenjual.notifyDataSetChanged();
+                            refreshAll(parent,view,position,id);
                         }
+                    }
 
-                        @Override
-                        public void onFailure(Call<ResponseModelPenjual> call, Throwable t) {
-                            Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            };
-            handler.postDelayed(r,1000);
-
+                    @Override
+                    public void onFailure(Call<ResponseModelPenjual> call, Throwable t) {
+                        Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : " + t, Toast.LENGTH_SHORT).show();
+                    }
+                });
         }else{
-            handler = new Handler();
-            final Runnable r = new Runnable() {
+            BaseApiService mApiService = UtilsApi.getApiService();
+            Call<ResponseModelPenjual> tampil = mApiService.getAllItemByKategori(idUser,idKategoriDagangan);
+            tampil.enqueue(new Callback<ResponseModelPenjual>() {
                 @Override
-                public void run() {
-                    BaseApiService mApiService = UtilsApi.getApiService();
-                    Call<ResponseModelPenjual> tampil = mApiService.getAllItemByKategori(idUser,idKategoriDagangan);
-                    tampil.enqueue(new Callback<ResponseModelPenjual>() {
-                        @Override
-                        public void onResponse(Call<ResponseModelPenjual> call, Response<ResponseModelPenjual> response) {
-                            modelPenjualList = response.body().getData();
-                            if (modelPenjualList.isEmpty()){
-                                rvPenjual.setVisibility(View.GONE);
-                                nodata.setVisibility(View.VISIBLE);
-                                nodataImage.setVisibility(View.VISIBLE);
-                            }else {
-                                rvPenjual.setVisibility(View.VISIBLE);
-                                nodata.setVisibility(View.GONE);
-                                nodataImage.setVisibility(View.GONE);
-                                adPenjual = new AdapterPenjual(getContext(), modelPenjualList);
-                                rvPenjual.setAdapter(adPenjual);
-                                adPenjual.notifyDataSetChanged();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseModelPenjual> call, Throwable t) {
-                            Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                public void onResponse(Call<ResponseModelPenjual> call, Response<ResponseModelPenjual> response) {
+                    modelPenjualList = response.body().getData();
+                    if (modelPenjualList.isEmpty()){
+                        rvPenjual.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        nodataImage.setVisibility(View.VISIBLE);
+                    }else {
+                        rvPenjual.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.GONE);
+                        nodataImage.setVisibility(View.GONE);
+                        adPenjual = new AdapterPenjual(getContext(), modelPenjualList);
+                        rvPenjual.setAdapter(adPenjual);
+                        adPenjual.notifyDataSetChanged();
+                        refreshAll(parent,view,position,id);
+                    }
                 }
-            };
-            handler.postDelayed(r,1000);
+
+                @Override
+                public void onFailure(Call<ResponseModelPenjual> call, Throwable t) {
+                    Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
     }
 
@@ -165,4 +154,48 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+    private void refreshAll(AdapterView<?> parent, View view, int position, long id){
+        handler = new Handler();
+        final Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                onItemSelected(parent,view,position,id);
+            }
+        };
+        handler.postDelayed(r,1000);
+    }
+//    private void refreshWithId(int millisecond){
+//        handler = new Handler();
+//        final Runnable r = new Runnable() {
+//            @Override
+//            public void run() {
+//                BaseApiService mApiService = UtilsApi.getApiService();
+//                Call<ResponseModelPenjual> tampil = mApiService.getAllItemByKategori(idUser,idKategoriDagangan);
+//                tampil.enqueue(new Callback<ResponseModelPenjual>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseModelPenjual> call, Response<ResponseModelPenjual> response) {
+//                        modelPenjualList = response.body().getData();
+//                        if (modelPenjualList.isEmpty()){
+//                            rvPenjual.setVisibility(View.GONE);
+//                            nodata.setVisibility(View.VISIBLE);
+//                            nodataImage.setVisibility(View.VISIBLE);
+//                        }else {
+//                            rvPenjual.setVisibility(View.VISIBLE);
+//                            nodata.setVisibility(View.GONE);
+//                            nodataImage.setVisibility(View.GONE);
+//                            adPenjual = new AdapterPenjual(getContext(), modelPenjualList);
+//                            rvPenjual.setAdapter(adPenjual);
+//                            adPenjual.notifyDataSetChanged();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResponseModelPenjual> call, Throwable t) {
+//                        Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//        };
+//        handler.postDelayed(r,millisecond);
+//    }
 }
