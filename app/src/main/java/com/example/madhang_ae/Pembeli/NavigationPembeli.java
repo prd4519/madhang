@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.madhang_ae.API.BaseApiService;
 import com.example.madhang_ae.API.UtilsApi;
 import com.example.madhang_ae.EditProfile;
 import com.example.madhang_ae.MainActivity;
@@ -31,9 +33,17 @@ import com.example.madhang_ae.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NavigationPembeli extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
         NavigationView.OnNavigationItemSelectedListener {
@@ -52,23 +62,60 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
         sessionManager = new SessionManager(getApplicationContext());
         fabPopPembeli = findViewById(R.id.popupPembeli);
         HashMap<String, String> user = sessionManager.getUserDetails();
+        id = user.get(SessionManager.kunci_id);
         name = user.get(SessionManager.kunci_name);
         email = user.get(SessionManager.kunci_mail);
-        avatar = user.get(SessionManager.kunci_ava);
         password = user.get(SessionManager.kunci_pass);
         String otp = user.get(SessionManager.kunci_otp);
         bottomNavigationViewPembeli = findViewById(R.id.navigationPembeli);
         bottomNavigationViewPembeli.setOnNavigationItemSelectedListener(this);
-       Glide.with(this.getApplicationContext())
-                    .load(UtilsApi.IMAGE_URL+avatar)
-                    .centerCrop()
-                    .dontAnimate()
-               .placeholder(R.drawable.ic_person2)
-                    .into(fabPopPembeli);
+
+       showAva();
         fabPopPembeli.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPopUp1();
+            }
+        });
+    }
+
+    private void showAva() {
+        BaseApiService mApiService = UtilsApi.getApiService();
+        Call<ResponseBody> ava = mApiService.getAva(Integer.parseInt(id));
+        ava.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonResult = new JSONObject(response.body().string());
+                        if (jsonResult.getString("error").equals("false")) {
+                            avatar = jsonResult.getJSONObject("profil").getString("avatar");
+                            Glide.with(NavigationPembeli.this.getApplicationContext())
+                                    .load(UtilsApi.IMAGE_URL+avatar)
+                                    .centerCrop()
+                                    .dontAnimate()
+                                    .placeholder(R.drawable.ic_person2)
+                                    .into(fabPopPembeli);
+
+                        } else {
+                            String error_msg = jsonResult.getString("error_msg");
+                            Toast.makeText(NavigationPembeli.this, error_msg, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    Toast.makeText(NavigationPembeli.this, "Cannot get image profil", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
             }
         });
     }

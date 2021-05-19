@@ -131,8 +131,7 @@ public class EditProfile extends AppCompatActivity {
             update.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Toast.makeText(EditProfile.this, "Berhasil Update Data, silahkan login kembali untuk melihat perubahan", Toast.LENGTH_SHORT).show();
-                    sessionManager.logout();
+                    Toast.makeText(EditProfile.this, "Berhasil Update Data", Toast.LENGTH_SHORT).show();
                     finish();
 
                 }

@@ -16,9 +16,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.madhang_ae.API.BaseApiService;
 import com.example.madhang_ae.API.UtilsApi;
 import com.example.madhang_ae.EditProfile;
 import com.example.madhang_ae.MainActivity;
@@ -33,15 +35,23 @@ import com.example.madhang_ae.otp;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NavigationPenjual extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
         NavigationView.OnNavigationItemSelectedListener  {
     private BottomNavigationView bottomNavigationViewPenjual;
     private SessionManager sessionManager;
-    private String name,email,avatar;
+    private String name,email,avatar,id;
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
     CircleImageView fabPopPenjual;
@@ -53,18 +63,14 @@ public class NavigationPenjual extends AppCompatActivity implements BottomNaviga
         loadFragment(new HomeFragment());
         sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getUserDetails();
+        id = user.get(SessionManager.kunci_id);
         name = user.get(SessionManager.kunci_name);
         email = user.get(SessionManager.kunci_mail);
-        avatar = user.get(SessionManager.kunci_ava);
         bottomNavigationViewPenjual = findViewById(R.id.navigationPenjual);
         bottomNavigationViewPenjual.setOnNavigationItemSelectedListener(this);
         fabPopPenjual = findViewById(R.id.popupPenjual);
-        Glide.with(this.getApplicationContext())
-                .load(UtilsApi.IMAGE_URL+avatar)
-                .centerCrop()
-                .dontAnimate()
-                .placeholder(R.drawable.ic_person2)
-                .into(fabPopPenjual);
+
+        showAva();
         fabPopPenjual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +78,48 @@ public class NavigationPenjual extends AppCompatActivity implements BottomNaviga
             }
         });
     }
+
+    private void showAva() {
+        BaseApiService mApiService = UtilsApi.getApiService();
+        Call<ResponseBody> ava = mApiService.getAva(Integer.parseInt(id));
+        ava.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonResult = new JSONObject(response.body().string());
+                        if (jsonResult.getString("error").equals("false")) {
+                            avatar = jsonResult.getJSONObject("profil").getString("avatar");
+                            Glide.with(NavigationPenjual.this.getApplicationContext())
+                                    .load(UtilsApi.IMAGE_URL+avatar)
+                                    .centerCrop()
+                                    .dontAnimate()
+                                    .placeholder(R.drawable.ic_person2)
+                                    .into(fabPopPenjual);
+
+                        } else {
+                            String error_msg = jsonResult.getString("error_msg");
+                            Toast.makeText(NavigationPenjual.this, error_msg, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    Toast.makeText(NavigationPenjual.this, "Cannot get image profil", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
     private void showPopUpp1(){
         dialogBuilder = new AlertDialog.Builder(NavigationPenjual.this);
         View layoutView = getLayoutInflater().inflate(R.layout.popup_penjual, null);

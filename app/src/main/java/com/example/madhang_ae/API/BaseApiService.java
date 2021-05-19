@@ -26,6 +26,9 @@ public interface BaseApiService {
                                     @Field("password") String password
     );
     @FormUrlEncoded
+    @POST("Akun/getImageProfil")
+    Call<ResponseBody> getAva(@Field("id_user") int id_user);
+    @FormUrlEncoded
     @POST("Akun/insertAkun")
     Call<ResponseBody> insertAkun(@Field("email") String email,
                                   @Field("password") String password,
