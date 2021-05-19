@@ -63,8 +63,6 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
         fabPopPembeli = findViewById(R.id.popupPembeli);
         HashMap<String, String> user = sessionManager.getUserDetails();
         id = user.get(SessionManager.kunci_id);
-        name = user.get(SessionManager.kunci_name);
-        email = user.get(SessionManager.kunci_mail);
         password = user.get(SessionManager.kunci_pass);
         String otp = user.get(SessionManager.kunci_otp);
         bottomNavigationViewPembeli = findViewById(R.id.navigationPembeli);
@@ -90,6 +88,9 @@ public class NavigationPembeli extends AppCompatActivity implements BottomNaviga
                         JSONObject jsonResult = new JSONObject(response.body().string());
                         if (jsonResult.getString("error").equals("false")) {
                             avatar = jsonResult.getJSONObject("profil").getString("avatar");
+                            name = jsonResult.getJSONObject("profil").getString("nama");
+                            email = jsonResult.getJSONObject("profil").getString("email");
+
                             Glide.with(NavigationPembeli.this.getApplicationContext())
                                     .load(UtilsApi.IMAGE_URL+avatar)
                                     .centerCrop()

@@ -23,10 +23,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.madhang_ae.API.BaseApiService;
 import com.example.madhang_ae.API.UtilsApi;
+import com.example.madhang_ae.Pembeli.NavigationPembeli;
 import com.example.madhang_ae.Penjual.NavigationPenjual;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -75,17 +80,10 @@ public class EditProfile extends AppCompatActivity {
         id_user = user.get(SessionManager.kunci_id);
         id_kecamatan = user.get(SessionManager.kunci_idKec);
         otp = user.get(SessionManager.kunci_otp);
-        ava = user.get(SessionManager.kunci_ava);
         password = user.get(SessionManager.kunci_pass);
-        etEmail.setText(user.get(SessionManager.kunci_mail));
-        etNama.setText(user.get(SessionManager.kunci_name));
-        etNoHp.setText(user.get(SessionManager.kunci_noHp));
-            Glide.with(this.getApplicationContext())
-                    .load(UtilsApi.IMAGE_URL + ava)
-                    .apply(new RequestOptions().centerInside())
-                    .placeholder(R.drawable.ic_person)
-                    .into(imageProfil);
 
+
+        getProfil();
         imageProfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +107,53 @@ public class EditProfile extends AppCompatActivity {
             }
         });
     }
+
+    private void getProfil() {
+        BaseApiService mApiService = UtilsApi.getApiService();
+        Call<ResponseBody> ava = mApiService.getAva(Integer.parseInt(id_user));
+        ava.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonResult = new JSONObject(response.body().string());
+                        if (jsonResult.getString("error").equals("false")) {
+                            String avatar = jsonResult.getJSONObject("profil").getString("avatar");
+                            String name = jsonResult.getJSONObject("profil").getString("nama");
+                            String mail = jsonResult.getJSONObject("profil").getString("email");
+                            String noHp = jsonResult.getJSONObject("profil").getString("no_hp");
+                            Glide.with(EditProfile.this.getApplicationContext())
+                                    .load(UtilsApi.IMAGE_URL + avatar)
+                                    .apply(new RequestOptions().centerInside())
+                                    .placeholder(R.drawable.ic_person)
+                                    .into(imageProfil);
+                            etEmail.setText(mail);
+                            etNama.setText(name);
+                            etNoHp.setText(noHp);
+
+                        } else {
+                            String error_msg = jsonResult.getString("error_msg");
+                            Toast.makeText(EditProfile.this, error_msg, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    Toast.makeText(EditProfile.this, "Cannot get image profil", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
     private void inputItem() {
         nama = etNama.getText().toString();
         email = etEmail.getText().toString();
@@ -132,6 +177,8 @@ public class EditProfile extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     Toast.makeText(EditProfile.this, "Berhasil Update Data", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(EditProfile.this,NavigationPembeli.class);
+                    startActivity(i);
                     finish();
 
                 }

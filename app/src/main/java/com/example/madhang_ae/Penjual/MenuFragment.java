@@ -26,6 +26,8 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.madhang_ae.API.BaseApiService;
 import com.example.madhang_ae.API.UtilsApi;
 import com.example.madhang_ae.EditProfile;
@@ -35,7 +37,11 @@ import com.example.madhang_ae.SessionManager;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -94,10 +100,11 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
         HashMap<String, String> user = sessionManager.getUserDetails();
         idUser = user.get(SessionManager.kunci_id);
         idKecamatan = user.get(SessionManager.kunci_idKec);
-        noHp = user.get(SessionManager.kunci_noHp);
+//        noHp = user.get(SessionManager.kunci_noHp);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.listDaftarKategori,R.layout.custom_spinner3);
         adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
         kategori.setAdapter(adapter);
+        getnohp();
         etNama = v.findViewById(R.id.et_namaDagangan);
         etHarga = v.findViewById(R.id.et_hargaDagangan);
         etDesa = v.findViewById(R.id.et_namaDesaDagangan);
@@ -126,6 +133,43 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
             }
         });
         return v;
+    }
+
+    private void getnohp() {
+        BaseApiService mApiService = UtilsApi.getApiService();
+        Call<ResponseBody> ava = mApiService.getAva(Integer.parseInt(idUser));
+        ava.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonResult = new JSONObject(response.body().string());
+                        if (jsonResult.getString("error").equals("false")) {
+
+                            String no_Hp = jsonResult.getJSONObject("profil").getString("no_hp");
+                            noHp = no_Hp;
+
+                        } else {
+                            String error_msg = jsonResult.getString("error_msg");
+                            Toast.makeText(getContext(), error_msg, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    Toast.makeText(getContext(), "Cannot get image profil", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void inputItem() {

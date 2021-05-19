@@ -111,7 +111,7 @@ public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDa
         delete.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Toast.makeText(ctx, "Terdapat item expired, silahkan refresh untuk perbarui ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ctx, "Terdapat item expired ", Toast.LENGTH_LONG).show();
             }
 
             @Override

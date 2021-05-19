@@ -42,14 +42,7 @@ public class AdapterJajanan extends RecyclerView.Adapter<AdapterJajanan.HolderDa
         ModelJajanan mm = modelJajananList.get(position);
         holder.namaJajanan.setText(mm.getNama());
         holder.namaDesa.setText("Desa "+mm.getDesa());
-        switch (mm.getShift()){
-            case 1:
-                holder.waktuJajanan.setText("Tersedia Hingga 12:00");
-                break;
-            case 2:
-                holder.waktuJajanan.setText("Tersedia Hingga 18:00");
-                break;
-        }
+        holder.waktuJajanan.setText("Tersedia Hingga "+mm.getJam_end());
         holder.hargaMaknan.setText("Rp. "+String.valueOf(mm.getHarga()));
         Glide.with(holder.itemView.getContext())
                 .load(UtilsApi.IMAGE_URL + mm.getImage())

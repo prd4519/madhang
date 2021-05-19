@@ -43,14 +43,7 @@ public class AdapterMinuman extends RecyclerView.Adapter<AdapterMinuman.HolderDa
         ModelMinuman mm = modelMinumanList.get(position);
         holder.namaMinuman.setText(mm.getNama());
         holder.namaDesa.setText("Desa "+mm.getDesa());
-        switch (mm.getShift()){
-            case 1:
-                holder.waktuMinuman.setText("Tersedia Hingga 12:00");
-                break;
-            case 2:
-                holder.waktuMinuman.setText("Tersedia Hingga 18:00");
-                break;
-        }
+        holder.waktuMinuman.setText("Tersedia Hingga "+mm.getJam_end());
         holder.hargaMinuman.setText("Rp. "+String.valueOf(mm.getHarga()));
         Glide.with(holder.itemView.getContext())
                 .load(UtilsApi.IMAGE_URL + mm.getImage())

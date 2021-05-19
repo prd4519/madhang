@@ -64,8 +64,6 @@ public class NavigationPenjual extends AppCompatActivity implements BottomNaviga
         sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getUserDetails();
         id = user.get(SessionManager.kunci_id);
-        name = user.get(SessionManager.kunci_name);
-        email = user.get(SessionManager.kunci_mail);
         bottomNavigationViewPenjual = findViewById(R.id.navigationPenjual);
         bottomNavigationViewPenjual.setOnNavigationItemSelectedListener(this);
         fabPopPenjual = findViewById(R.id.popupPenjual);
@@ -90,6 +88,8 @@ public class NavigationPenjual extends AppCompatActivity implements BottomNaviga
                         JSONObject jsonResult = new JSONObject(response.body().string());
                         if (jsonResult.getString("error").equals("false")) {
                             avatar = jsonResult.getJSONObject("profil").getString("avatar");
+                            name = jsonResult.getJSONObject("profil").getString("nama");
+                            email = jsonResult.getJSONObject("profil").getString("email");
                             Glide.with(NavigationPenjual.this.getApplicationContext())
                                     .load(UtilsApi.IMAGE_URL+avatar)
                                     .centerCrop()

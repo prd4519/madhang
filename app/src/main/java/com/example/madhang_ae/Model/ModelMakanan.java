@@ -1,8 +1,24 @@
 package com.example.madhang_ae.Model;
 
 public class ModelMakanan {
-    private int id,id_kecamatan,id_kategori,id_user,harga,shift;
-    private String desa,nama,image,no_hp;
+    private int id,id_kecamatan,id_kategori,id_user,harga;
+    private String desa,nama,image,no_hp,jam_start,jam_end;
+
+    public String getJam_start() {
+        return jam_start;
+    }
+
+    public void setJam_start(String jam_start) {
+        this.jam_start = jam_start;
+    }
+
+    public String getJam_end() {
+        return jam_end;
+    }
+
+    public void setJam_end(String jam_end) {
+        this.jam_end = jam_end;
+    }
 
     public int getId() {
         return id;
@@ -42,14 +58,6 @@ public class ModelMakanan {
 
     public void setHarga(int harga) {
         this.harga = harga;
-    }
-
-    public int getShift() {
-        return shift;
-    }
-
-    public void setShift(int shift) {
-        this.shift = shift;
     }
 
     public String getNo_hp() {

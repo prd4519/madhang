@@ -16,29 +16,21 @@ public class SessionManager {
 
     private static final String pref_name =  "crudpref";
     private static final String is_login = "isLogin";
-    public static final  String kunci_mail = "keymail";
-    public static final  String kunci_name = "keyname";
     public static final  String kunci_id = "keyid";
     public static final  String kunci_pass = "keypass";
     public static final  String kunci_idKec = "keyidKec";
-    public static final  String kunci_noHp = "keynoHp";
-    public static final  String kunci_ava = "keyava";
     public static final  String kunci_otp = "keyotp";
     public SessionManager(Context context) {
         pref = context.getSharedPreferences(pref_name, mode);
         editor = pref.edit();
         this.context = context;
     }
-    public void createSession(String email,String name,String id
-            ,String password,String idKec, String noHp,String ava,String otp){
+    public void createSession(String id,String password,String idKec,String otp){
         editor.putBoolean(is_login,true);
-        editor.putString(kunci_mail,email);
-        editor.putString(kunci_name,name);
         editor.putString(kunci_id,id);
         editor.putString(kunci_pass,password);
         editor.putString(kunci_idKec,idKec);
-        editor.putString(kunci_noHp,noHp);
-        editor.putString(kunci_ava,ava);
+
         editor.putString(kunci_otp,otp);
         editor.commit();
     }
@@ -69,13 +61,9 @@ public class SessionManager {
     public HashMap<String, String> getUserDetails(){
         HashMap<String, String> user = new HashMap<String, String>();
         user.put(pref_name, pref.getString(pref_name, null));
-        user.put(kunci_mail, pref.getString(kunci_mail, null));
-        user.put(kunci_name, pref.getString(kunci_name, null));
         user.put(kunci_id, pref.getString(kunci_id, null));
         user.put(kunci_pass, pref.getString(kunci_pass, null));
         user.put(kunci_idKec, pref.getString(kunci_idKec, null));
-        user.put(kunci_noHp, pref.getString(kunci_noHp, null));
-        user.put(kunci_ava, pref.getString(kunci_ava, null));
         user.put(kunci_otp, pref.getString(kunci_otp, null));
 
         return user;

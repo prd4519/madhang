@@ -85,19 +85,15 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject jsonResult = new JSONObject(response.body().string());
                         customDialog.hide();
                         if (jsonResult.getString("error").equals("false")) {
-                            String name = jsonResult.getJSONObject("login").getString("nama");
                             String id = jsonResult.getJSONObject("login").getString("id");
-                            String email = jsonResult.getJSONObject("login").getString("email");
                             String idKecamatan = jsonResult.getJSONObject("login").getString("id_kecamatan");
-                            String noHp = jsonResult.getJSONObject("login").getString("no_hp");
-                            String avatar = jsonResult.getJSONObject("login").getString("avatar");
                             String otp = jsonResult.getJSONObject("login").getString("otp");
                             String password = etPassword.getText().toString();
                             Intent intent = new Intent(getApplicationContext(), NavigationPembeli.class);
                             startActivity(intent);
                             finish();
                             sessionManager = new SessionManager(getApplicationContext());
-                            sessionManager.createSession(email,name,id,password,idKecamatan,noHp,avatar,otp);
+                            sessionManager.createSession(id,password,idKecamatan,otp);
 
                         } else {
                             String error_msg = jsonResult.getString("error_msg");

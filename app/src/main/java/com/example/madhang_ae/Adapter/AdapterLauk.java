@@ -42,14 +42,8 @@ public class AdapterLauk extends RecyclerView.Adapter<AdapterLauk.HolderDataLauk
         ModelLauk mm = modelLaukList.get(position);
         holder.namaLauk.setText(mm.getNama());
         holder.namaDesa.setText("Desa "+mm.getDesa());
-        switch (mm.getShift()){
-            case 1:
-                holder.waktuLauk.setText("Tersedia Hingga 12:00");
-                break;
-            case 2:
-                holder.waktuLauk.setText("Tersedia Hingga 18:00");
-                break;
-        }
+        holder.waktuLauk.setText("Tersedia Hingga "+mm.getJam_end());
+
         holder.hargaLauk.setText("Rp. "+String.valueOf(mm.getHarga()));
         Glide.with(holder.itemView.getContext())
                 .load(UtilsApi.IMAGE_URL + mm.getImage())
