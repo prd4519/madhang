@@ -61,13 +61,16 @@ public interface BaseApiService {
             ,@Part("id_kategori") RequestBody id_kategori
             ,@Part("id_kecamatan") RequestBody id_kecamatan
             ,@Part("desa") RequestBody desa
-            ,@Part("shift") RequestBody shift
+            ,@Part("end") RequestBody end
             ,@Part("no_hp") RequestBody no_hp
             ,@Part("harga") RequestBody harga
             ,@Part("id_user") RequestBody id_user);
     @FormUrlEncoded
     @POST("Item/getAllItem")
     Call<ResponseModelPenjual> getAllItem(@Field("id_user") int id_user);
+    @FormUrlEncoded
+    @POST("Item/deleteItem")
+    Call<ResponseBody> deleteItem(@Field("id") int id_item);
     @FormUrlEncoded
     @POST("Item/getAllItemByKategori")
     Call<ResponseModelPenjual> getAllItemByKategori(@Field("id_user") int id_user,@Field("id_kategori") int id_kategori);

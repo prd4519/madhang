@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.madhang_ae.API.BaseApiService;
@@ -35,6 +36,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -56,11 +59,14 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
     private LinearLayout linearLayoutbs;
     RoundedImageView imageItem;
     EditText etNama,etHarga,etDesa;
-    long idKategori,shift;
-    int idKategories,Shift;
-    Spinner kategori,spShift;
-    String namaDagangan,harga,desa,idUser,noHp,idKecamatan,mediaPath,postPath;
+    long idKategori;
+    int idKategories;
+    Spinner kategori;
+    String namaDagangan,harga,desa,idUser,noHp,idKecamatan,mediaPath,postPath,date,timeEnd;
     Button simpanItem;
+    Calendar calendar;
+    SimpleDateFormat dateFormat;
+    TimePicker picker;
     private static final int REQUEST_PICK_PHOTO = 2;
     private static final int REQUEST_WRITE_PERMISSION = 786;
     @Override
@@ -77,6 +83,11 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
         View v = inflater.inflate(R.layout.fragment_menu, container, false);
         sessionManager = new SessionManager(getContext());
         kategori = v.findViewById(R.id.sp_kategoriInput);
+        calendar = Calendar.getInstance();
+        picker = v.findViewById(R.id.tp_item);
+        picker.setIs24HourView(true);
+        dateFormat = new SimpleDateFormat("HH:mm");
+        date = dateFormat.format(calendar.getTime());
         linearLayoutbs = v.findViewById(R.id.bottomSheetMenu);
         bsMenu = BottomSheetBehavior.from(linearLayoutbs);
         bsMenu.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -90,21 +101,6 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
         etNama = v.findViewById(R.id.et_namaDagangan);
         etHarga = v.findViewById(R.id.et_hargaDagangan);
         etDesa = v.findViewById(R.id.et_namaDesaDagangan);
-        spShift = v.findViewById(R.id.sp_shiftInput);
-        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(),R.array.listDaftarShift,R.layout.custom_spinner3);
-        adapter2.setDropDownViewResource(R.layout.custom_spinner_dropdown);
-        spShift.setAdapter(adapter2);
-        spShift.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                shift = parent.getItemIdAtPosition(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
         kategori.setOnItemSelectedListener(this);
         simpanItem = v.findViewById(R.id.btn_SimpanItem);
         imageItem = v.findViewById(R.id.prevImage);
@@ -117,7 +113,15 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
         });
         simpanItem.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {int h,m;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    h = picker.getHour();
+                    m = picker.getMinute();
+                }else{
+                    h = picker.getCurrentHour();
+                    m = picker.getCurrentMinute();
+                }
+                timeEnd = h +":"+m;
                 requestPermission();
             }
         });
@@ -126,8 +130,7 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
 
     private void inputItem() {
         idKategories = (int) idKategori;
-        Shift = (int) shift;
-        if (idKategories == 0 && Shift == 0){
+        if (idKategories == 0 ){
             Toast.makeText(getContext(), "Mohon Pilih Kategori dan Shift", Toast.LENGTH_SHORT).show();
         }else{
             namaDagangan = etNama.getText().toString();
@@ -146,17 +149,19 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
                         ,RequestBody.create(MediaType.parse("text/plain"), String.valueOf(idKategories))
                         ,RequestBody.create(MediaType.parse("text/plain"), idKecamatan)
                         ,RequestBody.create(MediaType.parse("text/plain"), desa)
-                        ,RequestBody.create(MediaType.parse("text/plain"), String.valueOf(Shift))
+                        ,RequestBody.create(MediaType.parse("text/plain"), timeEnd)
                         ,RequestBody.create(MediaType.parse("text/plain"), noHp)
                         ,RequestBody.create(MediaType.parse("text/plain"), harga)
                         ,RequestBody.create(MediaType.parse("text/plain"), idUser));
                 inputItem.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        Toast.makeText(getContext(), "Berhasil Input Data", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(getContext(),NavigationPenjual.class);
-                        startActivity(i);
-                        getActivity().finish();
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getContext(), "Berhasil Input Data", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(getContext(), NavigationPenjual.class);
+                            startActivity(i);
+                            getActivity().finish();
+                        }
                     }
 
                     @Override

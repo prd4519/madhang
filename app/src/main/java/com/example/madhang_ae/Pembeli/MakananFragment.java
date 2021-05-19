@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.nfc.cardemulation.HostNfcFService;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +62,7 @@ public class MakananFragment extends Fragment implements AdapterView.OnItemSelec
     private Spinner kecamatanMakanan;
     private long idkecamatanMakanan;
     private int idKecamatan;
+    Handler handler;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,57 +90,71 @@ public class MakananFragment extends Fragment implements AdapterView.OnItemSelec
         idkecamatanMakanan = parent.getItemIdAtPosition(position);
         idKecamatan = (int) idkecamatanMakanan;
         if (idKecamatan == 0){
-            BaseApiService mApiService = UtilsApi.getApiService();
-            Call<ResponseModelMakanan> showAll = mApiService.getAllMakanan();
-            showAll.enqueue(new Callback<ResponseModelMakanan>() {
+            handler = new Handler();
+            final Runnable r = new Runnable() {
                 @Override
-                public void onResponse(Call<ResponseModelMakanan> call, Response<ResponseModelMakanan> response) {
-                    modelMakananList = response.body().getData();
-                    if (modelMakananList.isEmpty()){
-                        rvMakanan.setVisibility(View.GONE);
-                        nodata.setVisibility(View.VISIBLE);
-                        nodataImage.setVisibility(View.VISIBLE);
-                    }else {
-                        rvMakanan.setVisibility(View.VISIBLE);
-                        nodata.setVisibility(View.GONE);
-                        nodataImage.setVisibility(View.GONE);
-                        adMakanan = new AdapterMakanan(getContext(), modelMakananList);
-                        rvMakanan.setAdapter(adMakanan);
-                        adMakanan.notifyDataSetChanged();
-                    }
-                }
+                public void run() {
+                    BaseApiService mApiService = UtilsApi.getApiService();
+                    Call<ResponseModelMakanan> showAll = mApiService.getAllMakanan();
+                    showAll.enqueue(new Callback<ResponseModelMakanan>() {
+                        @Override
+                        public void onResponse(Call<ResponseModelMakanan> call, Response<ResponseModelMakanan> response) {
+                            modelMakananList = response.body().getData();
+                            if (modelMakananList.isEmpty()){
+                                rvMakanan.setVisibility(View.GONE);
+                                nodata.setVisibility(View.VISIBLE);
+                                nodataImage.setVisibility(View.VISIBLE);
+                            }else {
+                                rvMakanan.setVisibility(View.VISIBLE);
+                                nodata.setVisibility(View.GONE);
+                                nodataImage.setVisibility(View.GONE);
+                                adMakanan = new AdapterMakanan(getContext(), modelMakananList);
+                                rvMakanan.setAdapter(adMakanan);
+                                adMakanan.notifyDataSetChanged();
+                            }
+                        }
 
-                @Override
-                public void onFailure(Call<ResponseModelMakanan> call, Throwable t) {
-                    Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onFailure(Call<ResponseModelMakanan> call, Throwable t) {
+                            Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
-            });
+            };
+            handler.postDelayed(r,1000);
         }else{
-            BaseApiService mApiService = UtilsApi.getApiService();
-            Call<ResponseModelMakanan> showAll = mApiService.getMakananByKecamatan(idKecamatan);
-            showAll.enqueue(new Callback<ResponseModelMakanan>() {
+            handler = new Handler();
+            final Runnable r = new Runnable() {
                 @Override
-                public void onResponse(Call<ResponseModelMakanan> call, Response<ResponseModelMakanan> response) {
-                    modelMakananList = response.body().getData();
-                    if (modelMakananList.isEmpty()){
-                        rvMakanan.setVisibility(View.GONE);
-                        nodata.setVisibility(View.VISIBLE);
-                        nodataImage.setVisibility(View.VISIBLE);
-                    }else {
-                        rvMakanan.setVisibility(View.VISIBLE);
-                        nodata.setVisibility(View.GONE);
-                        nodataImage.setVisibility(View.GONE);
-                        adMakanan = new AdapterMakanan(getContext(), modelMakananList);
-                        rvMakanan.setAdapter(adMakanan);
-                        adMakanan.notifyDataSetChanged();
-                    }
-                }
+                public void run() {
+                    BaseApiService mApiService = UtilsApi.getApiService();
+                    Call<ResponseModelMakanan> showAll = mApiService.getMakananByKecamatan(idKecamatan);
+                    showAll.enqueue(new Callback<ResponseModelMakanan>() {
+                        @Override
+                        public void onResponse(Call<ResponseModelMakanan> call, Response<ResponseModelMakanan> response) {
+                            modelMakananList = response.body().getData();
+                            if (modelMakananList.isEmpty()){
+                                rvMakanan.setVisibility(View.GONE);
+                                nodata.setVisibility(View.VISIBLE);
+                                nodataImage.setVisibility(View.VISIBLE);
+                            }else {
+                                rvMakanan.setVisibility(View.VISIBLE);
+                                nodata.setVisibility(View.GONE);
+                                nodataImage.setVisibility(View.GONE);
+                                adMakanan = new AdapterMakanan(getContext(), modelMakananList);
+                                rvMakanan.setAdapter(adMakanan);
+                                adMakanan.notifyDataSetChanged();
+                            }
+                        }
 
-                @Override
-                public void onFailure(Call<ResponseModelMakanan> call, Throwable t) {
-                    Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onFailure(Call<ResponseModelMakanan> call, Throwable t) {
+                            Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
-            });
+            };
+            handler.postDelayed(r,1000);
         }
     }
 
