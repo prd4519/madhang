@@ -34,6 +34,7 @@ import com.example.madhang_ae.Model.ModelPenjual;
 import com.example.madhang_ae.Pembeli.NavigationPembeli;
 import com.example.madhang_ae.R;
 import com.example.madhang_ae.ResponseModel.ResponseModelPenjual;
+import com.example.madhang_ae.ServicePenjual;
 import com.example.madhang_ae.SessionManager;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
@@ -66,6 +67,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 //        fabPop = v.findViewById(R.id.popupp);
+
+        getActivity().startService(new Intent (getActivity(),ServicePenjual.class));
         linearLayoutbs = v.findViewById(R.id.bottomSheetPenjual);
         bsHome = BottomSheetBehavior.from(linearLayoutbs);
         bsHome.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -82,8 +85,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
         kategoriDagangan.setAdapter(adapter);
         kategoriDagangan.setOnItemSelectedListener(this);
-
-
         return v;
     }
 
@@ -111,6 +112,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                             rvPenjual.setAdapter(adPenjual);
                             adPenjual.notifyDataSetChanged();
                             refreshAll(parent,view,position,id);
+
                         }
                     }
 

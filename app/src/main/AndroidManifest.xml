@@ -3,8 +3,9 @@
     package="com.example.madhang_ae">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
@@ -13,14 +14,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EditPassword" android:screenOrientation="portrait"/>
-        <activity android:name=".EditProfile"  android:screenOrientation="portrait"/>
-        <activity android:name=".Penjual.NavigationPenjual"  android:screenOrientation="portrait"/>
-        <activity android:name=".Pembeli.NavigationPembeli" android:screenOrientation="portrait"/>
-        <activity android:name=".otp"  android:screenOrientation="portrait"/>
-        <activity android:name=".Daftar"  android:screenOrientation="portrait"/>
-        <activity android:name=".MainActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".SplashScreen" android:screenOrientation="portrait">
+        <service
+            android:name=".ServicePenjual"/>
+
+        <activity
+            android:name=".EditPassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EditProfile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Penjual.NavigationPenjual"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Pembeli.NavigationPembeli"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".otp"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Daftar"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SplashScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
