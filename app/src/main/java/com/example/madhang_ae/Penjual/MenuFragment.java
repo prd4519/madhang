@@ -184,6 +184,7 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
             if (namaDagangan.equals("")|harga.equals("")|desa.equals("")|mediaPath == null){
                 Toast.makeText(getContext(), "Mohon Lengkapi Data diatas", Toast.LENGTH_SHORT).show();
             }else{
+
                 File imagefile = new File(mediaPath);
                 RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"), imagefile);
                 MultipartBody.Part partImage = MultipartBody.Part.createFormData("image", imagefile.getName(), reqBody);

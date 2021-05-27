@@ -50,6 +50,7 @@ public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDa
     @Override
     public void onBindViewHolder(@NonNull HolderDataPenjual holder, int position) {
         ModelPenjual mp = modelPenjualList.get(position);
+        holder.id.setText(String.valueOf(mp.getId()));
         holder.namaDagangan.setText(mp.getNama());
         holder.namaKategori.setText(mp.getNamaKategori());
         holder.harga.setText("Rp. "+String.valueOf(mp.getHarga()));
@@ -69,7 +70,7 @@ public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDa
 
     public class HolderDataPenjual extends RecyclerView.ViewHolder{
         private RoundedImageView image;
-        private TextView namaDagangan, namaKategori, harga;
+        private TextView namaDagangan, namaKategori, harga,id;
         private ImageButton deleteDagangan;
         Calendar calendar;
         SimpleDateFormat dateFormat;
@@ -77,6 +78,7 @@ public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDa
         public HolderDataPenjual(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.imagePenjual);
+            id = itemView.findViewById(R.id.idItem);
             namaDagangan = itemView.findViewById(R.id.namaDagangan);
             namaKategori = itemView.findViewById(R.id.kategoriDagangan);
             harga = itemView.findViewById(R.id.hargaDagangan);
@@ -84,6 +86,14 @@ public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDa
             deleteDagangan = itemView.findViewById(R.id.btnDeleteDagangan);
             dateFormat = new SimpleDateFormat("HH:mm");
             date = dateFormat.format(calendar.getTime());
+            deleteDagangan = itemView.findViewById(R.id.btnDeleteDagangan);
+            deleteDagangan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteItem(Integer.parseInt(id.getText().toString()));
+                    notifyDataSetChanged();
+                }
+            });
         }
     }
 
