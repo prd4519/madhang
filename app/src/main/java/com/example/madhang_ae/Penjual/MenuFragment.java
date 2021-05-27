@@ -31,6 +31,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.madhang_ae.API.BaseApiService;
 import com.example.madhang_ae.API.UtilsApi;
 import com.example.madhang_ae.EditProfile;
+import com.example.madhang_ae.MainActivity;
 import com.example.madhang_ae.Pembeli.NavigationPembeli;
 import com.example.madhang_ae.R;
 import com.example.madhang_ae.SessionManager;
@@ -73,6 +74,8 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
     Calendar calendar;
     SimpleDateFormat dateFormat;
     TimePicker picker;
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog customDialog;
     private static final int REQUEST_PICK_PHOTO = 2;
     private static final int REQUEST_WRITE_PERMISSION = 786;
     @Override
@@ -111,6 +114,11 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
         kategori.setOnItemSelectedListener(this);
         simpanItem = v.findViewById(R.id.btn_SimpanItem);
         imageItem = v.findViewById(R.id.prevImage);
+        dialogBuilder = new AlertDialog.Builder(getContext());
+        View layoutView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+        dialogBuilder.setView(layoutView);
+        customDialog = dialogBuilder.create();
+        customDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         imageItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,7 +192,7 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
             if (namaDagangan.equals("")|harga.equals("")|desa.equals("")|mediaPath == null){
                 Toast.makeText(getContext(), "Mohon Lengkapi Data diatas", Toast.LENGTH_SHORT).show();
             }else{
-
+                customDialog.show();
                 File imagefile = new File(mediaPath);
                 RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"), imagefile);
                 MultipartBody.Part partImage = MultipartBody.Part.createFormData("image", imagefile.getName(), reqBody);
@@ -205,6 +213,7 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
                             Toast.makeText(getContext(), "Berhasil Input Data", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(getContext(), NavigationPenjual.class);
                             startActivity(i);
+                            customDialog.dismiss();
                             getActivity().finish();
                         }
                     }

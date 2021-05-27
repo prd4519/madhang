@@ -123,14 +123,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void showAlertDialog(){
-        dialogBuilder = new AlertDialog.Builder(MainActivity.this);
-        View layoutView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
-        dialogBuilder.setView(layoutView);
-        customDialog = dialogBuilder.create();
-        customDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-    }
+//    private void showAlertDialog(){
+//        dialogBuilder = new AlertDialog.Builder(MainActivity.this);
+//        View layoutView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+//        dialogBuilder.setView(layoutView);
+//        customDialog = dialogBuilder.create();
+//        customDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+//    }
 
 
 }
