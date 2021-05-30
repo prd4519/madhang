@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 //        fabPop = v.findViewById(R.id.popupp);
 
-        getActivity().startService(new Intent (getActivity(),ServicePenjual.class));
+//        getActivity().startService(new Intent (getActivity(),ServicePenjual.class));
         linearLayoutbs = v.findViewById(R.id.bottomSheetPenjual);
         bsHome = BottomSheetBehavior.from(linearLayoutbs);
         bsHome.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -94,11 +94,13 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         idKategori = parent.getItemIdAtPosition(position);
         idKategoriDagangan = (int) idKategori;
         if (idKategoriDagangan == 0){
+
                 BaseApiService mApiService = UtilsApi.getApiService();
                 Call<ResponseModelPenjual> tampil = mApiService.getAllItem(idUser);
                 tampil.enqueue(new Callback<ResponseModelPenjual>() {
                     @Override
                     public void onResponse(Call<ResponseModelPenjual> call, Response<ResponseModelPenjual> response) {
+
                         modelPenjualList = response.body().getData();
                         if (modelPenjualList.isEmpty()) {
                             rvPenjual.setVisibility(View.GONE);

@@ -20,6 +20,7 @@
             android:layout_height="?actionBarSize"
             android:background="@drawable/bg_roundede2"
             android:orientation="vertical">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

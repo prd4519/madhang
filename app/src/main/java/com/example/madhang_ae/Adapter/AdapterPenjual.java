@@ -1,23 +1,37 @@
 package com.example.madhang_ae.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.example.madhang_ae.API.BaseApiService;
 import com.example.madhang_ae.API.UtilsApi;
+import com.example.madhang_ae.MainActivity;
 import com.example.madhang_ae.Model.ModelPenjual;
 import com.example.madhang_ae.R;
+import com.example.madhang_ae.ServicePenjual;
+import com.example.madhang_ae.otp;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.text.ParseException;
@@ -49,6 +63,7 @@ public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDa
 
     @Override
     public void onBindViewHolder(@NonNull HolderDataPenjual holder, int position) {
+
         ModelPenjual mp = modelPenjualList.get(position);
         holder.id.setText(String.valueOf(mp.getId()));
         holder.namaDagangan.setText(mp.getNama());
@@ -57,8 +72,24 @@ public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDa
         Glide.with(holder.itemView.getContext())
                 .load(UtilsApi.IMAGE_URL + mp.getImage())
                 .apply(new RequestOptions().override(160,110))
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        holder.progressBar.setVisibility(View.GONE);
+                        holder.image.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        holder.progressBar.setVisibility(View.GONE);
+                        holder.image.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                })
                 .into(holder.image);
         isTimeExpired(holder.date, mp.getJam_end(),mp.getId());
+
     }
 
 
@@ -72,9 +103,12 @@ public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDa
         private RoundedImageView image;
         private TextView namaDagangan, namaKategori, harga,id;
         private ImageButton deleteDagangan;
+        final ProgressBar progressBar = (ProgressBar) itemView.findViewById(R.id.progressPenjual);
         Calendar calendar;
         SimpleDateFormat dateFormat;
         String date;
+        AlertDialog.Builder dialogBuilder;
+        AlertDialog alertDialog;
         public HolderDataPenjual(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.imagePenjual);
@@ -87,11 +121,35 @@ public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDa
             dateFormat = new SimpleDateFormat("HH:mm");
             date = dateFormat.format(calendar.getTime());
             deleteDagangan = itemView.findViewById(R.id.btnDeleteDagangan);
+
             deleteDagangan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    deleteItem(Integer.parseInt(id.getText().toString()));
+                    showAlertDialog();
                     notifyDataSetChanged();
+                }
+            });
+        }
+        private void showAlertDialog(){
+            dialogBuilder = new AlertDialog.Builder(ctx);
+            View layoutView = LayoutInflater.from(ctx).inflate(R.layout.layout_delete_item,null);
+            Button dialogButtonOk = layoutView.findViewById(R.id.btnDialogDelete);
+            Button dialogButtonBatal = layoutView.findViewById(R.id.btnDialogBatalDelete);
+            dialogBuilder.setView(layoutView);
+            alertDialog = dialogBuilder.create();
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            alertDialog.show();
+            dialogButtonOk.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    deleteItem(Integer.parseInt(id.getText().toString()));
+                    alertDialog.dismiss();
+                }
+            });
+            dialogButtonBatal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
                 }
             });
         }
@@ -101,13 +159,14 @@ public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDa
         SimpleDateFormat dfDate = new SimpleDateFormat("HH:mm");
         boolean b = false;
         try {
+            ctx.startService(new Intent(ctx.getApplicationContext(), ServicePenjual.class));
             if (dfDate.parse(startDate).before(dfDate.parse(endDate))) {
                 return true;  // If start date is before end date.
             } else if (dfDate.parse(startDate).equals(dfDate.parse(endDate))) {
-                deleteItem(id);
+                deleteItem1(id);
                 return false;  // If two dates are equal.
             } else {
-                deleteItem(id);
+                deleteItem1(id);
                 return false; // If start date is after the end date.
             }
         } catch (ParseException e) {
@@ -115,13 +174,28 @@ public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDa
             return false;
         }
     }
+    private void deleteItem1(int id) {
+        BaseApiService mApiService = UtilsApi.getApiService();
+        Call<ResponseBody> delete = mApiService.deleteItem(id);
+        delete.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Toast.makeText(ctx, "Item expired berhasil dihapus", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(ctx, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     private void deleteItem(int id) {
         BaseApiService mApiService = UtilsApi.getApiService();
         Call<ResponseBody> delete = mApiService.deleteItem(id);
         delete.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Toast.makeText(ctx, "Terdapat item expired ", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Berhasil Hapus Data", Toast.LENGTH_LONG).show();
             }
 
             @Override

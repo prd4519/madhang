@@ -18,6 +18,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <ProgressBar
+                android:id="@+id/progressJajan"
+                android:layout_width="160dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:visibility="visible"/>
             <com.makeramen.roundedimageview.RoundedImageView
                 android:layout_width="160dp"
                 android:layout_height="110dp"
@@ -28,6 +34,7 @@
                 card_view:riv_mutate_background="true"
                 card_view:riv_border_color="@color/colorWhite"
                 card_view:riv_border_width="1dp"
+                android:visibility="gone"
                 />
 
 
