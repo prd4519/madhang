@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,7 @@ public class MinumanFragment extends Fragment implements AdapterView.OnItemSelec
     private int idKecamatan;
     private TextView nodata;
     private ImageView nodataImage;
+    Handler handler;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,6 +100,7 @@ public class MinumanFragment extends Fragment implements AdapterView.OnItemSelec
                         adMinuman = new AdapterMinuman(getContext(), modelMinumanList);
                         rvMinuman.setAdapter(adMinuman);
                         adMinuman.notifyDataSetChanged();
+                        refreshAll(parent, view, position, id);
                     }
                 }
 
@@ -124,6 +127,7 @@ public class MinumanFragment extends Fragment implements AdapterView.OnItemSelec
                         adMinuman = new AdapterMinuman(getContext(), modelMinumanList);
                         rvMinuman.setAdapter(adMinuman);
                         adMinuman.notifyDataSetChanged();
+                        refreshAll(parent, view, position, id);
                     }
                 }
 
@@ -137,6 +141,21 @@ public class MinumanFragment extends Fragment implements AdapterView.OnItemSelec
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+    private void refreshAll(AdapterView<?> parent, View view, int position, long id){
+        handler = new Handler();
+        final Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                onItemSelected(parent,view,position,id);
+            }
+        };
+        handler.postDelayed(r,1000);
+//        ExecutorService executorService = Executors.newCachedThreadPool();
+//        executorService.submit(r);
+//
+//        executorService.shutdown();
 
     }
 }

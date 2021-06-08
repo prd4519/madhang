@@ -90,76 +90,79 @@ public class MakananFragment extends Fragment implements AdapterView.OnItemSelec
         idkecamatanMakanan = parent.getItemIdAtPosition(position);
         idKecamatan = (int) idkecamatanMakanan;
         if (idKecamatan == 0){
-            handler = new Handler();
-            final Runnable r = new Runnable() {
+            BaseApiService mApiService = UtilsApi.getApiService();
+            Call<ResponseModelMakanan> showAll = mApiService.getAllMakanan();
+            showAll.enqueue(new Callback<ResponseModelMakanan>() {
                 @Override
-                public void run() {
-                    BaseApiService mApiService = UtilsApi.getApiService();
-                    Call<ResponseModelMakanan> showAll = mApiService.getAllMakanan();
-                    showAll.enqueue(new Callback<ResponseModelMakanan>() {
-                        @Override
-                        public void onResponse(Call<ResponseModelMakanan> call, Response<ResponseModelMakanan> response) {
-                            modelMakananList = response.body().getData();
-                            if (modelMakananList.isEmpty()){
-                                rvMakanan.setVisibility(View.GONE);
-                                nodata.setVisibility(View.VISIBLE);
-                                nodataImage.setVisibility(View.VISIBLE);
-                            }else {
-                                rvMakanan.setVisibility(View.VISIBLE);
-                                nodata.setVisibility(View.GONE);
-                                nodataImage.setVisibility(View.GONE);
-                                adMakanan = new AdapterMakanan(getContext(), modelMakananList);
-                                rvMakanan.setAdapter(adMakanan);
-                                adMakanan.notifyDataSetChanged();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseModelMakanan> call, Throwable t) {
-                            Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                public void onResponse(Call<ResponseModelMakanan> call, Response<ResponseModelMakanan> response) {
+                    modelMakananList = response.body().getData();
+                    if (modelMakananList.isEmpty()){
+                        rvMakanan.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        nodataImage.setVisibility(View.VISIBLE);
+                    }else {
+                        rvMakanan.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.GONE);
+                        nodataImage.setVisibility(View.GONE);
+                        adMakanan = new AdapterMakanan(getContext(), modelMakananList);
+                        rvMakanan.setAdapter(adMakanan);
+                        adMakanan.notifyDataSetChanged();
+                        refreshAll(parent, view, position, id);
+                    }
                 }
-            };
-            handler.postDelayed(r,1000);
+
+                @Override
+                public void onFailure(Call<ResponseModelMakanan> call, Throwable t) {
+                    Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
+                }
+            });
         }else{
-            handler = new Handler();
-            final Runnable r = new Runnable() {
+            BaseApiService mApiService = UtilsApi.getApiService();
+            Call<ResponseModelMakanan> showAll = mApiService.getMakananByKecamatan(idKecamatan);
+            showAll.enqueue(new Callback<ResponseModelMakanan>() {
                 @Override
-                public void run() {
-                    BaseApiService mApiService = UtilsApi.getApiService();
-                    Call<ResponseModelMakanan> showAll = mApiService.getMakananByKecamatan(idKecamatan);
-                    showAll.enqueue(new Callback<ResponseModelMakanan>() {
-                        @Override
-                        public void onResponse(Call<ResponseModelMakanan> call, Response<ResponseModelMakanan> response) {
-                            modelMakananList = response.body().getData();
-                            if (modelMakananList.isEmpty()){
-                                rvMakanan.setVisibility(View.GONE);
-                                nodata.setVisibility(View.VISIBLE);
-                                nodataImage.setVisibility(View.VISIBLE);
-                            }else {
-                                rvMakanan.setVisibility(View.VISIBLE);
-                                nodata.setVisibility(View.GONE);
-                                nodataImage.setVisibility(View.GONE);
-                                adMakanan = new AdapterMakanan(getContext(), modelMakananList);
-                                rvMakanan.setAdapter(adMakanan);
-                                adMakanan.notifyDataSetChanged();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseModelMakanan> call, Throwable t) {
-                            Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                public void onResponse(Call<ResponseModelMakanan> call, Response<ResponseModelMakanan> response) {
+                    modelMakananList = response.body().getData();
+                    if (modelMakananList.isEmpty()){
+                        rvMakanan.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                        nodataImage.setVisibility(View.VISIBLE);
+                    }else {
+                        rvMakanan.setVisibility(View.VISIBLE);
+                        nodata.setVisibility(View.GONE);
+                        nodataImage.setVisibility(View.GONE);
+                        adMakanan = new AdapterMakanan(getContext(), modelMakananList);
+                        rvMakanan.setAdapter(adMakanan);
+                        adMakanan.notifyDataSetChanged();
+                        refreshAll(parent, view, position, id);
+                    }
                 }
-            };
-            handler.postDelayed(r,1000);
+
+                @Override
+                public void onFailure(Call<ResponseModelMakanan> call, Throwable t) {
+                    Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+    private void refreshAll(AdapterView<?> parent, View view, int position, long id){
+        handler = new Handler();
+        final Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                onItemSelected(parent,view,position,id);
+            }
+        };
+        handler.postDelayed(r,1000);
+//        ExecutorService executorService = Executors.newCachedThreadPool();
+//        executorService.submit(r);
+//
+//        executorService.shutdown();
 
     }
 }

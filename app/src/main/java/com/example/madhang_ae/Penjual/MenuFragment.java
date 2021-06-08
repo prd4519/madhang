@@ -196,33 +196,40 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
                 File imagefile = new File(mediaPath);
                 RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"), imagefile);
                 MultipartBody.Part partImage = MultipartBody.Part.createFormData("image", imagefile.getName(), reqBody);
-                BaseApiService mApiService = UtilsApi.getApiService();
-                Call<ResponseBody> inputItem = mApiService.inputItem(partImage
-                        ,RequestBody.create(MediaType.parse("text/plain"), namaDagangan)
-                        ,RequestBody.create(MediaType.parse("text/plain"), String.valueOf(idKategories))
-                        ,RequestBody.create(MediaType.parse("text/plain"), idKecamatan)
-                        ,RequestBody.create(MediaType.parse("text/plain"), desa)
-                        ,RequestBody.create(MediaType.parse("text/plain"), timeEnd)
-                        ,RequestBody.create(MediaType.parse("text/plain"), noHp)
-                        ,RequestBody.create(MediaType.parse("text/plain"), harga)
-                        ,RequestBody.create(MediaType.parse("text/plain"), idUser));
-                inputItem.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getContext(), "Berhasil Input Data", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(getContext(), NavigationPenjual.class);
-                            startActivity(i);
-                            customDialog.dismiss();
-                            getActivity().finish();
+                long length = imagefile.length();
+                int l = (int) length;
+                if (l <= 2048000) {
+                    BaseApiService mApiService = UtilsApi.getApiService();
+                    Call<ResponseBody> inputItem = mApiService.inputItem(partImage
+                            , RequestBody.create(MediaType.parse("text/plain"), namaDagangan)
+                            , RequestBody.create(MediaType.parse("text/plain"), String.valueOf(idKategories))
+                            , RequestBody.create(MediaType.parse("text/plain"), idKecamatan)
+                            , RequestBody.create(MediaType.parse("text/plain"), desa)
+                            , RequestBody.create(MediaType.parse("text/plain"), timeEnd)
+                            , RequestBody.create(MediaType.parse("text/plain"), noHp)
+                            , RequestBody.create(MediaType.parse("text/plain"), harga)
+                            , RequestBody.create(MediaType.parse("text/plain"), idUser));
+                    inputItem.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(getContext(), "Berhasil Input Data", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(getContext(), NavigationPenjual.class);
+                                startActivity(i);
+                                customDialog.dismiss();
+                                getActivity().finish();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else{
+                    customDialog.dismiss();
+                    Toast.makeText(getContext(), "Gambar lebih dari 2mb", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }

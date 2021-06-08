@@ -202,7 +202,7 @@ public class NavigationPenjual extends AppCompatActivity implements BottomNaviga
         dialogButtonExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                finishAffinity();
                 alertDialog.dismiss();
             }
         });

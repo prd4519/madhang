@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,13 +21,23 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.example.madhang_ae.API.BaseApiService;
 import com.example.madhang_ae.API.UtilsApi;
 import com.example.madhang_ae.Model.ModelMinuman;
 import com.example.madhang_ae.Model.ModelMinuman;
 import com.example.madhang_ae.R;
+import com.example.madhang_ae.ServicePenjual;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AdapterMinuman extends RecyclerView.Adapter<AdapterMinuman.HolderDataMinuman>{
     private Context ctx;
@@ -81,6 +92,7 @@ public class AdapterMinuman extends RecyclerView.Adapter<AdapterMinuman.HolderDa
                 v.getContext().startActivity(i);
             }
         });
+        isTimeExpired(holder.date, mm.getJam_end(),mm.getId());
     }
 
     @Override
@@ -91,14 +103,54 @@ public class AdapterMinuman extends RecyclerView.Adapter<AdapterMinuman.HolderDa
     public class HolderDataMinuman extends RecyclerView.ViewHolder{
         private RoundedImageView imageMinuman;
         private TextView namaMinuman,namaDesa,waktuMinuman,hargaMinuman;
+        private String date;
+        Calendar calendar;
+        SimpleDateFormat sdf;
         final ProgressBar progressBar = (ProgressBar) itemView.findViewById(R.id.progressMinuman);
         public HolderDataMinuman(@NonNull View itemView) {
             super(itemView);
+            calendar = Calendar.getInstance();
+            sdf=new SimpleDateFormat("HH:mm");
+            date = sdf.format(calendar.getTime());
             imageMinuman = itemView.findViewById(R.id.imageMinuman);
             namaMinuman = itemView.findViewById(R.id.namaMinuman);
             namaDesa = itemView.findViewById(R.id.namaDesaMinuman);
             waktuMinuman = itemView.findViewById(R.id.waktuMinuman);
             hargaMinuman = itemView.findViewById(R.id.hargaMinuman);
         }
+    }
+    public boolean isTimeExpired(String startDate, String endDate, int id) {
+        SimpleDateFormat dfDate = new SimpleDateFormat("HH:mm");
+        boolean b = false;
+        try {
+            ctx.startService(new Intent(ctx.getApplicationContext(), ServicePenjual.class));
+            if (dfDate.parse(startDate).before(dfDate.parse(endDate))) {
+                return true;  // If start date is before end date.
+            } else if (dfDate.parse(startDate).equals(dfDate.parse(endDate))) {
+                deleteItem(id);
+                return false;  // If two dates are equal.
+            } else {
+                deleteItem(id);
+                return false; // If start date is after the end date.
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    private void deleteItem(int id) {
+        BaseApiService mApiService = UtilsApi.getApiService();
+        Call<ResponseBody> delete = mApiService.deleteItem(id);
+        delete.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(ctx, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

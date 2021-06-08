@@ -60,6 +60,7 @@ public class otp extends AppCompatActivity {
         Codeotp = getIntent().getStringExtra("otpVerifikasi");
         sEmail = "aemadhang@gmail.com";
         sPassword = "mboh4519";
+        Toast.makeText(this, "Proses Pengiriman OTP Harap Tunggu ...", Toast.LENGTH_LONG).show();
         emailOtp.setText("Masukkan kode OTP yang telah dikirimkan ke alamat email "+email);
         sendVerification();
         btnVerifikasi.setOnClickListener(new View.OnClickListener() {
