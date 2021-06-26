@@ -158,8 +158,34 @@ public class EditProfile extends AppCompatActivity {
         nama = etNama.getText().toString();
         email = etEmail.getText().toString();
         no_hp = etNoHp.getText().toString();
-        if (nama.equals("")|email.equals("")|no_hp.equals("")|mediaPath == null){
-            Toast.makeText(this, "Data diatas tidak boleh kosong", Toast.LENGTH_SHORT).show();
+        if (nama.equals("")){
+            etNama.setError("Mohon isi Data");
+        }else if (email.equals("")){
+            etEmail.setError("Mohon isi Data");
+        }else if (no_hp.equals("")){
+            etNoHp.setError("Mohon isi Data");
+        }else if (mediaPath == null){
+            BaseApiService mApiService = UtilsApi.getApiService();
+            Call<ResponseBody> update = mApiService.updateAkun2(nama,password,Integer.parseInt(id_kecamatan)
+                    ,email,Integer.parseInt(otp),no_hp,Integer.parseInt(id_user));
+            update.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    Toast.makeText(EditProfile.this, "Berhasil Update Data", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(EditProfile.this,NavigationPembeli.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+                    finish();
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e("debug","OnFailure : Error -> "+t.getMessage());
+                    Toast.makeText(EditProfile.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }else{
             File imagefile = new File(mediaPath);
             RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"), imagefile);
@@ -178,6 +204,8 @@ public class EditProfile extends AppCompatActivity {
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     Toast.makeText(EditProfile.this, "Berhasil Update Data", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(EditProfile.this,NavigationPembeli.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
                     finish();
 

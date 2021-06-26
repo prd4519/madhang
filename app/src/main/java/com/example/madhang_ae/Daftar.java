@@ -71,8 +71,14 @@ public class Daftar extends AppCompatActivity implements AdapterView.OnItemSelec
                 password = etPassword.getText().toString();
                 noHp = etnoHp.getText().toString();
                 nama = etnama.getText().toString();
-                if (email.equals("")|password.equals("")|noHp.equals("")|nama.equals("")){
-                    Toast.makeText(Daftar.this, "Mohon masukkan data dengan benar", Toast.LENGTH_SHORT).show();
+                if (email.equals("")){
+                    etEmail.setError("Mohon isi data");
+                }else if (password.equals("")){
+                    etPassword.setError("Mohon isi data");
+                }else if (noHp.equals("")){
+                    etnoHp.setError("Mohon isi data");
+                }else if (nama.equals("")){
+                    etnama.setError("Mohon isi data");
                 }else if(idKecamatan == 0){
                     Toast.makeText(Daftar.this, "Mohon Pilih Kecamatan", Toast.LENGTH_SHORT).show();
                 }else {

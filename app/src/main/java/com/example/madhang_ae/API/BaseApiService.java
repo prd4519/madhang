@@ -50,6 +50,17 @@ public interface BaseApiService {
             ,@Part("no_hp") RequestBody no_hp
             ,@Part("id_user") RequestBody id_user);
     @FormUrlEncoded
+    @POST("Akun/updateAkun")
+    Call<ResponseBody> updateAkun2(
+            @Field("nama") String nama
+            ,@Field("password") String password
+            ,@Field("id_kecamatan") int id_kecamatan
+            ,@Field("email") String email
+            ,@Field("otp") int otp
+            ,@Field("no_hp") String no_hp
+            ,@Field("id_user") int id_user
+    );
+    @FormUrlEncoded
     @POST("Akun/Verifikasi")
     Call<ResponseBody> verifikasi(@Field("email") String email,@Field("otp")int otp);
     @FormUrlEncoded
