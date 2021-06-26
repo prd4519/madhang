@@ -92,7 +92,8 @@ public class AdapterMinuman extends RecyclerView.Adapter<AdapterMinuman.HolderDa
                 v.getContext().startActivity(i);
             }
         });
-        isTimeExpired(holder.date, mm.getJam_end(),mm.getId());
+        isTimeExpired(holder.time, mm.getJam_end(),mm.getId());
+        isDateExpired(holder.date,mm.getTimestamp(),mm.getId());
     }
 
     @Override
@@ -103,15 +104,17 @@ public class AdapterMinuman extends RecyclerView.Adapter<AdapterMinuman.HolderDa
     public class HolderDataMinuman extends RecyclerView.ViewHolder{
         private RoundedImageView imageMinuman;
         private TextView namaMinuman,namaDesa,waktuMinuman,hargaMinuman;
-        private String date;
+        private String time,date;
         Calendar calendar;
-        SimpleDateFormat sdf;
+        SimpleDateFormat sdf,sdf2;
         final ProgressBar progressBar = (ProgressBar) itemView.findViewById(R.id.progressMinuman);
         public HolderDataMinuman(@NonNull View itemView) {
             super(itemView);
             calendar = Calendar.getInstance();
             sdf=new SimpleDateFormat("HH:mm");
-            date = sdf.format(calendar.getTime());
+            sdf2= new SimpleDateFormat("yyyy-MM-dd");
+            time = sdf.format(calendar.getTime());
+            date = sdf2.format(calendar.getTime());
             imageMinuman = itemView.findViewById(R.id.imageMinuman);
             namaMinuman = itemView.findViewById(R.id.namaMinuman);
             namaDesa = itemView.findViewById(R.id.namaDesaMinuman);
@@ -129,6 +132,22 @@ public class AdapterMinuman extends RecyclerView.Adapter<AdapterMinuman.HolderDa
             } else if (dfDate.parse(startDate).equals(dfDate.parse(endDate))) {
                 deleteItem(id);
                 return false;  // If two dates are equal.
+            } else {
+                deleteItem(id);
+                return false; // If start date is after the end date.
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean isDateExpired(String startUpload, String endUpload, int id) {
+        SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
+        boolean b = false;
+        try {
+            ctx.startService(new Intent(ctx.getApplicationContext(), ServicePenjual.class));
+            if (dfDate.parse(startUpload).equals(dfDate.parse(endUpload))) {
+                return true;  // If two dates are equal.
             } else {
                 deleteItem(id);
                 return false; // If start date is after the end date.

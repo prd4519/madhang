@@ -88,20 +88,27 @@ public class JajananFragment extends Fragment implements AdapterView.OnItemSelec
             showAll.enqueue(new Callback<ResponseModelJajanan>() {
                 @Override
                 public void onResponse(Call<ResponseModelJajanan> call, Response<ResponseModelJajanan> response) {
-                    modelJajananList = response.body().getData();
-                    if (modelJajananList.isEmpty()){
-                        rvJajanan.setVisibility(View.GONE);
-                        nodata.setVisibility(View.VISIBLE);
-                        nodataImage.setVisibility(View.VISIBLE);
-                    }else {
-                        rvJajanan.setVisibility(View.VISIBLE);
-                        nodata.setVisibility(View.GONE);
-                        nodataImage.setVisibility(View.GONE);
-                        adJajanan = new AdapterJajanan(getContext(), modelJajananList);
-                        rvJajanan.setAdapter(adJajanan);
-                        adJajanan.notifyDataSetChanged();
-                        refreshAll(parent, view, position, id);
-                    }
+                    handler = new Handler();
+                    final Runnable r = new Runnable() {
+                        @Override
+                        public void run() {
+                            modelJajananList = response.body().getData();
+                            if (modelJajananList.isEmpty()){
+                                rvJajanan.setVisibility(View.GONE);
+                                nodata.setVisibility(View.VISIBLE);
+                                nodataImage.setVisibility(View.VISIBLE);
+                            }else {
+                                rvJajanan.setVisibility(View.VISIBLE);
+                                nodata.setVisibility(View.GONE);
+                                nodataImage.setVisibility(View.GONE);
+                                adJajanan = new AdapterJajanan(getContext(), modelJajananList);
+                                rvJajanan.setAdapter(adJajanan);
+                                adJajanan.notifyDataSetChanged();
+                            }
+                        }
+                    };
+                    handler.postDelayed(r,1000);
+
                 }
 
                 @Override
@@ -127,7 +134,7 @@ public class JajananFragment extends Fragment implements AdapterView.OnItemSelec
                         adJajanan = new AdapterJajanan(getContext(), modelJajananList);
                         rvJajanan.setAdapter(adJajanan);
                         adJajanan.notifyDataSetChanged();
-                        refreshAll(parent, view, position, id);
+
                     }
                 }
 
@@ -143,19 +150,19 @@ public class JajananFragment extends Fragment implements AdapterView.OnItemSelec
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-    private void refreshAll(AdapterView<?> parent, View view, int position, long id){
-        handler = new Handler();
-        final Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                onItemSelected(parent,view,position,id);
-            }
-        };
-        handler.postDelayed(r,1000);
-//        ExecutorService executorService = Executors.newCachedThreadPool();
-//        executorService.submit(r);
+//    private void refreshAll(AdapterView<?> parent, View view, int position, long id){
+//        handler = new Handler();
+//        final Runnable r = new Runnable() {
+//            @Override
+//            public void run() {
+//                onItemSelected(parent,view,position,id);
+//            }
+//        };
+//        handler.postDelayed(r,1000);
+////        ExecutorService executorService = Executors.newCachedThreadPool();
+////        executorService.submit(r);
+////
+////        executorService.shutdown();
 //
-//        executorService.shutdown();
-
-    }
+//    }
 }

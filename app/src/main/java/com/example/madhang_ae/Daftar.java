@@ -62,19 +62,25 @@ public class Daftar extends AppCompatActivity implements AdapterView.OnItemSelec
         kecamatanDaftar.setAdapter(adapter);
         kecamatanDaftar.setOnItemSelectedListener(this);
         Button Daftar = (Button) findViewById(R.id.btn_verifikasi);
+
         Daftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (idKecamatan == 0){
+                int id = (int) idKecamatan;
+                email = etEmail.getText().toString();
+                password = etPassword.getText().toString();
+                noHp = etnoHp.getText().toString();
+                nama = etnama.getText().toString();
+                if (email.equals("")|password.equals("")|noHp.equals("")|nama.equals("")){
+                    Toast.makeText(Daftar.this, "Mohon masukkan data dengan benar", Toast.LENGTH_SHORT).show();
+                }else if(idKecamatan == 0){
                     Toast.makeText(Daftar.this, "Mohon Pilih Kecamatan", Toast.LENGTH_SHORT).show();
                 }else {
                     verifikasiOTP();
                 }
-
             }
         });
     }
-
 
     private void verifikasiOTP() {
         int id = (int) idKecamatan;
@@ -87,7 +93,15 @@ public class Daftar extends AppCompatActivity implements AdapterView.OnItemSelec
         }else {
             Random codeOtp = new Random();
             code = codeOtp.nextInt(8999) + 1000;
-            BaseApiService mApiService = UtilsApi.getApiService();
+            Intent i = new Intent(Daftar.this, otp.class);
+                i.putExtra("passwordVerifikasi",password);
+                i.putExtra("noHPVerifikasi",noHp);
+                i.putExtra("idKecamatanVerifikasi",String.valueOf(id));
+                i.putExtra("namaVerifikasi",nama);
+                i.putExtra("emailVerifikasi", email);
+                i.putExtra("otpVerifikasi", String.valueOf(code));
+            startActivity(i);
+            /*BaseApiService mApiService = UtilsApi.getApiService();
             Call<ResponseBody> insert = mApiService.insertAkun(email, password, noHp, id, nama, code);
             insert.enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -108,7 +122,7 @@ public class Daftar extends AppCompatActivity implements AdapterView.OnItemSelec
                     Log.d("RETRO", "ON FAILURE : " + t.getMessage());
 
                 }
-            });
+            });*/
         }
     }
 

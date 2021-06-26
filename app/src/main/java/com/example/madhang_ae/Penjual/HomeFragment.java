@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,39 +96,52 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
         idKategori = parent.getItemIdAtPosition(position);
         idKategoriDagangan = (int) idKategori;
         if (idKategoriDagangan == 0){
-                BaseApiService mApiService = UtilsApi.getApiService();
-                Call<ResponseModelPenjual> tampil = mApiService.getAllItem(idUser);
-                tampil.enqueue(new Callback<ResponseModelPenjual>() {
-                    @Override
-                    public void onResponse(Call<ResponseModelPenjual> call, Response<ResponseModelPenjual> response) {
+            Handler h = new Handler();
+            final Runnable r = new Runnable() {
+                @Override
+                public void run() {
+                    BaseApiService mApiService = UtilsApi.getApiService();
+                    Call<ResponseModelPenjual> tampil = mApiService.getAllItem(idUser);
+                    tampil.enqueue(new Callback<ResponseModelPenjual>() {
+                        @Override
+                        public void onResponse(Call<ResponseModelPenjual> call, Response<ResponseModelPenjual> response) {
 
-                        modelPenjualList = response.body().getData();
-                        if (modelPenjualList.isEmpty()) {
-                            rvPenjual.setVisibility(View.GONE);
-                            nodata.setVisibility(View.VISIBLE);
-                            nodataImage.setVisibility(View.VISIBLE);
-                        } else {
-                            rvPenjual.setVisibility(View.VISIBLE);
-                            nodata.setVisibility(View.GONE);
-                            nodataImage.setVisibility(View.GONE);
-                            adPenjual = new AdapterPenjual(getContext(), modelPenjualList);
-                            rvPenjual.setAdapter(adPenjual);
-                            adPenjual.notifyDataSetChanged();
-                            refreshAll(parent,view,position,id);
+                            modelPenjualList = response.body().getData();
+                            if (modelPenjualList.isEmpty()) {
+                                rvPenjual.setVisibility(View.GONE);
+                                nodata.setVisibility(View.VISIBLE);
+                                nodataImage.setVisibility(View.VISIBLE);
+                            } else {
+                                rvPenjual.setVisibility(View.VISIBLE);
+                                nodata.setVisibility(View.GONE);
+                                nodataImage.setVisibility(View.GONE);
+                                adPenjual = new AdapterPenjual(getContext(), modelPenjualList);
+                                rvPenjual.setAdapter(adPenjual);
+                                adPenjual.notifyDataSetChanged();
+                                /*handler.removeCallbacks(r);*/
 
+                                /* refreshAll(parent,view,position,id);*/
+
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ResponseModelPenjual> call, Throwable t) {
-                        Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : " + t, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<ResponseModelPenjual> call, Throwable t) {
+                            Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : " + t, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            };
+            h.postDelayed(r,1000);
         }else{
-
+            Handler h1 = new Handler();
+            final Runnable r1 = new Runnable() {
+                @Override
+                public void run() {
                     BaseApiService mApiService = UtilsApi.getApiService();
                     Call<ResponseModelPenjual> tampil = mApiService.getAllItemByKategori(idUser,idKategoriDagangan);
                     tampil.enqueue(new Callback<ResponseModelPenjual>() {
@@ -145,7 +159,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                                 adPenjual = new AdapterPenjual(getContext(), modelPenjualList);
                                 rvPenjual.setAdapter(adPenjual);
                                 adPenjual.notifyDataSetChanged();
-                                refreshAll(parent,view,position,id);
+                                /*handler.removeCallbacks(r);*/
+
+                                /* refreshAll(parent,view,position,id);*/
                             }
                         }
 
@@ -154,8 +170,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                             Toast.makeText(getContext(), "Gagal Menghubungkan Server pesan : "+t, Toast.LENGTH_SHORT).show();
                         }
                     });
-
-
+                }
+            };
+            h1.postDelayed(r1,1000);
         }
     }
 
@@ -165,13 +182,13 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     }
     private void refreshAll(AdapterView<?> parent, View view, int position, long id){
         handler = new Handler();
-        final Runnable r = new Runnable() {
+        final Runnable r1 = new Runnable() {
             @Override
             public void run() {
-                onItemSelected(parent,view,position,id);
+                onItemSelected(parent, view, position, id);
             }
         };
-        handler.postDelayed(r,1000);
+        handler.post(r1);
 //        ExecutorService executorService = Executors.newCachedThreadPool();
 //        executorService.submit(r);
 //

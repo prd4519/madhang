@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,7 +43,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class otp extends AppCompatActivity {
-    String sEmail,sPassword,email,Codeotp;
+    String sEmail,sPassword,email,Codeotp,nama,noHp,password,idKecamatan;
+
     EditText etOtp;
     Button btnVerifikasi;
     AlertDialog.Builder dialogBuilder;
@@ -58,6 +60,10 @@ public class otp extends AppCompatActivity {
         emailOtp = findViewById(R.id.txt_email_otp);
         email = getIntent().getStringExtra("emailVerifikasi");
         Codeotp = getIntent().getStringExtra("otpVerifikasi");
+        nama = getIntent().getStringExtra("namaVerifikasi");
+        noHp = getIntent().getStringExtra("noHPVerifikasi");
+        password = getIntent().getStringExtra("passwordVerifikasi");
+        idKecamatan = getIntent().getStringExtra("idKecamatanVerifikasi");
         sEmail = "aemadhang@gmail.com";
         sPassword = "mboh4519";
         Toast.makeText(this, "Proses Pengiriman OTP Harap Tunggu ...", Toast.LENGTH_LONG).show();
@@ -72,7 +78,31 @@ public class otp extends AppCompatActivity {
     }
 
     private void SubmitVerifikasi() {
-        BaseApiService mApiService = UtilsApi.getApiService();
+        if (etOtp.getText().toString().equals(Codeotp)){
+            BaseApiService mApiService = UtilsApi.getApiService();
+            Call<ResponseBody> insert = mApiService.insertAkun(email, password, noHp, Integer.parseInt(idKecamatan),
+                    nama, Integer.parseInt(Codeotp));
+            insert.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        showAlertDialog();
+
+                    } else {
+                        Toast.makeText(otp.this, "Gagal Verifikasi", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.d("RETRO", "ON FAILURE : " + t.getMessage());
+
+                }
+            });
+        }else{
+            showAlertDialogWrong();
+        }
+       /* BaseApiService mApiService = UtilsApi.getApiService();
         Call<ResponseBody> verif = mApiService.verifikasi(email,Integer.parseInt(etOtp.getText().toString()));
         verif.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -114,7 +144,7 @@ public class otp extends AppCompatActivity {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(otp.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
     }
     private void showAlertDialog(){
         dialogBuilder = new AlertDialog.Builder(otp.this);

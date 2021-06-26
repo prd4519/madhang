@@ -2,7 +2,15 @@ package com.example.madhang_ae.Model;
 
 public class ModelJajanan {
     private int id,id_kecamatan,id_kategori,id_user,harga;
-    private String desa,nama,image,no_hp,jam_start,jam_end;
+    private String desa,nama,image,no_hp,jam_start,jam_end,timestamp;
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
 
     public String getJam_start() {
         return jam_start;

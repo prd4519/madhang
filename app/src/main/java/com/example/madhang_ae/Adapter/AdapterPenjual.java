@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -29,6 +33,7 @@ import com.example.madhang_ae.API.BaseApiService;
 import com.example.madhang_ae.API.UtilsApi;
 import com.example.madhang_ae.MainActivity;
 import com.example.madhang_ae.Model.ModelPenjual;
+import com.example.madhang_ae.Penjual.HomeFragment;
 import com.example.madhang_ae.R;
 import com.example.madhang_ae.ServicePenjual;
 import com.example.madhang_ae.otp;
@@ -47,7 +52,6 @@ import retrofit2.Response;
 public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDataPenjual>{
     private Context ctx;
     private List<ModelPenjual> modelPenjualList;
-
     public AdapterPenjual(Context ctx, List<ModelPenjual> modelPenjualList) {
         this.ctx = ctx;
         this.modelPenjualList = modelPenjualList;
@@ -88,7 +92,23 @@ public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDa
                     }
                 })
                 .into(holder.image);
-        isTimeExpired(holder.date, mp.getJam_end(),mp.getId());
+        isTimeExpired(holder.time, mp.getJam_end(),mp.getId());
+        isDateExpired(holder.date,mp.getTimestamp(),mp.getId());
+        /*Handler handlertime = new Handler(Looper.myLooper());
+        handlertime.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        },1000);
+
+        Handler handlerdate = new Handler();
+        handlerdate.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        },1000);*/
 
     }
 
@@ -105,8 +125,8 @@ public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDa
         private ImageButton deleteDagangan;
         final ProgressBar progressBar = (ProgressBar) itemView.findViewById(R.id.progressPenjual);
         Calendar calendar;
-        SimpleDateFormat dateFormat;
-        String date;
+        SimpleDateFormat dateFormat,dateFormat2;
+        String time,date;
         AlertDialog.Builder dialogBuilder;
         AlertDialog alertDialog;
         public HolderDataPenjual(@NonNull View itemView) {
@@ -119,22 +139,26 @@ public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDa
             calendar = Calendar.getInstance();
             deleteDagangan = itemView.findViewById(R.id.btnDeleteDagangan);
             dateFormat = new SimpleDateFormat("HH:mm");
-            date = dateFormat.format(calendar.getTime());
+            dateFormat2= new SimpleDateFormat("yyyy-MM-dd");
+            time = dateFormat.format(calendar.getTime());
+            date = dateFormat2.format(calendar.getTime());
             deleteDagangan = itemView.findViewById(R.id.btnDeleteDagangan);
 
             deleteDagangan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showAlertDialog();
-                    notifyDataSetChanged();
+                    showAlertDialog(namaDagangan.getText().toString());
+
                 }
             });
         }
-        private void showAlertDialog(){
+        private void showAlertDialog(String namaDagangan){
             dialogBuilder = new AlertDialog.Builder(ctx);
             View layoutView = LayoutInflater.from(ctx).inflate(R.layout.layout_delete_item,null);
             Button dialogButtonOk = layoutView.findViewById(R.id.btnDialogDelete);
             Button dialogButtonBatal = layoutView.findViewById(R.id.btnDialogBatalDelete);
+            TextView message = layoutView.findViewById(R.id.txt_delete_item);
+            message.setText("Apakah anda ingin menghapus "+namaDagangan+" dari menu ?");
             dialogBuilder.setView(layoutView);
             alertDialog = dialogBuilder.create();
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -144,6 +168,7 @@ public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDa
                 public void onClick(View view) {
                     deleteItem(Integer.parseInt(id.getText().toString()));
                     alertDialog.dismiss();
+
                 }
             });
             dialogButtonBatal.setOnClickListener(new View.OnClickListener() {
@@ -158,15 +183,35 @@ public class AdapterPenjual extends RecyclerView.Adapter<AdapterPenjual.HolderDa
     public boolean isTimeExpired(String startDate, String endDate, int id) {
         SimpleDateFormat dfDate = new SimpleDateFormat("HH:mm");
         boolean b = false;
+        Handler handler = new Handler();
         try {
             ctx.startService(new Intent(ctx.getApplicationContext(), ServicePenjual.class));
             if (dfDate.parse(startDate).before(dfDate.parse(endDate))) {
                 return true;  // If start date is before end date.
             } else if (dfDate.parse(startDate).equals(dfDate.parse(endDate))) {
                 deleteItem1(id);
+
                 return false;  // If two dates are equal.
             } else {
                 deleteItem1(id);
+
+                return false; // If start date is after the end date.
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean isDateExpired(String startUpload, String endUpload, int id) {
+        SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
+        boolean b = false;
+        try {
+            ctx.startService(new Intent(ctx.getApplicationContext(), ServicePenjual.class));
+            if (dfDate.parse(startUpload).equals(dfDate.parse(endUpload))) {
+                return true;  // If two dates are equal.
+            } else {
+                deleteItem(id);
+
                 return false; // If start date is after the end date.
             }
         } catch (ParseException e) {

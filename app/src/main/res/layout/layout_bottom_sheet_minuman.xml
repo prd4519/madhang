@@ -47,7 +47,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical"
-        android:gravity="center"
         android:background="@drawable/ic_bgbottomsheet2">
         <TextView
             android:id="@+id/tv_nodata_minuman"

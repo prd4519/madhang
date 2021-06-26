@@ -31,7 +31,7 @@
                 android:id="@+id/imageMakanan"
                 android:src="@drawable/example"
                 android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 card_view:riv_corner_radius="7dp"
                 card_view:riv_mutate_background="true"
                 card_view:riv_border_color="@color/colorWhite"
