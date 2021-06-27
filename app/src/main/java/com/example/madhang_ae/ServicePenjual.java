@@ -6,6 +6,8 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.madhang_ae.Adapter.AdapterPenjual;
+
 public class ServicePenjual extends Service {
     public ServicePenjual() {
     }
@@ -13,12 +15,12 @@ public class ServicePenjual extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("Test Service","Service Created");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("Test Service","Service Started");
+
         return START_NOT_STICKY;
         
     }

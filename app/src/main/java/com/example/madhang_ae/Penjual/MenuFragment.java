@@ -136,7 +136,7 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemSelected
                     h = picker.getCurrentHour();
                     m = picker.getCurrentMinute();
                 }
-                timeEnd = h +":"+m;
+                timeEnd = (String.format("%02d:%02d",h,m));
                 requestPermission();
             }
         });

@@ -2,7 +2,10 @@ package com.example.madhang_ae;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +28,8 @@ public class EditPassword extends AppCompatActivity {
     SessionManager sessionManager;
     String pass,passLama,passBaru,id_user;
     Button btnSimpan;
+    AlertDialog.Builder dialogBuilder;
+    AlertDialog customDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +42,11 @@ public class EditPassword extends AppCompatActivity {
         id_user = user.get(SessionManager.kunci_id);
         FloatingActionButton back = (FloatingActionButton) findViewById(R.id.btn_kembaliPassword);
         btnSimpan = findViewById(R.id.btn_SimpanPassword);
+        dialogBuilder = new AlertDialog.Builder(EditPassword.this);
+        View layoutView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+        dialogBuilder.setView(layoutView);
+        customDialog = dialogBuilder.create();
+        customDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         btnSimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,11 +67,13 @@ public class EditPassword extends AppCompatActivity {
         if (passBaru.equals("")|passLama.equals("")){
             Toast.makeText(this, "Mohon lengkapi isian", Toast.LENGTH_SHORT).show();
         }else if (passLama.equals(pass)){
+            customDialog.show();
             BaseApiService mApiService = UtilsApi.getApiService();
             Call<ResponseBody> updatePass = mApiService.updatePassword(id_user,passBaru);
             updatePass.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    customDialog.dismiss();
                     Toast.makeText(EditPassword.this, "Password berhasil di Update, Silahkan Login kembali dengan password baru", Toast.LENGTH_SHORT).show();
                     sessionManager.logout();
                 }

@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     try {
                         JSONObject jsonResult = new JSONObject(response.body().string());
-                        customDialog.hide();
+                        customDialog.dismiss();
                         if (jsonResult.getString("error").equals("false")) {
                             String id = jsonResult.getJSONObject("login").getString("id");
                             String idKecamatan = jsonResult.getJSONObject("login").getString("id_kecamatan");

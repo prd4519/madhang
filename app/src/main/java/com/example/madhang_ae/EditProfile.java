@@ -4,9 +4,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,6 +54,8 @@ public class EditProfile extends AppCompatActivity {
     private Button editProfil,editpassword;
     private static final int REQUEST_PICK_PHOTO = 2;
     private static final int REQUEST_WRITE_PERMISSION = 786;
+    AlertDialog.Builder dialogBuilder;
+    AlertDialog customDialog;
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == REQUEST_WRITE_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -82,7 +87,11 @@ public class EditProfile extends AppCompatActivity {
         otp = user.get(SessionManager.kunci_otp);
         password = user.get(SessionManager.kunci_pass);
 
-
+        dialogBuilder = new AlertDialog.Builder(EditProfile.this);
+        View layoutView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+        dialogBuilder.setView(layoutView);
+        customDialog = dialogBuilder.create();
+        customDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getProfil();
         imageProfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +104,7 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 requestPermission();
+                customDialog.show();
             }
         });
         editpassword = findViewById(R.id.btn_EditPassword);
@@ -109,6 +119,7 @@ public class EditProfile extends AppCompatActivity {
     }
 
     private void getProfil() {
+
         BaseApiService mApiService = UtilsApi.getApiService();
         Call<ResponseBody> ava = mApiService.getAva(Integer.parseInt(id_user));
         ava.enqueue(new Callback<ResponseBody>() {
@@ -117,6 +128,7 @@ public class EditProfile extends AppCompatActivity {
                 if (response.isSuccessful()){
                     try {
                         JSONObject jsonResult = new JSONObject(response.body().string());
+                        customDialog.dismiss();
                         if (jsonResult.getString("error").equals("false")) {
                             String avatar = jsonResult.getJSONObject("profil").getString("avatar");
                             String name = jsonResult.getJSONObject("profil").getString("nama");
