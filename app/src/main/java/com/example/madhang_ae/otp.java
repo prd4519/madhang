@@ -47,8 +47,8 @@ public class otp extends AppCompatActivity {
 
     EditText etOtp;
     Button btnVerifikasi;
-    AlertDialog.Builder dialogBuilder;
-    AlertDialog alertDialog;
+    AlertDialog.Builder dialogBuilder,customDialogBuilder;
+    AlertDialog alertDialog,customDialog;
     TextView emailOtp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +66,13 @@ public class otp extends AppCompatActivity {
         idKecamatan = getIntent().getStringExtra("idKecamatanVerifikasi");
         sEmail = "aemadhang@gmail.com";
         sPassword = "mboh4519";
-        Toast.makeText(this, "Proses Pengiriman OTP Harap Tunggu ...", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "otp : "+Codeotp, Toast.LENGTH_LONG).show();
         emailOtp.setText("Masukkan kode OTP yang telah dikirimkan ke alamat email "+email);
+        customDialogBuilder = new AlertDialog.Builder(otp.this);
+        View layoutView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+        customDialogBuilder.setView(layoutView);
+        customDialog = customDialogBuilder.create();
+        customDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         sendVerification();
         btnVerifikasi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +94,7 @@ public class otp extends AppCompatActivity {
                         showAlertDialog();
 
                     } else {
-                        Toast.makeText(otp.this, "Gagal Verifikasi", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(otp.this, "Email Already Exist", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -180,7 +185,6 @@ public class otp extends AppCompatActivity {
         });
     }
     public void sendVerification() {
-
         Properties properties = new Properties();
         properties.put("mail.smtp.auth","true");
         properties.put("mail.smtp.starttls.enable","true");
@@ -213,6 +217,8 @@ public class otp extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            customDialog.show();
+
         }
 
         @Override
@@ -230,8 +236,10 @@ public class otp extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if(s.equals("Success")){
+                customDialog.dismiss();
                 Toast.makeText(otp.this, "Kode OTP telah terkirim, mohon cek email anda", Toast.LENGTH_SHORT).show();
             }else{
+                customDialog.dismiss();
                 Toast.makeText(getApplicationContext(),
                         "Something Went Wrong?", Toast.LENGTH_SHORT).show();
             }
