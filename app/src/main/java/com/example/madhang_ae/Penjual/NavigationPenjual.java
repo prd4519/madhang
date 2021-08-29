@@ -32,6 +32,11 @@ import com.example.madhang_ae.Pembeli.NavigationPembeli;
 import com.example.madhang_ae.R;
 import com.example.madhang_ae.SessionManager;
 import com.example.madhang_ae.otp;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -55,6 +60,7 @@ public class NavigationPenjual extends AppCompatActivity implements BottomNaviga
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
     CircleImageView fabPopPenjual;
+    AdView mAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +73,15 @@ public class NavigationPenjual extends AppCompatActivity implements BottomNaviga
         bottomNavigationViewPenjual = findViewById(R.id.navigationPenjual);
         bottomNavigationViewPenjual.setOnNavigationItemSelectedListener(this);
         fabPopPenjual = findViewById(R.id.popupPenjual);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
 
+            }
+        });
+        mAdView = findViewById(R.id.adView2);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         showAva();
         fabPopPenjual.setOnClickListener(new View.OnClickListener() {
             @Override
