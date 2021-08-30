@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.madhang_ae">
+    package="com.android.madhang_ae">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -19,36 +19,36 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-9888946403877419~7235286440"/>
         <service
-            android:name=".ServicePenjual"/>
+            android:name="com.android.madhang_ae.ServicePenjual"/>
 
         <activity
-            android:name=".EditPassword"
+            android:name="com.android.madhang_ae.EditPassword"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".EditProfile"
+            android:name="com.android.madhang_ae.EditProfile"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".Penjual.NavigationPenjual"
+            android:name="com.android.madhang_ae.Penjual.NavigationPenjual"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".Pembeli.NavigationPembeli"
+            android:name="com.android.madhang_ae.Pembeli.NavigationPembeli"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".otp"
+            android:name="com.android.madhang_ae.otp"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".Daftar"
+            android:name="com.android.madhang_ae.Daftar"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".MainActivity"
+            android:name="com.android.madhang_ae.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".SplashScreen"
+            android:name="com.android.madhang_ae.SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
